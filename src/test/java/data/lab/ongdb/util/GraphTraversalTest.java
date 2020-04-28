@@ -14,33 +14,13 @@ import org.neo4j.driver.v1.Config;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-/**
- * 　　　　　　　 ┏┓       ┏┓+ +
- * 　　　　　　　┏┛┻━━━━━━━┛┻┓ + +
- * 　　　　　　　┃　　　　　　 ┃
- * 　　　　　　　┃　　　━　　　┃ ++ + + +
- * 　　　　　　 █████━█████  ┃+
- * 　　　　　　　┃　　　　　　 ┃ +
- * 　　　　　　　┃　　　┻　　　┃
- * 　　　　　　　┃　　　　　　 ┃ + +
- * 　　　　　　　┗━━┓　　　 ┏━┛
- * ┃　　  ┃
- * 　　　　　　　　　┃　　  ┃ + + + +
- * 　　　　　　　　　┃　　　┃　Code is far away from     bug with the animal protecting
- * 　　　　　　　　　┃　　　┃ +
- * 　　　　　　　　　┃　　　┃
- * 　　　　　　　　　┃　　　┃　　+
- * 　　　　　　　　　┃　 　 ┗━━━┓ + +
- * 　　　　　　　　　┃ 　　　　　┣┓
- * 　　　　　　　　　┃ 　　　　　┏┛
- * 　　　　　　　　　┗┓┓┏━━━┳┓┏┛ + + + +
- * 　　　　　　　　　 ┃┫┫　 ┃┫┫
- * 　　　　　　　　　 ┗┻┛　 ┗┻┛+ + + +
- */
-
-/**
- * @author YanchaoMa yanchaoma@foxmail.com
- * @PACKAGE_NAME: casia.isi.neo4j.util
+/*
+ *
+ * Data Lab - graph database organization.
+ *
+ *//**
+ * @author Yc-Ma 
+ * @PACKAGE_NAME: data.lab.ongdb.util
  * @Description: TODO(VertexEdgeMatrix Reasoning Tool)
  * @date 2019/8/19 13:44
  */

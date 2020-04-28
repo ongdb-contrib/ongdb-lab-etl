@@ -1,8 +1,8 @@
 package data.lab.ongdb.common;
 
 /**
- * @author YanchaoMa yanchaoma@foxmail.com
- * @PACKAGE_NAME: casia.isi.neo4j.common.SortOrder
+ * @author Yc-Ma 
+ * @PACKAGE_NAME: data.lab.ongdb.common.SortOrder
  * @Description: TODO(设置排序方式)
  * @date 2019/7/13 16:26
  */

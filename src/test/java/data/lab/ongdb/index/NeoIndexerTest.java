@@ -12,33 +12,13 @@ import org.junit.Test;
 
 import java.io.File;
 
-/**
- * 　　　　　　　 ┏┓       ┏┓+ +
- * 　　　　　　　┏┛┻━━━━━━━┛┻┓ + +
- * 　　　　　　　┃　　　　　　 ┃
- * 　　　　　　　┃　　　━　　　┃ ++ + + +
- * 　　　　　　 █████━█████  ┃+
- * 　　　　　　　┃　　　　　　 ┃ +
- * 　　　　　　　┃　　　┻　　　┃
- * 　　　　　　　┃　　　　　　 ┃ + +
- * 　　　　　　　┗━━┓　　　 ┏━┛
- * ┃　　  ┃
- * 　　　　　　　　　┃　　  ┃ + + + +
- * 　　　　　　　　　┃　　　┃　Code is far away from     bug with the animal protecting
- * 　　　　　　　　　┃　　　┃ +
- * 　　　　　　　　　┃　　　┃
- * 　　　　　　　　　┃　　　┃　　+
- * 　　　　　　　　　┃　 　 ┗━━━┓ + +
- * 　　　　　　　　　┃ 　　　　　┣┓
- * 　　　　　　　　　┃ 　　　　　┏┛
- * 　　　　　　　　　┗┓┓┏━━━┳┓┏┛ + + + +
- * 　　　　　　　　　 ┃┫┫　 ┃┫┫
- * 　　　　　　　　　 ┗┻┛　 ┗┻┛+ + + +
- */
-
-/**
- * @author YanchaoMa yanchaoma@foxmail.com
- * @PACKAGE_NAME: casia.isi.neo4j.index
+/*
+ *
+ * Data Lab - graph database organization.
+ *
+ *//**
+ * @author Yc-Ma 
+ * @PACKAGE_NAME: data.lab.ongdb.index
  * @Description: TODO(Neo index test)
  * @date 2019/7/18 15:41
  */

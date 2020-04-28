@@ -1,28 +1,8 @@
-package data.lab.ongdb.util;/**
- * 　　　　　　　 ┏┓       ┏┓+ +
- * 　　　　　　　┏┛┻━━━━━━━┛┻┓ + +
- * 　　　　　　　┃　　　　　　 ┃
- * 　　　　　　　┃　　　━　　　┃ ++ + + +
- * 　　　　　　 █████━█████  ┃+
- * 　　　　　　　┃　　　　　　 ┃ +
- * 　　　　　　　┃　　　┻　　　┃
- * 　　　　　　　┃　　　　　　 ┃ + +
- * 　　　　　　　┗━━┓　　　 ┏━┛
- * ┃　　  ┃
- * 　　　　　　　　　┃　　  ┃ + + + +
- * 　　　　　　　　　┃　　　┃　Code is far away from     bug with the animal protecting
- * 　　　　　　　　　┃　　　┃ +
- * 　　　　　　　　　┃　　　┃
- * 　　　　　　　　　┃　　　┃　　+
- * 　　　　　　　　　┃　 　 ┗━━━┓ + +
- * 　　　　　　　　　┃ 　　　　　┣┓
- * 　　　　　　　　　┃ 　　　　　┏┛
- * 　　　　　　　　　┗┓┓┏━━━┳┓┏┛ + + + +
- * 　　　　　　　　　 ┃┫┫　 ┃┫┫
- * 　　　　　　　　　 ┗┻┛　 ┗┻┛+ + + +
- */
-
-import data.lab.ongdb.model.Label;
+package data.lab.ongdb.util;/*
+ *
+ * Data Lab - graph database organization.
+ *
+ */import data.lab.ongdb.model.Label;
 import data.lab.ongdb.model.RelationshipType;
 import data.lab.ongdb.search.Property;
 
@@ -31,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author YanchaoMa yanchaoma@foxmail.com
- * @PACKAGE_NAME: casia.isi.neo4j.search
+ * @author Yc-Ma 
+ * @PACKAGE_NAME: data.lab.ongdb.search
  * @Description: TODO(CYPHER语句处理工具)
  * @date 2019/7/26 11:06
  */

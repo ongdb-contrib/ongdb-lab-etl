@@ -1,29 +1,9 @@
 package data.lab.ongdb.model;
-/**
- * 　　　　　　　 ┏┓       ┏┓+ +
- * 　　　　　　　┏┛┻━━━━━━━┛┻┓ + +
- * 　　　　　　　┃　　　　　　 ┃
- * 　　　　　　　┃　　　━　　　┃ ++ + + +
- * 　　　　　　 █████━█████  ┃+
- * 　　　　　　　┃　　　　　　 ┃ +
- * 　　　　　　　┃　　　┻　　　┃
- * 　　　　　　　┃　　　　　　 ┃ + +
- * 　　　　　　　┗━━┓　　　 ┏━┛
- * ┃　　  ┃
- * 　　　　　　　　　┃　　  ┃ + + + +
- * 　　　　　　　　　┃　　　┃　Code is far away from     bug with the animal protecting
- * 　　　　　　　　　┃　　　┃ +
- * 　　　　　　　　　┃　　　┃
- * 　　　　　　　　　┃　　　┃　　+
- * 　　　　　　　　　┃　 　 ┗━━━┓ + +
- * 　　　　　　　　　┃ 　　　　　┣┓
- * 　　　　　　　　　┃ 　　　　　┏┛
- * 　　　　　　　　　┗┓┓┏━━━┳┓┏┛ + + + +
- * 　　　　　　　　　 ┃┫┫　 ┃┫┫
- * 　　　　　　　　　 ┗┻┛　 ┗┻┛+ + + +
- */
-
-import data.lab.ongdb.common.ResultDataContents;
+/*
+ *
+ * Data Lab - graph database organization.
+ *
+ */import data.lab.ongdb.common.ResultDataContents;
 import data.lab.ongdb.common.Symbol;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -32,8 +12,8 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 /**
- * @author YanchaoMa yanchaoma@foxmail.com
- * @PACKAGE_NAME: casia.isi.neo4j.model
+ * @author Yc-Ma 
+ * @PACKAGE_NAME: data.lab.ongdb.model
  * @Description: TODO(NEO4J - HTTP请求体查询参数)
  * @date 2019/7/10 10:00
  */

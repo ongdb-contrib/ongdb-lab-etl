@@ -22,8 +22,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * @author YanchaoMa yanchaoma@foxmail.com
- * @PACKAGE_NAME: casia.isi.neo4j.util.Neo4jDataUtils
+ * @author Yc-Ma 
+ * @PACKAGE_NAME: data.lab.ongdb.util.Neo4jDataUtils
  * @Description: TODO(D3 - NEO4J数据操作工具)
  * @date 2019/7/12 18:03
  */

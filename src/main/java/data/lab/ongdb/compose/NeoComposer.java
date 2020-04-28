@@ -1,29 +1,9 @@
 package data.lab.ongdb.compose;
-/**
- * 　　　　　　　 ┏┓       ┏┓+ +
- * 　　　　　　　┏┛┻━━━━━━━┛┻┓ + +
- * 　　　　　　　┃　　　　　　 ┃
- * 　　　　　　　┃　　　━　　　┃ ++ + + +
- * 　　　　　　 █████━█████  ┃+
- * 　　　　　　　┃　　　　　　 ┃ +
- * 　　　　　　　┃　　　┻　　　┃
- * 　　　　　　　┃　　　　　　 ┃ + +
- * 　　　　　　　┗━━┓　　　 ┏━┛
- * ┃　　  ┃
- * 　　　　　　　　　┃　　  ┃ + + + +
- * 　　　　　　　　　┃　　　┃　Code is far away from     bug with the animal protecting
- * 　　　　　　　　　┃　　　┃ +
- * 　　　　　　　　　┃　　　┃
- * 　　　　　　　　　┃　　　┃　　+
- * 　　　　　　　　　┃　 　 ┗━━━┓ + +
- * 　　　　　　　　　┃ 　　　　　┣┓
- * 　　　　　　　　　┃ 　　　　　┏┛
- * 　　　　　　　　　┗┓┓┏━━━┳┓┏┛ + + + +
- * 　　　　　　　　　 ┃┫┫　 ┃┫┫
- * 　　　　　　　　　 ┗┻┛　 ┗┻┛+ + + +
- */
-
-import data.lab.ongdb.common.*;
+/*
+ *
+ * Data Lab - graph database organization.
+ *
+ */import data.lab.ongdb.common.*;
 import data.lab.ongdb.compose.pack.*;
 import data.lab.ongdb.driver.Neo4jDriver;
 import data.lab.ongdb.http.server.HttpService;
@@ -44,8 +24,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @author YanchaoMa yanchaoma@foxmail.com
- * @PACKAGE_NAME: casia.isi.neo4j.compose
+ * @author Yc-Ma 
+ * @PACKAGE_NAME: data.lab.ongdb.compose
  * @Description: TODO(构图工具)
  * @date 2019/7/9 11:50
  */

@@ -1,29 +1,9 @@
 package data.lab.ongdb.util;
-/**
- * 　　　　　　　 ┏┓       ┏┓+ +
- * 　　　　　　　┏┛┻━━━━━━━┛┻┓ + +
- * 　　　　　　　┃　　　　　　 ┃
- * 　　　　　　　┃　　　━　　　┃ ++ + + +
- * 　　　　　　 █████━█████  ┃+
- * 　　　　　　　┃　　　　　　 ┃ +
- * 　　　　　　　┃　　　┻　　　┃
- * 　　　　　　　┃　　　　　　 ┃ + +
- * 　　　　　　　┗━━┓　　　 ┏━┛
- * ┃　　  ┃
- * 　　　　　　　　　┃　　  ┃ + + + +
- * 　　　　　　　　　┃　　　┃　Code is far away from     bug with the animal protecting
- * 　　　　　　　　　┃　　　┃ +
- * 　　　　　　　　　┃　　　┃
- * 　　　　　　　　　┃　　　┃　　+
- * 　　　　　　　　　┃　 　 ┗━━━┓ + +
- * 　　　　　　　　　┃ 　　　　　┣┓
- * 　　　　　　　　　┃ 　　　　　┏┛
- * 　　　　　　　　　┗┓┓┏━━━┳┓┏┛ + + + +
- * 　　　　　　　　　 ┃┫┫　 ┃┫┫
- * 　　　　　　　　　 ┗┻┛　 ┗┻┛+ + + +
- */
-
-import data.lab.ongdb.algo.AllPaths;
+/*
+ *
+ * Data Lab - graph database organization.
+ *
+ */import data.lab.ongdb.algo.AllPaths;
 import data.lab.ongdb.algo.FloydShortestPath;
 import data.lab.ongdb.algo.structure.AdjacencyNode;
 import com.alibaba.fastjson.JSONArray;
@@ -33,8 +13,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author YanchaoMa yanchaoma@foxmail.com
- * @PACKAGE_NAME: casia.isi.neo4j.util
+ * @author Yc-Ma 
+ * @PACKAGE_NAME: data.lab.ongdb.util
  * @Description: TODO(图遍历工具)
  * @date 2019/8/19 13:42
  */

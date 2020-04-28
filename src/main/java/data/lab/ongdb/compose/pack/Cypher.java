@@ -1,29 +1,9 @@
 package data.lab.ongdb.compose.pack;
-/**
- * 　　　　　　　 ┏┓       ┏┓+ +
- * 　　　　　　　┏┛┻━━━━━━━┛┻┓ + +
- * 　　　　　　　┃　　　　　　 ┃
- * 　　　　　　　┃　　　━　　　┃ ++ + + +
- * 　　　　　　 █████━█████  ┃+
- * 　　　　　　　┃　　　　　　 ┃ +
- * 　　　　　　　┃　　　┻　　　┃
- * 　　　　　　　┃　　　　　　 ┃ + +
- * 　　　　　　　┗━━┓　　　 ┏━┛
- * ┃　　  ┃
- * 　　　　　　　　　┃　　  ┃ + + + +
- * 　　　　　　　　　┃　　　┃　Code is far away from     bug with the animal protecting
- * 　　　　　　　　　┃　　　┃ +
- * 　　　　　　　　　┃　　　┃
- * 　　　　　　　　　┃　　　┃　　+
- * 　　　　　　　　　┃　 　 ┗━━━┓ + +
- * 　　　　　　　　　┃ 　　　　　┣┓
- * 　　　　　　　　　┃ 　　　　　┏┛
- * 　　　　　　　　　┗┓┓┏━━━┳┓┏┛ + + + +
- * 　　　　　　　　　 ┃┫┫　 ┃┫┫
- * 　　　　　　　　　 ┗┻┛　 ┗┻┛+ + + +
- */
-
-import data.lab.ongdb.model.Label;
+/*
+ *
+ * Data Lab - graph database organization.
+ *
+ */import data.lab.ongdb.model.Label;
 import data.lab.ongdb.model.RelationshipType;
 import data.lab.ongdb.search.Property;
 import data.lab.ongdb.util.CypherTool;
@@ -33,8 +13,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @author YanchaoMa yanchaoma@foxmail.com
- * @PACKAGE_NAME: casia.isi.neo4j.compose.pack
+ * @author Yc-Ma 
+ * @PACKAGE_NAME: data.lab.ongdb.compose.pack
  * @Description: TODO(Cypher)
  * @date 2019/8/1 19:54
  */
@@ -84,8 +64,8 @@ public class Cypher {
 
 
     /**
-     * @author YanchaoMa yanchaoma@foxmail.com
-     * @PACKAGE_NAME: casia.isi.neo4j.compose.pack.Cypher
+     * @author Yc-Ma 
+     * @PACKAGE_NAME: data.lab.ongdb.compose.pack.Cypher
      * @Description: TODO(合并节点)
      * @date 2019/8/29 11:00
      */
@@ -162,8 +142,8 @@ public class Cypher {
     }
 
     /**
-     * @author YanchaoMa yanchaoma@foxmail.com
-     * @PACKAGE_NAME: casia.isi.neo4j.compose.pack.Cypher
+     * @author Yc-Ma 
+     * @PACKAGE_NAME: data.lab.ongdb.compose.pack.Cypher
      * @Description: TODO(合并关系)
      * @date 2019/8/29 11:00
      */

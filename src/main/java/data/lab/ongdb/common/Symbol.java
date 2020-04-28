@@ -1,8 +1,8 @@
 package data.lab.ongdb.common;
 
 /**
- * @author YanchaoMa yanchaoma@foxmail.com
- * @PACKAGE_NAME: casia.isi.neo4j.common.Symbol
+ * @author Yc-Ma
+ * @PACKAGE_NAME: data.lab.ongdb.common.Symbol
  * @Description: TODO(枚举类型, 符号)
  * @date 2019/7/9 9:26
  */

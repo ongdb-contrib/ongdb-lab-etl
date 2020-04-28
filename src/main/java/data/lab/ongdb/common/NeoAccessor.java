@@ -1,29 +1,9 @@
 package data.lab.ongdb.common;
-/**
- * 　　　　　　　 ┏┓       ┏┓+ +
- * 　　　　　　　┏┛┻━━━━━━━┛┻┓ + +
- * 　　　　　　　┃　　　　　　 ┃
- * 　　　　　　　┃　　　━　　　┃ ++ + + +
- * 　　　　　　 █████━█████  ┃+
- * 　　　　　　　┃　　　　　　 ┃ +
- * 　　　　　　　┃　　　┻　　　┃
- * 　　　　　　　┃　　　　　　 ┃ + +
- * 　　　　　　　┗━━┓　　　 ┏━┛
- * ┃　　  ┃
- * 　　　　　　　　　┃　　  ┃ + + + +
- * 　　　　　　　　　┃　　　┃　Code is far away from     bug with the animal protecting
- * 　　　　　　　　　┃　　　┃ +
- * 　　　　　　　　　┃　　　┃
- * 　　　　　　　　　┃　　　┃　　+
- * 　　　　　　　　　┃　 　 ┗━━━┓ + +
- * 　　　　　　　　　┃ 　　　　　┣┓
- * 　　　　　　　　　┃ 　　　　　┏┛
- * 　　　　　　　　　┗┓┓┏━━━┳┓┏┛ + + + +
- * 　　　　　　　　　 ┃┫┫　 ┃┫┫
- * 　　　　　　　　　 ┗┻┛　 ┗┻┛+ + + +
- */
-
-import data.lab.ongdb.algo.simhash.NewsFingerPrint;
+/*
+ *
+ * Data Lab - graph database organization.
+ *
+ */import data.lab.ongdb.algo.simhash.NewsFingerPrint;
 import data.lab.ongdb.algo.simhash.SimHash;
 import data.lab.ongdb.compose.NeoComposer;
 import data.lab.ongdb.compose.pack.Cypher;
@@ -51,8 +31,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @author YanchaoMa yanchaoma@foxmail.com
- * @PACKAGE_NAME: casia.isi.neo4j.common
+ * @author Yc-Ma 
+ * @PACKAGE_NAME: data.lab.ongdb.common
  * @Description: TODO(图谱构建器 / 增 / 删 / 改 / 查工具的父类)
  * @date 2019/7/10 19:18
  */

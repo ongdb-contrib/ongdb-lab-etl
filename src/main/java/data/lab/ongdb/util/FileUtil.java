@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author YanchaoMa yanchaoma@foxmail.com
- * @PACKAGE_NAME: casia.isi.neo4j.util.FileUtil
+ * @author Yc-Ma 
+ * @PACKAGE_NAME: data.lab.ongdb.util.FileUtil
  * @Description: TODO(文件操作)
  * @date 2019/7/22 11:19
  */

@@ -3,7 +3,7 @@ package data.lab.ongdb.util;
 import data.lab.ongdb.common.Symbol;
 
 /**
- * @author YanchaoMa yanchaoma@foxmail.com
+ * @author Yc-Ma 
  * @PACKAGE_NAME: casia.isi.elasticsearch.util
  * @Description: TODO(Tool)
  * @date 2019/5/31 9:44
