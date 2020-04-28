@@ -25,6 +25,4 @@ data.lab.ongdb.index
 data.lab.ongdb.update
 - node/relationship/path update interface - No CYPHER restrictions, it can support a large number of delete operations
 
-# LICENSE
-The code is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
 

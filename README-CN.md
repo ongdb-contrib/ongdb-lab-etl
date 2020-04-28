@@ -25,5 +25,3 @@ data.lab.ongdb.index
 data.lab.ongdb.update
 - 节点/关系/路径更新接口 - 无CYPHER限制，可支持大批量删除操作
 
-
-
