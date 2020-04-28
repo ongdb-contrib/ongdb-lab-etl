@@ -20,6 +20,11 @@
             <artifactId>neo4j-etl</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>data.lab.engineering</groupId>
+            <artifactId>ongdb-lab-http</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -76,3 +81,4 @@
         </plugins>
     </build>
 </project>
+
