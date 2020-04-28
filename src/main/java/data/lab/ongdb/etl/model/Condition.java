@@ -3,11 +3,14 @@ package data.lab.ongdb.etl.model;
  *
  * Data Lab - graph database organization.
  *
- */import data.lab.ongdb.etl.common.ResultDataContents;
+ */
+
+import data.lab.ongdb.etl.common.ResultDataContents;
 import data.lab.ongdb.etl.common.Symbol;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -19,7 +22,7 @@ import java.util.List;
  */
 public class Condition {
 
-    private Logger logger = Logger.getLogger(this.getClass());
+    private static final Logger LOGGER = LogManager.getLogger(Condition.class);
 
     private JSONArray statements = new JSONArray();
 
@@ -54,8 +57,8 @@ public class Condition {
                 parameters.put("parameters", props);
                 statements.add(parameters);
             } else {
-                if (logger.isDebugEnabled()) {
-                    logger.error("Statement parameters:" + paras.toString(), new IllegalArgumentException());
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.error("Statement parameters:" + paras.toString(), new IllegalArgumentException());
                 }
             }
         }

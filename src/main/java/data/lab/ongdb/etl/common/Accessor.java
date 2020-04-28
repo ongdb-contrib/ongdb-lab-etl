@@ -10,7 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 /**
  * @author Yc-Ma 
  * @PACKAGE_NAME: data.lab.ongdb.etl.common
- * @Description: TODO(NEO4J增删改查的接口的所有父类接口)
+ * @Description: TODO(ONgDB COMPOSER增删改的接口的所有父类接口)
  * @date 2019/7/9 19:20
  */
 public interface Accessor {
@@ -34,7 +34,7 @@ public interface Accessor {
      * @return
      * @Description: TODO(跳过条件添加直接使用CYPHER查询 - 默认返回节点或者关系的所有属性字段)
      */
-    JSONObject execute(String cypher, data.lab.ongdb.etl.common.CRUD crudType);
+    JSONObject execute(String cypher, CRUD crudType);
 
     /**
      * invoke cypherAction in batched transactions being feeded from cypherIteration running in main thread

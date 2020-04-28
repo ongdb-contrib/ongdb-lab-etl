@@ -3,11 +3,13 @@ package data.lab.ongdb.etl.model;
  *
  * Data Lab - graph database organization.
  *
- *//**
- * @author Yc-Ma 
- * @PACKAGE_NAME: data.lab.ongdb.etl.model
+ */
+
+/**
+ * @author Yc-Ma
+ * @PACKAGE_NAME: data.lab.ongdb.etl.model.Label
  * @Description: TODO(标签接口)
- * @date 2019/7/9 14:40
+ * @date 2020/4/28 19:31
  */
 public interface Label {
     /**

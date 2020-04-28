@@ -24,7 +24,7 @@ public class NodeTest {
         labels.add(Labels.LabelsTree);
 
         // 定义枚举类实现Label接口
-        node.setLables(Labels.Facebook发帖, Labels.InstagramID);
+        node.setLables(Labels.valueOf("Facebook发帖"), Labels.valueOf("InstagramID"));
 
         node.setLables(Label.label("POST"));
 

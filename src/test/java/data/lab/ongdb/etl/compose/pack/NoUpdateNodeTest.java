@@ -15,8 +15,10 @@ import java.util.*;
  *
  * Data Lab - graph database organization.
  *
- *//**
- * @author Yc-Ma 
+ */
+
+/**
+ * @author Yc-Ma
  * @PACKAGE_NAME: data.lab.ongdb.etl.compose.pack
  * @Description: TODO(Describe the role of this JAVA class)
  * @date 2019/8/2 12:47
@@ -26,7 +28,7 @@ public class NoUpdateNodeTest {
     @Test
     public void set_unique_uuid() {
         NoUpdateNode noUpdateNode = new NoUpdateNode();
-        noUpdateNode.setLabels(new Labels[]{Labels.虚拟账号, Labels.TwitterID});
+        noUpdateNode.setLabels(new Labels[]{Labels.valueOf("账号"), Labels.valueOf("TwitterID")});
         Map map = new Hashtable();
         map.put("test", 1312);
         noUpdateNode.setProperties(map);
@@ -50,7 +52,7 @@ public class NoUpdateNodeTest {
         System.out.println(value); // ddd
 
 
-        noUpdateNode.setLabels(new Labels[]{Labels.虚拟账号, Labels.TwitterID});
+        noUpdateNode.setLabels(new Labels[]{Labels.valueOf("账号"), Labels.valueOf("TwitterID")});
         Map map = new Hashtable();
         map.put("test", 1312);
         noUpdateNode.setProperties(map);

@@ -1,14 +1,15 @@
-package data.lab.ongdb.etl.update;/*
+package data.lab.ongdb.etl.update;
+/*
  *
  * Data Lab - graph database organization.
  *
- *//**
- * @PACKAGE_NAME: data.lab.ongdb.etl.update
+ */
+
+/**
+ * @author Yc-Ma
+ * @PACKAGE_NAME: data.lab.ongdb.etl.update.Updater
  * @Description: TODO(VertexEdgeMatrix Update Interface)
- * @author Yc-Ma 
- * @date 2019/8/13 15:46
- *
- *
+ * @date 2020/4/28 19:17
  */
 public interface Updater {
 }

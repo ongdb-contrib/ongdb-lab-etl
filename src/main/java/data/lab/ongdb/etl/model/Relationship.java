@@ -3,14 +3,16 @@ package data.lab.ongdb.etl.model;
  *
  * Data Lab - graph database organization.
  *
- */import java.util.Map;
+ */
+
+import java.util.Map;
 import java.util.Objects;
 
 /**
- * @author Yc-Ma 
- * @PACKAGE_NAME: data.lab.ongdb.etl.model
+ * @author Yc-Ma
+ * @PACKAGE_NAME: data.lab.ongdb.etl.model.Relationship
  * @Description: TODO(关系实体)
- * @date 2019/7/9 14:46
+ * @date 2020/4/28 19:32
  */
 public class Relationship extends Entity {
 

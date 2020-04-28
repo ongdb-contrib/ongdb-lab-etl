@@ -3,7 +3,9 @@ package data.lab.ongdb.etl.model;
  *
  * Data Lab - graph database organization.
  *
- */import com.alibaba.fastjson.annotation.JSONField;
+ */
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.Objects;
 

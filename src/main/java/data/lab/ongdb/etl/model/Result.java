@@ -6,7 +6,8 @@ package data.lab.ongdb.etl.model;
  */import data.lab.ongdb.etl.common.TimeUnit;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Yc-Ma 
@@ -15,6 +16,8 @@ import org.apache.log4j.Logger;
  * @date 2019/7/9 19:22
  */
 public class Result {
+
+    private static final Logger LOGGER = LogManager.getLogger(Result.class);
 
     /**
      * @param
@@ -80,14 +83,14 @@ public class Result {
         return object;
     }
 
-    public static String statisticsConsume(long startMill, long stopMill, int requestSendSize, Logger logger) {
+    public static String statisticsConsume(long startMill, long stopMill, int requestSendSize) {
         if (requestSendSize == 0) requestSendSize = 1;
         String consumeMessage = new StringBuilder().append("Total consume ")
                 .append((stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue())))
                 .append("s,average consume ")
                 .append(((stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()))) / requestSendSize)
                 .append("s/request").toString();
-        logger.info(consumeMessage);
+        LOGGER.info(consumeMessage);
         return consumeMessage;
     }
 

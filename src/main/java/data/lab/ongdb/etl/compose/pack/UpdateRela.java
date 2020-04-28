@@ -3,11 +3,14 @@ package data.lab.ongdb.etl.compose.pack;
  *
  * Data Lab - graph database organization.
  *
- */import data.lab.ongdb.etl.common.Field;
+ */
+
+import data.lab.ongdb.etl.common.Field;
 import data.lab.ongdb.etl.model.Entity;
 import data.lab.ongdb.etl.model.Label;
 import data.lab.ongdb.etl.model.RelationshipType;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +24,7 @@ import java.util.Objects;
  */
 public class UpdateRela extends Entity {
 
-    private Logger logger = Logger.getLogger(this.getClass());
+    private static final Logger LOGGER = LogManager.getLogger(UpdateRela.class);
 
     /**
      * batchDemo:('/'符号之前是当前节点的最子层级标签)
@@ -52,7 +55,7 @@ public class UpdateRela extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         UpdateRela that = (UpdateRela) o;
-        return Objects.equals(logger, that.logger) &&
+        return Objects.equals(LOGGER, that.LOGGER) &&
                 Objects.equals(from, that.from) &&
                 Objects.equals(type, that.type) &&
                 Objects.equals(properties, that.properties) &&
@@ -61,7 +64,7 @@ public class UpdateRela extends Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), logger, from, type, properties, to);
+        return Objects.hash(super.hashCode(), LOGGER, from, type, properties, to);
     }
 
     public String getFrom() {

@@ -75,7 +75,7 @@ public class Property {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        casia.isi.neo4j.search.Property property = (casia.isi.neo4j.search.Property) o;
+        Property property = (Property) o;
         return Objects.equals(key, property.key) &&
                 Objects.equals(value, property.value);
     }

@@ -11,15 +11,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
-import org.neo4j.driver.Driver;
-import org.neo4j.driver.Session;
-import org.neo4j.driver.Transaction;
+import org.neo4j.driver.*;
 import org.neo4j.driver.internal.value.*;
-import org.neo4j.driver.v1.*;
-import org.neo4j.driver.v1.types.Node;
-import org.neo4j.driver.v1.types.Path;
-import org.neo4j.driver.v1.types.Relationship;
-import org.neo4j.driver.v1.util.Pair;
+import org.neo4j.driver.types.Node;
+import org.neo4j.driver.types.Path;
+import org.neo4j.driver.types.Relationship;
+import org.neo4j.driver.util.Pair;
 
 import java.util.List;
 import java.util.Map;
@@ -168,7 +165,7 @@ public class Neo4jDriver {
             if (object instanceof Relationship) {
                 JSONObject relation = packRelation((Relationship) object);
                 array.add(relation);
-            }else if (object instanceof  Node){
+            }else if (object instanceof Node){
                 JSONObject relation = packNode((Node) object);
                 array.add(relation);
             }else {

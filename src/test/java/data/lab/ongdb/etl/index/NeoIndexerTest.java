@@ -3,7 +3,6 @@ package data.lab.ongdb.etl.index;
 import data.lab.ongdb.etl.common.Labels;
 import data.lab.ongdb.etl.model.Label;
 import data.lab.ongdb.etl.model.RelationshipType;
-import data.lab.ongdb.search.NeoSeeker;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.PropertyConfigurator;
@@ -27,7 +26,7 @@ public class NeoIndexerTest {
     // BLOT协议
     private final static String ipPorts = "192.168.12.19:7687";
 
-    private data.lab.ongdb.etl.index.NeoIndexer neoIndexer = new data.lab.ongdb.etl.index.NeoIndexer(ipPorts, "neo4j", "123456");
+    private data.lab.ongdb.etl.index.NeoIndexer neoIndexer = new NeoIndexer(ipPorts, "neo4j", "123456");
 
     @Before
     public void setUp() throws Exception {
@@ -100,20 +99,20 @@ public class NeoIndexerTest {
 
     @Test
     public void relationPattern() {
-        System.out.println(NeoSeeker.relationPattern()
-                .setStartLabel(Label.label("Test"))
-                .setRelation(RelationshipType.withName("LIKE"))
-                .setEndLabel(Label.label("Movie"))
-                .toPattern());
-        System.out.println(NeoSeeker.relationPattern()
-                .setStartLabel(Label.label("Test"))
-                .setEndLabel(Label.label("Movie"))
-                .toPattern());
-        System.out.println(NeoSeeker.relationPattern()
-                .setStartLabel(Label.label("Test"))
-                .toPattern());
-        System.out.println(NeoSeeker.relationPattern()
-                .toPattern());
+//        System.out.println(NeoSeeker.relationPattern()
+//                .setStartLabel(Label.label("Test"))
+//                .setRelation(RelationshipType.withName("LIKE"))
+//                .setEndLabel(Label.label("Movie"))
+//                .toPattern());
+//        System.out.println(NeoSeeker.relationPattern()
+//                .setStartLabel(Label.label("Test"))
+//                .setEndLabel(Label.label("Movie"))
+//                .toPattern());
+//        System.out.println(NeoSeeker.relationPattern()
+//                .setStartLabel(Label.label("Test"))
+//                .toPattern());
+//        System.out.println(NeoSeeker.relationPattern()
+//                .toPattern());
     }
 
     /**
@@ -123,14 +122,14 @@ public class NeoIndexerTest {
      */
     @Test
     public void addRelationFieldIndexTest4() {
-        String autoMatchRelation = NeoSeeker.relationPattern()
-                .setStartLabel(Label.label("Test"))
-                .setEndLabel(Label.label("Movie"))
-                .toPattern();
-        neoIndexer.addRelationFieldIndex(autoMatchRelation, RelationshipType.withName("参与组织"), "_unique_uuid", "_entity_name");
-        neoIndexer.setDEBUG(true);
-        System.out.println(neoIndexer.execute());
-        neoIndexer.reset();
+//        String autoMatchRelation = NeoSeeker.relationPattern()
+//                .setStartLabel(Label.label("Test"))
+//                .setEndLabel(Label.label("Movie"))
+//                .toPattern();
+//        neoIndexer.addRelationFieldIndex(autoMatchRelation, RelationshipType.withName("参与组织"), "_unique_uuid", "_entity_name");
+//        neoIndexer.setDEBUG(true);
+//        System.out.println(neoIndexer.execute());
+//        neoIndexer.reset();
     }
 
     @Test
@@ -143,8 +142,8 @@ public class NeoIndexerTest {
          * @Description: TODO(给节点增加全文检索)
          */
         neoIndexer.addNodeFullTextSearch("search", data.lab.ongdb.etl.index.FullTextMap.initFullTextNode()
-                .add(Labels.专题事件, "name", "eid")
-                .add(Labels.新浪微博ID, "name"), true);
+                .add(Labels.valueOf("事件"), "name", "eid")
+                .add(Labels.valueOf("新浪微博ID"), "name"), true);
         neoIndexer.setDEBUG(true);
         System.out.println(neoIndexer.execute());
         neoIndexer.reset();
@@ -158,17 +157,17 @@ public class NeoIndexerTest {
          * @Description: TODO(给节点增加全文检索)
          */
         neoIndexer.addNodeFullTextSearchAutoUpdate("test", data.lab.ongdb.etl.index.FullTextMap.initFullTextNode()
-                .add(Labels.专题事件, "name", "eid")
-                .add(Labels.新浪微博ID, "name")
+                .add(Labels.valueOf("事件"), "name", "eid")
+                .add(Labels.valueOf("新浪微博ID"), "name")
         );
         neoIndexer.setDEBUG(true);
         System.out.println(neoIndexer.execute());
         neoIndexer.reset();
     }
 
-//    CALL db.index.fulltext.createNodeIndex('nodesProperties',["公司","YouTubeID","专题事件","重点人组织","新浪微博发帖","Twitter发帖","FacebookID","新浪微博ID","InstagramID","TwitterID","学校","认证机构","Instagram发帖","Facebook发帖","其它组织","志愿机构","现实人员","颁发机构","YouTube发帖","LinkedinID"],["nameNodeSpace","eid","gid"])
+//    CALL db.index.fulltext.createNodeIndex('nodesProperties',["公司","YouTubeID","专题事件","LOGGER组织","新浪微博发帖","Twitter发帖","FacebookID","新浪微博ID","InstagramID","TwitterID","学校","认证机构","Instagram发帖","Facebook发帖","其它组织","志愿机构","现实员","颁发机构","YouTube发帖","LinkedinID"],["nameNodeSpace","eid","gid"])
 //
-//    CALL db.index.fulltext.createNodeIndex('重点人组织', ["重点人组织"],["nameNodeSpace","gid"]);
+//    CALL db.index.fulltext.createNodeIndex('LOGGER组织', ["LOGGER组织"],["nameNodeSpace","gid"]);
 //    CALL db.index.fulltext.createNodeIndex('专题事件',["专题事件"],["nameNodeSpace","eid"]);
 //    CALL db.index.fulltext.createNodeIndex('其它组织', ["其它组织"],["nameNodeSpace"]);
 //    CALL db.index.fulltext.createNodeIndex('公司',["公司"],["nameNodeSpace"]);
@@ -179,9 +178,9 @@ public class NeoIndexerTest {
 //    CALL db.index.fulltext.createNodeIndex('新浪微博发帖',["新浪微博发帖"],["content","nameNodeSpace"]);
 //    CALL db.index.fulltext.createNodeIndex('Instagram发帖', ["Instagram发帖"],["content","nameNodeSpace"]);
 //    CALL db.index.fulltext.createNodeIndex('Twitter发帖', ["Twitter发帖"],["nameNodeSpace","content"]);
-//    CALL db.index.fulltext.createNodeIndex('YouTube发帖', ["YouTube发帖"],["nameNodeSpace","content"]);
+//    CALL db.index.fulltext.createNodeIndex('YouTube发帖', ["YrouTube发帖"],["nameNodeSpace","content"]);
 //    CALL db.index.fulltext.createNodeIndex('Facebook发帖',["Facebook发帖"],["content","nameNodeSpace"]);
-//    CALL db.index.fulltext.createNodeIndex('现实人员',["现实人员"],["nameNodeSpace"]);
+//    CALL db.index.fulltext.createNodeIndex('现实员',["现实员"],["nameNodeSpace"]);
 //    CALL db.index.fulltext.createNodeIndex('InstagramID', ["InstagramID"],["nameNodeSpace"]);
 //    CALL db.index.fulltext.createNodeIndex('YouTubeID', ["YouTubeID"],["nameNodeSpace"]);
 //    CALL db.index.fulltext.createNodeIndex('LinkedinID', ["LinkedinID"],["nameNodeSpace"]);
@@ -200,26 +199,14 @@ public class NeoIndexerTest {
          * @Description: TODO(给节点增加全文检索)
          */
         neoIndexer.addNodeFullTextSearchAutoUpdate("nodesProperties", data.lab.ongdb.etl.index.FullTextMap.initFullTextNode()
-                .add(Labels.专题事件, "nameNodeSpace", "eid")
-                .add(Labels.重点人组织, "nameNodeSpace", "gid")
-                .add(Labels.其它组织, "nameNodeSpace")
-                .add(Labels.公司, "nameNodeSpace")
-                .add(Labels.学校, "nameNodeSpace")
-                .add(Labels.认证机构, "nameNodeSpace")
-                .add(Labels.颁发机构, "nameNodeSpace")
-                .add(Labels.志愿机构, "nameNodeSpace")
-                .add(Labels.新浪微博发帖, "nameNodeSpace")
-                .add(Labels.Instagram发帖, "nameNodeSpace")
-                .add(Labels.Twitter发帖, "nameNodeSpace")
-                .add(Labels.YouTube发帖, "nameNodeSpace")
-                .add(Labels.Facebook发帖, "nameNodeSpace")
-                .add(Labels.现实人员, "nameNodeSpace")
-                .add(Labels.InstagramID, "nameNodeSpace")
-                .add(Labels.YouTubeID, "nameNodeSpace")
-                .add(Labels.LinkedinID, "nameNodeSpace")
-                .add(Labels.FacebookID, "nameNodeSpace")
-                .add(Labels.TwitterID, "nameNodeSpace")
-                .add(Labels.新浪微博ID, "nameNodeSpace")
+                .add(Labels.valueOf("事"), "nameNodeSpace", "eid")
+                .add(Labels.valueOf("LOGGER组织"), "nameNodeSpace", "gid")
+                .add(Labels.valueOf("其它组织"), "nameNodeSpace")
+                .add(Labels.valueOf("公司"), "nameNodeSpace")
+                .add(Labels.valueOf("学校"), "nameNodeSpace")
+                .add(Labels.valueOf("认证机构"), "nameNodeSpace")
+                .add(Labels.valueOf("颁发机构"), "nameNodeSpace")
+                .add(Labels.valueOf("志愿机构"), "nameNodeSpace")
         );
         neoIndexer.setDEBUG(true);
         System.out.println(neoIndexer.execute());

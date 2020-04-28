@@ -1,18 +1,22 @@
 package data.lab.ongdb.etl.compose;
 
+import data.lab.ongdb.etl.common.CRUD;
+import data.lab.ongdb.etl.common.Field;
+import data.lab.ongdb.etl.common.Labels;
+import data.lab.ongdb.etl.common.Relationships;
 import data.lab.ongdb.etl.compose.pack.*;
-import data.lab.ongdb.etl.model.Label;
-import data.lab.ongdb.etl.model.RelationshipType;
-import data.lab.ongdb.search.Property;
-import data.lab.ongdb.etl.util.MD5Digest;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import data.lab.ongdb.etl.model.Label;
+import data.lab.ongdb.etl.model.Property;
+import data.lab.ongdb.etl.model.RelationshipType;
+import data.lab.ongdb.etl.util.MD5Digest;
 import org.apache.log4j.PropertyConfigurator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.neo4j.driver.v1.Config;
+import org.neo4j.driver.Config;
 
 import java.io.File;
 import java.util.*;
@@ -82,7 +86,7 @@ public class NeoComposerTest {
 
         for (int i = 0; i < 1000; i++) {
             UpdateNode updateNode = new UpdateNode();
-            updateNode.setLabel(Labels.TwitterID);
+            updateNode.setLabel(Labels.valueOf("TwitterID"));
             updateNode.set_entity_name("ertyu" + i + 2);
             updateNode.set_unique_uuid(MD5Digest.MD5(updateNode.get_entity_name()));
             Map<String, Object> properties = new HashMap<>();
@@ -113,12 +117,12 @@ public class NeoComposerTest {
             for (int i = 0; i < 1000; i++) {
                 UpdateRela updateRela = new UpdateRela();
 
-                updateRela.setFrom(Labels.TwitterID, MD5Digest.MD5("ertuy" + i));
-                updateRela.setTo(Labels.TwitterID, MD5Digest.MD5("ertuy" + i + 2));
+                updateRela.setFrom(Labels.valueOf("TwitterID"), MD5Digest.MD5("ertuy" + i));
+                updateRela.setTo(Labels.valueOf("TwitterID"), MD5Digest.MD5("ertuy" + i + 2));
 
-                updateRela.setType(Relationships.好友);
-                updateRela.set_entity_name(Relationships.好友.toString());
-                updateRela.set_unique_uuid(MD5Digest.MD5(("ertuy" + i) + ("ertuy" + i + 2) + (Relationships.好友)));
+                updateRela.setType(Relationships.valueOf("好友"));
+                updateRela.set_entity_name(Relationships.valueOf("好友").toString());
+                updateRela.set_unique_uuid(MD5Digest.MD5(("ertuy" + i) + ("ertuy" + i + 2) + (Relationships.valueOf("好友"))));
 
                 Map<String, Object> properties = new HashMap<>();
                 //            properties.put("url", "www.twitter.com/u/123452");
@@ -148,12 +152,12 @@ public class NeoComposerTest {
             for (int i = 0; i < 2000; i++) {
                 UpdateRela updateRela = new UpdateRela();
 
-                updateRela.setFrom(Labels.TwitterID, MD5Digest.MD5("ertuy" + i + num));
-                updateRela.setTo(Labels.TwitterID, MD5Digest.MD5("ertuy" + i + 2 + num));
+                updateRela.setFrom(Labels.valueOf("TwitterID"), MD5Digest.MD5("ertuy" + i + num));
+                updateRela.setTo(Labels.valueOf("TwitterID"), MD5Digest.MD5("ertuy" + i + 2 + num));
 
-                updateRela.setType(Relationships.好友);
-                updateRela.set_entity_name(Relationships.好友.toString());
-                updateRela.set_unique_uuid(MD5Digest.MD5(("ertuy" + i) + ("ertuy" + i + 2) + (Relationships.好友)));
+                updateRela.setType(Relationships.valueOf("好友"));
+                updateRela.set_entity_name(Relationships.valueOf("好友").toString());
+                updateRela.set_unique_uuid(MD5Digest.MD5(("ertuy" + i) + ("ertuy" + i + 2) + (Relationships.valueOf("好友"))));
 
                 Map<String, Object> properties = new HashMap<>();
                 properties.put("url", "www.twitter.com/u/123452");
@@ -172,7 +176,7 @@ public class NeoComposerTest {
             List<UpdateNode> updateNodeList = new ArrayList<>();
             for (int i = 0; i < 2000; i++) {
                 UpdateNode updateNode = new UpdateNode();
-                updateNode.setLabel(Labels.TwitterID);
+                updateNode.setLabel(Labels.valueOf("TwitterID"));
                 updateNode.set_entity_name("ertuy" + i + 2 + num);
                 updateNode.set_unique_uuid(MD5Digest.MD5(updateNode.get_entity_name()));
                 Map<String, Object> properties = new HashMap<>();
@@ -348,7 +352,7 @@ public class NeoComposerTest {
 //        noUpdateNode.set_entity_name("古力娜扎");
 //        noUpdateNode.setProperties("name", "古力娜扎", "test", true);
 
-        NoUpdateNode noUpdateNode = new NoUpdateNode(new Labels[]{Labels.TwitterID, Labels.虚拟账号, Labels.人}, "123213",
+        NoUpdateNode noUpdateNode = new NoUpdateNode(new Labels[]{Labels.valueOf("TwitterID"), Labels.valueOf("虚拟账号"), Labels.valueOf("人")}, "123213",
                 "name", "古力娜扎", "test", true);
 
         noUpdateNodeList.add(noUpdateNode);
@@ -366,7 +370,7 @@ public class NeoComposerTest {
 //        noUpdateNode.set_entity_name("古力娜扎");
 //        noUpdateNode.setProperties("name", "古力娜扎", "test", true);
 
-        NoUpdateNode noUpdateNode = new NoUpdateNode(new Labels[]{Labels.TwitterID, Labels.虚拟账号, Labels.人}, "123213",
+        NoUpdateNode noUpdateNode = new NoUpdateNode(new Labels[]{Labels.valueOf("TwitterID"), Labels.valueOf("虚拟账号"), Labels.valueOf("人")}, "123213",
                 "name", "古力娜扎", "test", true);
 
         noUpdateNodeList.add(noUpdateNode);
@@ -384,7 +388,7 @@ public class NeoComposerTest {
 //        noUpdateRela.setName(Relationships.回复.name());
 //        noUpdateRela.setProperties("_mark",32423);
 //        noUpdateRela.setTo(100599);
-        NoUpdateRela noUpdateRela = new NoUpdateRela(100510, Relationships.点赞, Relationships.点赞.name(), 100599, "_mark", 32423);
+        NoUpdateRela noUpdateRela = new NoUpdateRela(100510, Relationships.valueOf("点赞"), Relationships.valueOf("点赞").name(), 100599, "_mark", 32423);
         noUpdateRelaList.add(noUpdateRela);
         System.out.println(composer.importApocMergeRelations(noUpdateRelaList));
     }

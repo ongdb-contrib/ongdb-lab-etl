@@ -16,8 +16,8 @@ import data.lab.ongdb.etl.util.JSONTool;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.log4j.Logger;
-import org.neo4j.driver.v1.Config;
+import org.apache.logging.log4j.*;
+import org.neo4j.driver.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class NeoIndexer extends NeoAccessor implements data.lab.ongdb.etl.index.Indexer {
 
-    private Logger logger = Logger.getLogger(this.getClass());
+    private static final Logger LOGGER = LogManager.getLogger(NeoIndexer.class);
 
     // 节点属性索引条件
     private List<Condition> nodeFieldIndex = new ArrayList<>();
@@ -248,7 +248,7 @@ public class NeoIndexer extends NeoAccessor implements data.lab.ongdb.etl.index.
         JSONObject result = Result.statistics(this.queryResultList);
 
         // 统计所有请求的耗时，以及每个请求的平均耗时
-        result.put("consume", Result.statisticsConsume(startMill, stopMill, this.queryResultList.size(), logger));
+        result.put("consume", Result.statisticsConsume(startMill, stopMill, this.queryResultList.size()));
         return result;
     }
 

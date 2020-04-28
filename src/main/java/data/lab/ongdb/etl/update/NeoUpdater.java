@@ -1,23 +1,21 @@
 package data.lab.ongdb.etl.update;
 /*
-*
+ *
  * Data Lab - graph database organization.
-*
+ *
  */
-
-
-import data.lab.ongdb.etl.common.CRUD;
 import data.lab.ongdb.etl.common.NeoAccessor;
+import data.lab.ongdb.etl.common.CRUD;
 import data.lab.ongdb.etl.model.Condition;
 import data.lab.ongdb.etl.model.Result;
 import com.alibaba.fastjson.JSONObject;
-import org.neo4j.driver.v1.Config;
+import org.neo4j.driver.Config;
 
 /**
  * @author Yc-Ma
- * @PACKAGE_NAME: data.lab.ongdb.etl.update
+ * @PACKAGE_NAME: data.lab.ongdb.etl.update.NeoUpdater
  * @Description: TODO(VertexEdgeMatrix Updater - ( CREATE / DELETE / UPDATE))
- * @date 2019/8/13 15:46
+ * @date 2020/4/28 19:11
  */
 public class NeoUpdater extends NeoAccessor implements Updater {
     /**

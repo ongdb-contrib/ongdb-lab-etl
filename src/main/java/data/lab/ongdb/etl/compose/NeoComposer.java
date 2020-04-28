@@ -3,7 +3,9 @@ package data.lab.ongdb.etl.compose;
  *
  * Data Lab - graph database organization.
  *
- */import data.lab.ongdb.etl.common.*;
+ */
+
+import data.lab.ongdb.etl.common.*;
 import data.lab.ongdb.etl.common.AccessOccurs;
 import data.lab.ongdb.etl.common.CRUD;
 import data.lab.ongdb.etl.common.Field;
@@ -16,7 +18,6 @@ import data.lab.ongdb.etl.compose.pack.NoUpdateRela;
 import data.lab.ongdb.etl.compose.pack.UpdateNode;
 import data.lab.ongdb.etl.compose.pack.UpdateRela;
 import data.lab.ongdb.etl.driver.Neo4jDriver;
-import data.lab.ongdb.http.server.HttpService;
 import data.lab.ongdb.etl.model.*;
 import data.lab.ongdb.etl.model.Condition;
 import data.lab.ongdb.etl.model.Label;
@@ -28,8 +29,9 @@ import data.lab.ongdb.etl.util.JSONTool;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.log4j.Logger;
-import org.neo4j.driver.v1.Config;
+import data.lab.ongdb.http.extra.server.HttpService;
+import org.neo4j.driver.Config;
+import org.apache.logging.log4j.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +40,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @author Yc-Ma 
+ * @author Yc-Ma
  * @PACKAGE_NAME: data.lab.ongdb.etl.compose
  * @Description: TODO(构图工具)
  * @date 2019/7/9 11:50
  */
-public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compose.Composer {
+public class NeoComposer extends NeoAccessor implements Composer {
 
-    private Logger logger = Logger.getLogger(this.getClass());
+    private static final Logger LOGGER = LogManager.getLogger(NeoComposer.class);
 
     // 支持动态批量更新节点的请求列表
     public List<Condition> addMergeDynamicNodes = new ArrayList<>();
@@ -115,46 +117,6 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
     }
 
     /**
-     * @param accessOccurs:选择用哪种方式与NEO4J进行交互
-     * @param ipPorts:服务节点的地址列表（IP:PORT）多地址使用逗号隔开
-     * @param authAccount:节点的用户名
-     * @param authPassword:节点用户名密码
-     * @return
-     * @Description: TODO(构造函数)
-     */
-    @Deprecated
-    public NeoComposer(AccessOccurs accessOccurs, String ipPorts, String authAccount, String authPassword) {
-        super(accessOccurs, ipPorts, authAccount, authPassword);
-    }
-
-    /**
-     * @param contents:指定图数据使用什么格式返回，默认GRAPH格式返回
-     * @param ipPorts:服务节点的地址列表（IP:PORT）多地址使用逗号隔开
-     * @param authAccount:节点的用户名
-     * @param authPassword:节点用户名密码
-     * @return
-     * @Description: TODO(构造函数)
-     */
-    @Deprecated
-    public NeoComposer(ResultDataContents contents, String ipPorts, String authAccount, String authPassword) {
-        super(contents, ipPorts, authAccount, authPassword);
-    }
-
-    /**
-     * @param contents:指定图数据使用什么格式返回，默认GRAPH格式返回
-     * @param accessOccurs:选择用哪种方式与NEO4J进行交互
-     * @param ipPorts:服务节点的地址列表（IP:PORT）多地址使用逗号隔开
-     * @param authAccount:节点的用户名
-     * @param authPassword:节点用户名密码
-     * @return
-     * @Description: TODO(构造函数)
-     */
-    @Deprecated
-    public NeoComposer(ResultDataContents contents, AccessOccurs accessOccurs, String ipPorts, String authAccount, String authPassword) {
-        super(contents, accessOccurs, ipPorts, authAccount, authPassword);
-    }
-
-    /**
      * 通用场景下使用的接口（效率较差-适合数据量较少但是结构复杂的更新创建 - 自定义CYPHER）
      *
      * @param cypherList
@@ -194,7 +156,9 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
      */
     @Override
     public JSONObject executeImport(List<Object[]> nodes, Label label, String _uniqueField, String... _key) {
-        if (nodes.isEmpty()) {return passEmpty();}
+        if (nodes.isEmpty()) {
+            return passEmpty();
+        }
         StringBuilder builder = new StringBuilder();
         String[] keys = _key;
         int serialNumber;
@@ -227,7 +191,9 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
      */
     @Override
     public JSONObject executeImport(List<Object[]> nodes, Label label, Label[] setOtherLabels, String _uniqueField, String... _key) {
-        if (nodes.isEmpty()) {return passEmpty();}
+        if (nodes.isEmpty()) {
+            return passEmpty();
+        }
         StringBuilder builder = new StringBuilder();
         String[] keys = _key;
         int serialNumber;
@@ -273,7 +239,9 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
      */
     @Override
     public JSONObject executeImport(List<Object[]> relations, RelationshipType relationshipType, Label startNodeLabel, Label endNodeLabel, String _uniqueFieldStart, String _uniqueFieldEnd, String... _key) {
-        if (relations.isEmpty()) {return passEmpty();}
+        if (relations.isEmpty()) {
+            return passEmpty();
+        }
         StringBuilder builder = new StringBuilder();
         String[] keys = _key;
         int serialNumber;
@@ -314,7 +282,7 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
         }
         String header = builder.substring(0, builder.length() - 1) + "\r\n";
         FileUtil.writeDataToCSV(header, NeoUrl.NEO_CSV.getSymbolValue(), csvName, false);
-        this.logger.info("Write node csv header...");
+        this.LOGGER.info("Write node csv header...");
     }
 
     /**
@@ -326,7 +294,7 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
     @Override
     public void writeCsvBody(String csvName, String row) {
         FileUtil.writeDataToCSV(row, NeoUrl.NEO_CSV.getSymbolValue(), csvName, true);
-        this.logger.info("Write node csv body...");
+        this.LOGGER.info("Write node csv body...");
     }
 
     /**
@@ -417,7 +385,9 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
      */
     @Override
     public JSONObject importApocMergeNodes(List<NoUpdateNode> noUpdateNodeList) {
-        if (noUpdateNodeList.isEmpty()) {return passEmpty();}
+        if (noUpdateNodeList.isEmpty()) {
+            return passEmpty();
+        }
         JSONArray nodes = JSONArray.parseArray(JSON.toJSONString(noUpdateNodeList));
         String dataPackage = JSONTool.removeKeyDoubleQuotationMark(nodes);
         String cypher = "UNWIND " + dataPackage + " as row " +
@@ -527,15 +497,17 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
      */
     @Override
     public void addMergeDynamicNodes(List<UpdateNode> updateNodeList, int batchSize) {
-        if (updateNodeList.isEmpty()) {passEmpty();}
+        if (updateNodeList.isEmpty()) {
+            passEmpty();
+        }
 
         final int MAX_SEND = batchSize;
 
         // 节点分批操作 - 将CONDITION按照BATCH拆分添加STATEMENT列表
         final double node_temp = (double) (updateNodeList.size()) / (double) MAX_SEND;
         final int node_limit = (int) Math.ceil(node_temp);
-        if (this.logger.isInfoEnabled()) {
-            this.logger.info("NODE SIZE:" + updateNodeList.size() + ",EXECUTE BATCH SIZE:" + node_limit);
+        if (this.LOGGER.isInfoEnabled()) {
+            this.LOGGER.info("NODE SIZE:" + updateNodeList.size() + ",EXECUTE BATCH SIZE:" + node_limit);
         }
 
         Stream.iterate(0, n -> n + 1)
@@ -553,8 +525,8 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
                     Condition condition = new Condition();
                     condition.setStatement(cypher, super.contents);
                     this.addMergeDynamicNodes.add(condition);
-                    if (this.logger.isInfoEnabled()) {
-                        this.logger.info("Add merge dynamic import nodes condition...");
+                    if (this.LOGGER.isInfoEnabled()) {
+                        this.LOGGER.info("Add merge dynamic import nodes condition...");
                     }
                 });
     }
@@ -576,8 +548,8 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
         // 关系分批操作 - 将CONDITION按照BATCH拆分添加STATEMENT列表
         final double rela_temp = (double) (updateRelaList.size()) / (double) MAX_SEND;
         final int rela_limit = (int) Math.ceil(rela_temp);
-        if (this.logger.isInfoEnabled()) {
-            this.logger.info("RELATIONSHIPS SIZE:" + updateRelaList.size() + ",EXECUTE BATCH SIZE:" + rela_limit);
+        if (this.LOGGER.isInfoEnabled()) {
+            this.LOGGER.info("RELATIONSHIPS SIZE:" + updateRelaList.size() + ",EXECUTE BATCH SIZE:" + rela_limit);
         }
 
         Stream.iterate(0, n -> n + 1)
@@ -595,8 +567,8 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
                     Condition condition = new Condition();
                     condition.setStatement(cypher, super.contents);
                     this.addMergeDynamicRelations.add(condition);
-                    if (this.logger.isInfoEnabled()) {
-                        this.logger.info("Add merge dynamic import relationships condition...");
+                    if (this.LOGGER.isInfoEnabled()) {
+                        this.LOGGER.info("Add merge dynamic import relationships condition...");
                     }
                 });
     }
@@ -608,7 +580,9 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
      */
     @Override
     public void addMergeDynamicNodes(List<UpdateNode> updateNodeList) {
-        if (updateNodeList.isEmpty()) {passEmpty();}
+        if (updateNodeList.isEmpty()) {
+            passEmpty();
+        }
         // 开始添加CONDITION
         JSONArray nodes = JSONArray.parseArray(JSON.toJSONString(updateNodeList));
         String dataPackage = JSONTool.removeKeyDoubleQuotationMark(nodes);
@@ -618,8 +592,8 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
         Condition condition = new Condition();
         condition.setStatement(cypher, super.contents);
         this.addMergeDynamicNodes.add(condition);
-        if (this.logger.isInfoEnabled()) {
-            this.logger.info("Add merge dynamic import nodes condition...");
+        if (this.LOGGER.isInfoEnabled()) {
+            this.LOGGER.info("Add merge dynamic import nodes condition...");
         }
     }
 
@@ -630,7 +604,9 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
      */
     @Override
     public void addMergeDynamicRelations(List<UpdateRela> updateRelaList) {
-        if (updateRelaList.isEmpty()) {passEmpty();}
+        if (updateRelaList.isEmpty()) {
+            passEmpty();
+        }
         JSONArray relationships = JSONArray.parseArray(JSON.toJSONString(updateRelaList));
         String dataPackage = JSONTool.removeKeyDoubleQuotationMark(relationships);
 
@@ -641,8 +617,8 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
         Condition condition = new Condition();
         condition.setStatement(cypher, super.contents);
         this.addMergeDynamicRelations.add(condition);
-        if (this.logger.isInfoEnabled()) {
-            this.logger.info("Add merge dynamic import relationships condition...");
+        if (this.LOGGER.isInfoEnabled()) {
+            this.LOGGER.info("Add merge dynamic import relationships condition...");
         }
     }
 
@@ -845,7 +821,7 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
     }
 
     private JSONObject passEmpty() {
-        this.logger.info("Data package is empty missing execute!");
+        this.LOGGER.info("Data package is empty missing execute!");
         return new JSONObject();
     }
 
@@ -888,7 +864,7 @@ public class NeoComposer extends NeoAccessor implements data.lab.ongdb.etl.compo
         JSONObject result = Result.statistics(this.queryResultList);
 
         // 统计所有请求的耗时，以及每个请求的平均耗时
-        result.put("consume", Result.statisticsConsume(startMill, stopMill, this.queryResultList.size(), logger));
+        result.put("consume", Result.statisticsConsume(startMill, stopMill, this.queryResultList.size()));
         return result;
     }
 

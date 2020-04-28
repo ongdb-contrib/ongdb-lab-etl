@@ -1,10 +1,9 @@
 package data.lab.ongdb.etl.update;
 
-import data.lab.ongdb.search.NeoSearcher;
 import org.apache.log4j.PropertyConfigurator;
 import org.junit.Before;
 import org.junit.Test;
-import org.neo4j.driver.v1.Config;
+import org.neo4j.driver.Config;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -28,10 +27,8 @@ public class NeoUpdaterTest {
 //    private NeoUpdater neoUpdater = new NeoUpdater(ipPorts, "neo4j", "123456");
 
     // 设置持续尝试重试事务函数的最大时间
-    private data.lab.ongdb.etl.update.NeoUpdater neoUpdater = new data.lab.ongdb.etl.update.NeoUpdater(ipPorts, "neo4j", "123456"
+    private NeoUpdater neoUpdater = new data.lab.ongdb.etl.update.NeoUpdater(ipPorts, "neo4j", "123456"
             , Config.builder().withMaxTransactionRetryTime(600, TimeUnit.SECONDS).build());
-
-    private NeoSearcher neoSearcher = new NeoSearcher(ipPorts, "neo4j", "123456");
 
     @Before
     public void setUp() throws Exception {

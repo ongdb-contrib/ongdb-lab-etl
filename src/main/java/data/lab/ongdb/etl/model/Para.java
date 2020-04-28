@@ -4,9 +4,9 @@ package data.lab.ongdb.etl.model;/*
 *
  */
 
-
 import com.alibaba.fastjson.JSONObject;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 public class Para {
 
-    private Logger logger = Logger.getLogger(this.getClass());
+    private static final Logger LOGGER = LogManager.getLogger(Para.class);
 
     private String paraName;
 
@@ -41,8 +41,8 @@ public class Para {
                     i++;
                 }
             } else {
-                if (this.logger.isDebugEnabled()) {
-                    this.logger.error("Statement parameters:" + paras.toString(), new IllegalArgumentException());
+                if (this.LOGGER.isDebugEnabled()) {
+                    this.LOGGER.error("Statement parameters:" + paras.toString(), new IllegalArgumentException());
                 }
             }
         }

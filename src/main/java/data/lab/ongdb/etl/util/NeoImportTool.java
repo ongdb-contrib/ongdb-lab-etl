@@ -8,11 +8,10 @@ package data.lab.ongdb.etl.util;
 import data.lab.ongdb.etl.common.CRUD;
 import data.lab.ongdb.etl.compose.NeoComposer;
 import data.lab.ongdb.etl.compose.pack.Cypher;
-import data.lab.ongdb.http.HttpRequest;
-import data.lab.ongdb.etl.model.Label;
-import data.lab.ongdb.search.NeoSearcher;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import data.lab.ongdb.etl.model.Label;
+import data.lab.ongdb.http.extra.HttpRequest;
 
 import java.util.Map;
 
@@ -41,7 +40,7 @@ public class NeoImportTool {
      * @Description: TODO(文件中写入建立索引的CYPHER)
      */
     public static void initIndex(String pathName, String cqlFileName, boolean isAppend) {
-        data.lab.ongdb.etl.util.FileUtil.writeIDSToFile(initCypher.getCypher(), pathName, cqlFileName, isAppend);
+        FileUtil.writeIDSToFile(initCypher.getCypher(), pathName, cqlFileName, isAppend);
     }
 
     public static JSONObject queryCypher(String url, String cypher) {
@@ -62,46 +61,46 @@ public class NeoImportTool {
 
     public static void dump(NeoComposer targetComposer, JSONObject result) {
 
-        JSONArray nodes = data.lab.ongdb.etl.util.JSONTool.getNodeOrRelaList(result, "nodes");
-        JSONArray relationships = data.lab.ongdb.etl.util.JSONTool.getNodeOrRelaList(result, "relationships");
+        JSONArray nodes = JSONTool.getNodeOrRelaList(result, "nodes");
+        JSONArray relationships = JSONTool.getNodeOrRelaList(result, "relationships");
 
-        relationships = data.lab.ongdb.etl.util.JSONTool.removeNull(relationships);
+        relationships = JSONTool.removeNull(relationships);
 
         writeCypherToCql(targetComposer, nodes, true);
         writeCypherToCql(targetComposer, relationships, false);
     }
 
-    /**
-     * @param source:目标COMPOSER
-     * @param dumpCypher:转储语句
-     * @param target:目标COMPOSER
-     * @return
-     * @Description: TODO(根据CYPHER将数据完整转储到另外一个库)
-     */
-    public JSONObject dump(NeoSearcher source, String dumpCypher, NeoComposer target) {
-        return null;
-    }
+//    /**
+//     * @param source:目标COMPOSER
+//     * @param dumpCypher:转储语句
+//     * @param target:目标COMPOSER
+//     * @return
+//     * @Description: TODO(根据CYPHER将数据完整转储到另外一个库)
+//     */
+//    public JSONObject dump(NeoSearcher source, String dumpCypher, NeoComposer target) {
+//        return null;
+//    }
 
-    /**
-     * @param source:目标COMPOSER
-     * @param dumpCypher:转储语句
-     * @param pathName:目标文件夹名称
-     * @param cqlFileName:在根目录cql文件夹生成转储的cql文件
-     * @param isAppend:是否追加写入
-     * @return
-     * @Description: TODO(根据CYPHER将数据完整生成CQL)
-     */
-    public static boolean dump(NeoSearcher source, String dumpCypher, String pathName, String cqlFileName, boolean isAppend, boolean dumpByHttp) {
-
-        JSONObject result = source.execute(dumpCypher, CRUD.RETRIEVE);
-        JSONArray nodes = data.lab.ongdb.etl.util.JSONTool.getNodeOrRelaList(result, "nodes");
-        JSONArray relationships = data.lab.ongdb.etl.util.JSONTool.getNodeOrRelaList(result, "relationships");
-
-        writeCypherToCql(nodes, true, pathName, cqlFileName, isAppend, dumpByHttp);
-        writeCypherToCql(relationships, false, pathName, cqlFileName, isAppend, dumpByHttp);
-
-        return data.lab.ongdb.etl.util.JSONTool.isNeoD3ObjEmpty(result);
-    }
+//    /**
+//     * @param source:目标COMPOSER
+//     * @param dumpCypher:转储语句
+//     * @param pathName:目标文件夹名称
+//     * @param cqlFileName:在根目录cql文件夹生成转储的cql文件
+//     * @param isAppend:是否追加写入
+//     * @return
+//     * @Description: TODO(根据CYPHER将数据完整生成CQL)
+//     */
+//    public static boolean dump(NeoSearcher source, String dumpCypher, String pathName, String cqlFileName, boolean isAppend, boolean dumpByHttp) {
+//
+//        JSONObject result = source.execute(dumpCypher, CRUD.RETRIEVE);
+//        JSONArray nodes = JSONTool.getNodeOrRelaList(result, "nodes");
+//        JSONArray relationships = JSONTool.getNodeOrRelaList(result, "relationships");
+//
+//        writeCypherToCql(nodes, true, pathName, cqlFileName, isAppend, dumpByHttp);
+//        writeCypherToCql(relationships, false, pathName, cqlFileName, isAppend, dumpByHttp);
+//
+//        return JSONTool.isNeoD3ObjEmpty(result);
+//    }
 
     private static void writeCypherToCql(JSONArray array, boolean isNodeObj, String pathName, String cqlFileName, boolean isAppend, boolean dumpByHttp) {
         array.forEach(obj -> {
@@ -113,7 +112,7 @@ public class NeoImportTool {
                 cypher = relationObjToCypher(object);
             }
             if (!dumpByHttp) {
-                data.lab.ongdb.etl.util.FileUtil.writeIDSToFile(cypher.getCypher(), pathName, cqlFileName, isAppend);
+                FileUtil.writeIDSToFile(cypher.getCypher(), pathName, cqlFileName, isAppend);
             } else {
                 // 通过HTTP直接执行CYPHER
                 HttpRequest request = new HttpRequest();
