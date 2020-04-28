@@ -3,15 +3,17 @@ package data.lab.ongdb.util;
  *
  * Data Lab - graph database organization.
  *
- */import java.text.ParseException;
+ */
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @author Yc-Ma 
- * @PACKAGE_NAME: casia.isi.elasticsearch.util
- * @Description: TODO(时间类型数据操作工具)
- * @date 2019/5/30 17:13
+ * @author Yc-Ma
+ * @PACKAGE_NAME: data.lab.ongdb.util.DateUtil
+ * @Description: TODO(DateUtil)
+ * @date 2020/4/28 14:35
  */
 public class DateUtil {
 
@@ -34,7 +36,7 @@ public class DateUtil {
     public static long dateToMillisecond(String date) {
         long millisecond = 0;
         try {
-            if (date != null && !"" .equals(date)) {
+            if (date != null && !"".equals(date)) {
                 millisecond = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date).getTime();
             }
         } catch (ParseException e) {

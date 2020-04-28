@@ -3,9 +3,11 @@ package data.lab.ongdb.compose.pack;
  *
  * Data Lab - graph database organization.
  *
- */import data.lab.ongdb.model.Label;
+ */
+
+import data.lab.ongdb.model.Label;
+import data.lab.ongdb.model.Property;
 import data.lab.ongdb.model.RelationshipType;
-import data.lab.ongdb.search.Property;
 import data.lab.ongdb.util.CypherTool;
 
 import java.util.HashMap;

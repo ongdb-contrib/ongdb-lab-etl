@@ -3,12 +3,17 @@ package data.lab.ongdb.driver;
  *
  * Data Lab - graph database organization.
  *
- */import data.lab.ongdb.common.CRUD;
+ */
+
+import data.lab.ongdb.common.CRUD;
 import data.lab.ongdb.common.TimeUnit;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.Session;
+import org.neo4j.driver.Transaction;
 import org.neo4j.driver.internal.value.*;
 import org.neo4j.driver.v1.*;
 import org.neo4j.driver.v1.types.Node;
@@ -48,7 +53,6 @@ public class Neo4jDriver {
             try (Session session = driver.session()) {
                 try (Transaction tx = session.beginTransaction()) {
                     tx.run(statement);
-                    tx.success();  // Mark this write as successful.
                     flag = true;
                 }
             } catch (Exception e) {

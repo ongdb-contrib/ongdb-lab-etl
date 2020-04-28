@@ -3,7 +3,8 @@ package data.lab.ongdb.common;
  *
  * Data Lab - graph database organization.
  *
- *//**
+ */
+/**
  * @author Yc-Ma 
  * @PACKAGE_NAME: data.lab.ongdb.common
  * @Description: TODO(数据库操作类型)

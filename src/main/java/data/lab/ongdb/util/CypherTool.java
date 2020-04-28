@@ -1,11 +1,13 @@
-package data.lab.ongdb.util;/*
+package data.lab.ongdb.util;
+/*
  *
  * Data Lab - graph database organization.
  *
- */import data.lab.ongdb.model.Label;
-import data.lab.ongdb.model.RelationshipType;
-import data.lab.ongdb.search.Property;
+ */
 
+import data.lab.ongdb.model.Label;
+import data.lab.ongdb.model.Property;
+import data.lab.ongdb.model.RelationshipType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

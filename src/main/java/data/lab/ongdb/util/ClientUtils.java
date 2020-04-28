@@ -1,12 +1,17 @@
 package data.lab.ongdb.util;
+/*
+ *
+ * Data Lab - graph database organization.
+ *
+ */
 
 import data.lab.ongdb.common.Symbol;
 
 /**
- * @author Yc-Ma 
- * @PACKAGE_NAME: casia.isi.elasticsearch.util
+ * @author Yc-Ma
+ * @PACKAGE_NAME: data.lab.ongdb.util.ClientUtils
  * @Description: TODO(Tool)
- * @date 2019/5/31 9:44
+ * @date 2020/4/28 14:34
  */
 public class ClientUtils {
 

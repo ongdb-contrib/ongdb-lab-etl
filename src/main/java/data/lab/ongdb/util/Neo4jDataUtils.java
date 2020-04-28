@@ -1,15 +1,18 @@
 package data.lab.ongdb.util;
+/*
+ *
+ * Data Lab - graph database organization.
+ *
+ */
 
-import data.lab.ongdb.common.Labels;
-import data.lab.ongdb.common.Relationships;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
+import org.neo4j.driver.Value;
 import org.neo4j.driver.internal.InternalNode;
-import org.neo4j.driver.v1.Value;
-import org.neo4j.driver.v1.types.Node;
-import org.neo4j.driver.v1.types.Path;
-import org.neo4j.driver.v1.types.Relationship;
+import org.neo4j.driver.types.Node;
+import org.neo4j.driver.types.Path;
+import org.neo4j.driver.types.Relationship;
 
 import java.sql.Array;
 import java.sql.ResultSet;
@@ -22,10 +25,10 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * @author Yc-Ma 
+ * @author Yc-Ma
  * @PACKAGE_NAME: data.lab.ongdb.util.Neo4jDataUtils
- * @Description: TODO(D3 - NEO4J数据操作工具)
- * @date 2019/7/12 18:03
+ * @Description: TODO(D3 - NEO4J : data tool)
+ * @date 2020/4/28 14:40
  */
 public class Neo4jDataUtils {
 
@@ -238,42 +241,6 @@ public class Neo4jDataUtils {
         } else {
             return null;
         }
-    }
-
-    /**
-     * @param
-     * @return
-     * @Description: TODO(添加统一名称的命名空间 - nameNodeSpace)
-     */
-    private static JSONObject addNameNodeSpace(JSONObject nodeData) {
-
-        JSONArray labels = nodeData.getJSONArray("labels");
-        if (labels.contains(Labels.LinkedinID.toString())) {
-            nodeData = copyField(nodeData, "fullname");
-
-        } else if (labels.contains(Labels.FacebookID.toString())) {
-            nodeData = copyField(nodeData, "fullname");
-
-        } else if (labels.contains(Labels.TwitterID.toString())) {
-            nodeData = copyField(nodeData, "userNickName");
-
-        } else if (labels.contains(Labels.M方向选民.toString())) {
-            nodeData = copyField(nodeData, "fullName");
-
-        } else if (labels.contains(Labels.现实人员.toString())) {
-            nodeData = copyField(nodeData, "fullname");
-
-        } else if (labels.contains(Labels.新浪微博ID.toString()) || labels.contains(Labels.网易博客ID.toString())) {
-            nodeData = copyField(nodeData, "vir_name");
-
-        } else if (labels.contains(Labels.发帖.toString()) || labels.contains(Labels.Facebook发帖.toString())
-                || labels.contains(Labels.Twitter发帖.toString())) {
-            nodeData = copyField(nodeData, "content", "twContent", "title");
-        } else {
-            nodeData = copyField(nodeData, "name");
-
-        }
-        return nodeData;
     }
 
     /**
@@ -647,39 +614,6 @@ public class Neo4jDataUtils {
             }
         }
         return null;
-    }
-
-    /**
-     * @param
-     * @return
-     * @Description: TODO(关系列表)
-     */
-    public static JSONObject getNodeRelationships(ResultSet result) {
-        JSONObject data = new JSONObject();  //data object
-        int total = 0;
-        StringBuilder builder = new StringBuilder();
-        String master = null, slave = null;
-        try {
-            while (result.next()) {
-                String relationshipName = result.getString(1);
-
-                if (!Relationships.隶属虚拟账号.toString().equals(relationshipName) && !Relationships.发帖.toString().equals(relationshipName)) {
-                    int count = result.getInt(2);
-                    data.put(relationshipName, count);
-                    master = result.getString(3);
-                    slave = result.getString(4);
-                    total += count;
-                    builder.append(relationshipName + "关系" + count + "条 ");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        JSONArray array = new JSONArray();
-        array.add(master + "和" + slave + "存在" + builder.toString());
-        data.put("detail", array);
-        data.put("total", total);
-        return data;
     }
 
     public static JSONObject getCurrentNodes(ResultSet result) {

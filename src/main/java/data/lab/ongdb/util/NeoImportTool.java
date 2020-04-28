@@ -3,7 +3,9 @@ package data.lab.ongdb.util;
  *
  * Data Lab - graph database organization.
  *
- */import data.lab.ongdb.common.CRUD;
+ */
+
+import data.lab.ongdb.common.CRUD;
 import data.lab.ongdb.compose.NeoComposer;
 import data.lab.ongdb.compose.pack.Cypher;
 import data.lab.ongdb.http.HttpRequest;

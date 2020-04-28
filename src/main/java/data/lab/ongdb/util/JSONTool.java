@@ -3,7 +3,9 @@ package data.lab.ongdb.util;
  *
  * Data Lab - graph database organization.
  *
- */import data.lab.ongdb.common.SortOrder;
+ */
+
+import data.lab.ongdb.common.SortOrder;
 import data.lab.ongdb.model.Label;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -16,10 +18,10 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * @author Yc-Ma 
- * @PACKAGE_NAME: data.lab.ongdb.util
- * @Description: TODO(处理JSON数据)
- * @date 2019/7/10 9:49
+ * @author Yc-Ma
+ * @PACKAGE_NAME: data.lab.ongdb.util.JSONTool
+ * @Description: TODO(JSONTool)
+ * @date 2020/4/28 14:37
  */
 public class JSONTool {
 

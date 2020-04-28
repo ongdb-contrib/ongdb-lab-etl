@@ -3,15 +3,12 @@ package data.lab.ongdb.common;
  *
  * Data Lab - graph database organization.
  *
- */import data.lab.ongdb.algo.simhash.NewsFingerPrint;
-import data.lab.ongdb.algo.simhash.SimHash;
+ */
+
 import data.lab.ongdb.compose.NeoComposer;
 import data.lab.ongdb.compose.pack.Cypher;
 import data.lab.ongdb.compose.pack.NoUpdateRela;
 import data.lab.ongdb.driver.Neo4jDriver;
-import data.lab.ongdb.http.HttpPoolSym;
-import data.lab.ongdb.http.HttpProxyRegister;
-import data.lab.ongdb.http.HttpProxyRequest;
 import data.lab.ongdb.model.Condition;
 import data.lab.ongdb.model.Result;
 import data.lab.ongdb.update.NeoUpdater;
@@ -20,10 +17,9 @@ import data.lab.ongdb.util.JSONTool;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
-import org.neo4j.driver.v1.AuthTokens;
-import org.neo4j.driver.v1.Config;
-import org.neo4j.driver.v1.Driver;
-import org.neo4j.driver.v1.GraphDatabase;
+import org.neo4j.driver.AuthTokens;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.GraphDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +35,6 @@ import java.util.stream.Stream;
 public abstract class NeoAccessor implements Accessor {
 
     private Logger logger = Logger.getLogger(this.getClass());
-
-    // http访问对象 支持绝对接口地址和相对接口地址
-    public HttpProxyRequest request;
 
     // java_driver访问对象
     public Driver driver;

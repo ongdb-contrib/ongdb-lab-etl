@@ -11,9 +11,7 @@ package data.lab.ongdb.driver;
  *
  *
  */
-import org.neo4j.driver.v1.*;
-
-import static org.neo4j.driver.v1.Values.parameters;
+import org.neo4j.driver.*;
 
 public class DriverTest
 {

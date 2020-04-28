@@ -3,14 +3,16 @@ package data.lab.ongdb.util;
  *
  * Data Lab - graph database organization.
  *
- */import java.io.UnsupportedEncodingException;
+ */
+
+import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
 /**
- * @author Yc-Ma 
- * @PACKAGE_NAME: data.lab.ongdb.util
+ * @author Yc-Ma
+ * @PACKAGE_NAME: data.lab.ongdb.util.Base64Digest
  * @Description: TODO(BASE64)
- * @date 2019/7/9 10:48
+ * @date 2020/4/28 14:32
  */
 public class Base64Digest {
 
@@ -44,7 +46,7 @@ public class Base64Digest {
     public static String dncoder(String text) {
         if (text != null && !"".equals(text)) {
             try {
-                return new String(decoder.decode(text),CHARACTER);
+                return new String(decoder.decode(text), CHARACTER);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

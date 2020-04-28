@@ -1,4 +1,9 @@
 package data.lab.ongdb.util;
+/*
+ *
+ * Data Lab - graph database organization.
+ *
+ */
 
 import java.io.*;
 import java.util.ArrayList;
@@ -7,10 +12,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author Yc-Ma 
+ * @author Yc-Ma
  * @PACKAGE_NAME: data.lab.ongdb.util.FileUtil
- * @Description: TODO(文件操作)
- * @date 2019/7/22 11:19
+ * @Description: TODO(FileUtil)
+ * @date 2020/4/28 14:36
  */
 public class FileUtil {
 
