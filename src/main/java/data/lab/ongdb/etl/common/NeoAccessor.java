@@ -10,7 +10,7 @@ import data.lab.ongdb.etl.compose.pack.Cypher;
 import data.lab.ongdb.etl.compose.pack.NoUpdateRela;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import data.lab.ongdb.etl.driver.Neo4jDriver;
+import data.lab.ongdb.etl.driver.ONgDBDriver;
 import data.lab.ongdb.etl.model.Condition;
 import data.lab.ongdb.etl.model.Result;
 import data.lab.ongdb.etl.update.NeoUpdater;
@@ -183,15 +183,15 @@ public abstract class NeoAccessor implements Accessor {
             return JSONObject.parseObject(this.request.httpPost(data.lab.ongdb.etl.common.NeoUrl.DB_DATA_TRANSACTION_COMMIT.getSymbolValue(), condition.toString()));
         } else if (data.lab.ongdb.etl.common.AccessOccurs.JAVA_DRIVER.equals(this.accessOccurs)) {
             if (data.lab.ongdb.etl.common.CRUD.RETRIEVE.equals(crudType)) {
-                return Neo4jDriver.searcher(this.driver, condition.getStatement(condition.toString()));
+                return ONgDBDriver.searcher(this.driver, condition.getStatement(condition.toString()));
             } else if (data.lab.ongdb.etl.common.CRUD.MERGE_CSV.equals(crudType)) {
-                return Neo4jDriver.composerAutoCommit(this.driver, condition.getStatement(condition.toString()));
+                return ONgDBDriver.composerAutoCommit(this.driver, condition.getStatement(condition.toString()));
             } else if (data.lab.ongdb.etl.common.CRUD.RETRIEVE_PROPERTIES.equals(crudType)) {
-                return Neo4jDriver.rowProperties(this.driver, condition.getStatement(condition.toString()));
+                return ONgDBDriver.rowProperties(this.driver, condition.getStatement(condition.toString()));
             } else if (data.lab.ongdb.etl.common.CRUD.MERGE_RETURN_NODE_ID.equals(crudType)) {
-                return Neo4jDriver.composerReturnNodeId(this.driver, condition.getStatement(condition.toString()));
+                return ONgDBDriver.composerReturnNodeId(this.driver, condition.getStatement(condition.toString()));
             } else {
-                return Neo4jDriver.composer(this.driver, condition.getStatement(condition.toString()));
+                return ONgDBDriver.composer(this.driver, condition.getStatement(condition.toString()));
             }
         }
         return new JSONObject();
@@ -205,7 +205,7 @@ public abstract class NeoAccessor implements Accessor {
     public JSONObject dbIndexes() {
         String cypher = "CALL db.indexes() YIELD description,indexName,tokenNames,properties,state,type,progress,provider,id,failureMessage " +
                 "RETURN description,indexName,tokenNames,properties,state,type,progress,provider,id,failureMessage;";
-        return Neo4jDriver.rowProperties(this.driver, cypher);
+        return ONgDBDriver.rowProperties(this.driver, cypher);
     }
 
     /**
@@ -215,7 +215,7 @@ public abstract class NeoAccessor implements Accessor {
     @Override
     public JSONObject dbLabels() {
         String cypher = "CALL db.labels();";
-        return Neo4jDriver.rowProperties(this.driver, cypher);
+        return ONgDBDriver.rowProperties(this.driver, cypher);
     }
 
     /**
@@ -225,7 +225,7 @@ public abstract class NeoAccessor implements Accessor {
     @Override
     public JSONObject dbRelationshipTypes() {
         String cypher = "CALL db.relationshipTypes();";
-        return Neo4jDriver.rowProperties(this.driver, cypher);
+        return ONgDBDriver.rowProperties(this.driver, cypher);
     }
 
     /**

@@ -2,6 +2,12 @@
 - MAIN PROTOCOL:BOLT ROUTING
 
 ## CORE INTERFACE
+### SERVER MANAGE
+>CORE AND READ_REPLICA
+>DEV - TEST
+>PRO - FORMAL
+data.lab.ongdb.etl.register.ONgDBConfiguration
+
 ### COMPOSER
 data.lab.ongdb.etl.compose
 - 1.Support batch dynamic update imports

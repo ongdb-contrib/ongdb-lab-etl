@@ -22,18 +22,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Yc-Ma 
+ * @author Yc-Ma
  * @PACKAGE_NAME: data.lab.ongdb.etl.driver
  * @Description: TODO(NEO4J_JAVA_DRIVER驱动)
  * @date 2019/7/13 19:50
  */
-public class Neo4jDriver {
+public class ONgDBDriver {
 
     /**
      * JAVA_DRIVER返回的数据格式统一按照D3_GRAPH格式返回
      **/
 
-    private final static Logger logger = org.apache.log4j.Logger.getLogger(Neo4jDriver.class);
+    private final static Logger logger = org.apache.log4j.Logger.getLogger(ONgDBDriver.class);
 
     /**
      * @param driver:传入NEO4J_JAVA驱动
@@ -78,14 +78,14 @@ public class Neo4jDriver {
         long startMill = System.currentTimeMillis();
         try (Session session = driver.session()) {
             try (Transaction tx = session.beginTransaction()) {
-                StatementResult result = tx.run(statement);
+               Result result = tx.run(statement);
                 while (result.hasNext()) {
                     Record record = result.next();
                     Map<String, Object> map = record.asMap();
                     JSONObject object = JSONObject.parseObject(JSON.toJSONString(map));
                     resultMessage.putAll(object);
                 }
-                tx.success();  // Mark this write as successful.
+//                tx.success();  // Mark this write as successful.
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,7 +126,7 @@ public class Neo4jDriver {
         JSONObject resultObject = new JSONObject();
         JSONArray resultArray = new JSONArray();
         try (Session session = driver.session()) {
-            StatementResult result = session.run(cypher);
+            Result result = session.run(cypher);
             while (result.hasNext()) {
                 Record record = result.next();
                 Map<String, Object> map = record.asMap();
@@ -201,7 +201,7 @@ public class Neo4jDriver {
         try (Session session = driver.session()) {
             // Auto-commit transactions are a quick and easy way to wrap a read.
 
-            StatementResult result = session.run(statement);
+            Result result = session.run(statement);
             // Each Cypher execution returns a stream of records.
             while (result.hasNext()) {
                 Record record = result.next();

@@ -5,20 +5,16 @@ package data.lab.ongdb.etl.compose;
  *
  */
 
-import data.lab.ongdb.etl.common.*;
-import data.lab.ongdb.etl.common.AccessOccurs;
 import data.lab.ongdb.etl.common.CRUD;
 import data.lab.ongdb.etl.common.Field;
 import data.lab.ongdb.etl.common.NeoAccessor;
 import data.lab.ongdb.etl.common.NeoUrl;
-import data.lab.ongdb.etl.common.ResultDataContents;
 import data.lab.ongdb.etl.compose.pack.Cypher;
 import data.lab.ongdb.etl.compose.pack.NoUpdateNode;
 import data.lab.ongdb.etl.compose.pack.NoUpdateRela;
 import data.lab.ongdb.etl.compose.pack.UpdateNode;
 import data.lab.ongdb.etl.compose.pack.UpdateRela;
-import data.lab.ongdb.etl.driver.Neo4jDriver;
-import data.lab.ongdb.etl.model.*;
+import data.lab.ongdb.etl.driver.ONgDBDriver;
 import data.lab.ongdb.etl.model.Condition;
 import data.lab.ongdb.etl.model.Label;
 import data.lab.ongdb.etl.model.RelationshipType;
@@ -128,7 +124,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
         }
         JSONArray message = new JSONArray();
         cypherList.parallelStream().forEach(cypher ->
-                message.add(Neo4jDriver.composer(this.driver, cypher.getCypher())));
+                message.add(ONgDBDriver.composer(this.driver, cypher.getCypher())));
         JSONObject result = new JSONObject();
         result.put("result", message);
         return result;

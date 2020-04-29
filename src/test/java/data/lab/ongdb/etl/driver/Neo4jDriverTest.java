@@ -38,7 +38,7 @@ public class Neo4jDriverTest {
                         "RETURN n")
                 .toString();
 
-        Neo4jDriver.composerAutoCommit(composer.driver,cypher);
+        ONgDBDriver.composerAutoCommit(composer.driver,cypher);
     }
 
     @Test
