@@ -13,6 +13,8 @@ import com.alibaba.fastjson.JSONObject;
 import data.lab.ongdb.etl.driver.ONgDBDriver;
 import data.lab.ongdb.etl.model.Condition;
 import data.lab.ongdb.etl.model.Result;
+import data.lab.ongdb.etl.register.Address;
+import data.lab.ongdb.etl.register.DBHeartBeatDetection;
 import data.lab.ongdb.etl.update.NeoUpdater;
 import data.lab.ongdb.etl.util.ClientUtils;
 import data.lab.ongdb.etl.util.JSONTool;
@@ -24,13 +26,14 @@ import org.neo4j.driver.Config;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.GraphDatabase;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @author Yc-Ma 
+ * @author Yc-Ma
  * @PACKAGE_NAME: data.lab.ongdb.etl.common
  * @Description: TODO(图谱构建器 / 增 / 删 / 改 工具的父类)
  * @date 2019/7/10 19:18
@@ -55,6 +58,23 @@ public abstract class NeoAccessor implements Accessor {
     public AccessOccurs accessOccurs = AccessOccurs.JAVA_DRIVER;
 
     public NeoAccessor() {
+    }
+
+    /**
+     * @param addresses:ONgDB的服务地址：服务节点的地址列表（IP:PORT）多地址使用逗号隔开
+     * @param authAccount:节点的用户名
+     * @param authPassword:节点用户名密码
+     * @return
+     * @Description: TODO(构造函数 - 默认使用JAVA - DRIVER发送请求 ， D3_GRAPH格式返回数据)
+     */
+    public NeoAccessor(List<Address> addresses, String authAccount, String authPassword) {
+        // 注册心跳检测
+        try {
+            DBHeartBeatDetection dbHeartBeatDetection = new DBHeartBeatDetection();
+            dbHeartBeatDetection.run(addresses, authAccount, authPassword);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -108,7 +128,7 @@ public abstract class NeoAccessor implements Accessor {
      * @Description: TODO(跳过条件添加直接使用CYPHER查询 - 默认返回节点或者关系的所有属性字段)
      */
     @Override
-    public JSONObject execute(String cypher, data.lab.ongdb.etl.common.CRUD crudType) {
+    public JSONObject execute(String cypher, CRUD crudType) {
         // 禁止某些危险查询
         if (cypher.contains("DELETE") || cypher.contains("REMOVE") ||
                 cypher.contains("delete") || cypher.contains("remove")) {
@@ -126,7 +146,7 @@ public abstract class NeoAccessor implements Accessor {
         long stopMill = System.currentTimeMillis();
         result.put("consume", Result.statisticsConsume(startMill, stopMill, queryResultList.size()));
 
-        if (data.lab.ongdb.etl.common.ResultDataContents.D3_GRAPH.equals(this.contents) && !data.lab.ongdb.etl.common.CRUD.RETRIEVE_PROPERTIES.equals(crudType)) {
+        if (ResultDataContents.D3_GRAPH.equals(this.contents) && !CRUD.RETRIEVE_PROPERTIES.equals(crudType)) {
             result = JSONTool.packD3Json(result);
         }
         if (this.DEBUG) {
@@ -167,7 +187,7 @@ public abstract class NeoAccessor implements Accessor {
                 .toString();
         Condition condition = new Condition();
         condition.setStatement(cypher, this.contents);
-        return Result.message(chooseSendCypherWay(condition, data.lab.ongdb.etl.common.CRUD.RETRIEVE_PROPERTIES));
+        return Result.message(chooseSendCypherWay(condition, CRUD.RETRIEVE_PROPERTIES));
     }
 
     /**
@@ -175,20 +195,20 @@ public abstract class NeoAccessor implements Accessor {
      * @return
      * @Description: TODO(使用REST - API或者JAVA - DRIVER执行请求)
      */
-    public JSONObject chooseSendCypherWay(Condition condition, data.lab.ongdb.etl.common.CRUD crudType) {
+    public JSONObject chooseSendCypherWay(Condition condition, CRUD crudType) {
         if (this.DEBUG) {
             this.LOGGER.info("Debug condition:" + condition.toString());
         }
-        if (data.lab.ongdb.etl.common.AccessOccurs.RESTFUL_API.equals(this.accessOccurs)) {
-            return JSONObject.parseObject(this.request.httpPost(data.lab.ongdb.etl.common.NeoUrl.DB_DATA_TRANSACTION_COMMIT.getSymbolValue(), condition.toString()));
-        } else if (data.lab.ongdb.etl.common.AccessOccurs.JAVA_DRIVER.equals(this.accessOccurs)) {
-            if (data.lab.ongdb.etl.common.CRUD.RETRIEVE.equals(crudType)) {
+        if (AccessOccurs.RESTFUL_API.equals(this.accessOccurs)) {
+            return JSONObject.parseObject(this.request.httpPost(NeoUrl.DB_DATA_TRANSACTION_COMMIT.getSymbolValue(), condition.toString()));
+        } else if (AccessOccurs.JAVA_DRIVER.equals(this.accessOccurs)) {
+            if (CRUD.RETRIEVE.equals(crudType)) {
                 return ONgDBDriver.searcher(this.driver, condition.getStatement(condition.toString()));
-            } else if (data.lab.ongdb.etl.common.CRUD.MERGE_CSV.equals(crudType)) {
+            } else if (CRUD.MERGE_CSV.equals(crudType)) {
                 return ONgDBDriver.composerAutoCommit(this.driver, condition.getStatement(condition.toString()));
-            } else if (data.lab.ongdb.etl.common.CRUD.RETRIEVE_PROPERTIES.equals(crudType)) {
+            } else if (CRUD.RETRIEVE_PROPERTIES.equals(crudType)) {
                 return ONgDBDriver.rowProperties(this.driver, condition.getStatement(condition.toString()));
-            } else if (data.lab.ongdb.etl.common.CRUD.MERGE_RETURN_NODE_ID.equals(crudType)) {
+            } else if (CRUD.MERGE_RETURN_NODE_ID.equals(crudType)) {
                 return ONgDBDriver.composerReturnNodeId(this.driver, condition.getStatement(condition.toString()));
             } else {
                 return ONgDBDriver.composer(this.driver, condition.getStatement(condition.toString()));

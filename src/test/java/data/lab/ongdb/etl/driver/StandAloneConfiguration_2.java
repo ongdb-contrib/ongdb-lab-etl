@@ -10,7 +10,7 @@ package data.lab.ongdb.etl.driver;
  * @date 2019/7/10 22:04
  */
 
-import data.lab.ongdb.etl.register.ONgDBConfiguration;
+import data.lab.ongdb.etl.properties.ServerConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
@@ -66,9 +66,9 @@ public class StandAloneConfiguration_2 {
         PropertyConfigurator.configureAndWatch("conf" + File.separator + "log4j.properties");
         Configurator.setAllLevels("", Level.INFO);
         // DEV
-        StandAloneConfiguration_2 example = new StandAloneConfiguration_2(ONgDBConfiguration.getDev().getUris().randomSingleNode(),
-                ONgDBConfiguration.getDev().getUserName(),
-                ONgDBConfiguration.getDev().getPassword());
+        StandAloneConfiguration_2 example = new StandAloneConfiguration_2(ServerConfiguration.getDev().getUris().randomSingleNode(),
+                ServerConfiguration.getDev().getUserName(),
+                ServerConfiguration.getDev().getPassword());
 
         example.addPerson("Adaa");
         example.addPerson("Alicea");

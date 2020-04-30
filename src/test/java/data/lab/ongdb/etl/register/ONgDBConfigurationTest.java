@@ -1,5 +1,6 @@
 package data.lab.ongdb.etl.register;
 
+import data.lab.ongdb.etl.properties.ServerConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
@@ -39,7 +40,7 @@ public class ONgDBConfigurationTest {
     @Test
     public void role() {
         // 依赖于此配置文件的配置conf\ongdb.properties，区分DEV和PRO
-        Uris uris = ONgDBConfiguration.getPro().getUris();
+        Uris uris = ServerConfiguration.getPro().getUris();
 
         // 单机模式访问=========================================================
         // 随机返回一个节点地址

@@ -1,12 +1,12 @@
-package data.lab.ongdb.etl.register;
+package data.lab.ongdb.etl.properties;
 /*
  *
  * Data Lab - graph database organization.
  *
  */
 
-import java.io.File;
-import java.io.FileInputStream;
+import data.lab.ongdb.etl.register.Login;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -16,9 +16,7 @@ import java.util.*;
  * @Description: TODO(ONgDB configuration)
  * @date 2020/4/29 8:47
  */
-public class ONgDBConfiguration {
-
-    private static final String configurationPath = "conf" + File.separator + "ongdb.properties";
+public class ServerConfiguration {
 
     private static final String DEV = "ongdb.dev.";
     private static final String PRO = "ongdb.pro.";
@@ -43,17 +41,10 @@ public class ONgDBConfiguration {
         return new Login(uriStr, userName, password);
     }
 
-    private static Properties properties() throws IOException {
-        FileInputStream inStream = new FileInputStream(new File(configurationPath));
-        Properties properties = new Properties();
-        properties.load(inStream);
-        return properties;
-    }
-
     private static Properties rejector(String key_prefix_name) {
         Properties newProperties = new Properties();
         try {
-            Properties properties = properties();
+            Properties properties = ETLProperties.ONgDBproperties();
             for (Object pro : properties.keySet()) {
                 String key = String.valueOf(pro);
                 String value = String.valueOf(properties.getProperty(key));

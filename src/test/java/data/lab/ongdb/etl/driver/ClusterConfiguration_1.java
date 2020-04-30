@@ -7,7 +7,7 @@ package data.lab.ongdb.etl.driver;
 
 import data.lab.ongdb.etl.register.AccessPrefix;
 import data.lab.ongdb.etl.register.Login;
-import data.lab.ongdb.etl.register.ONgDBConfiguration;
+import data.lab.ongdb.etl.properties.ServerConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
@@ -40,7 +40,7 @@ public class ClusterConfiguration_1 {
     }
 
     private void addPersonCluster(String name) {
-        Login login = ONgDBConfiguration.getPro();
+        Login login = ServerConfiguration.getPro();
         String server = login.getUris().coreSingleNode().replace(AccessPrefix.MULTI_NODES.getSymbol(), "");
         String user = login.getUserName();
         String pwd = login.getPassword();

@@ -33,14 +33,14 @@ CALL dbms.cluster.routing.getRoutingTable({},"neo4j")
 └─────┴──────────────────────────────────────────────────────────────────────┘
 
 -- 自动提交事务，事务函数和显式事务(推荐使用事务函数)
-
+-- 写入操作必须判断是否在leader节点进行！！！
 
 ## 核心接口
 ### SERVER MANAGE
 >分类节点角色CORE和READ_REPLICA(其中FOLLOWER和READ_REPLICA节点都只能READ)
 >DEV表示测试版
 >PRO表示生产环境
-data.lab.ongdb.etl.register.ONgDBConfiguration
+data.lab.ongdb.etl.properties.ServerConfiguration
 
 ### 批量构图工具接口
 data.lab.ongdb.etl.compose

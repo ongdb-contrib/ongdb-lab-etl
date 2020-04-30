@@ -6,6 +6,7 @@ package data.lab.ongdb.etl.register;
  */
 
 import data.lab.ongdb.etl.common.Symbol;
+import data.lab.ongdb.http.extra.HttpProxyRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.neo4j.driver.*;
@@ -39,7 +40,12 @@ public class Login {
     }
 
     private void findRole(Uris uris) {
+        Http
         uris.all().forEach(server -> {
+
+
+
+
             Driver driver = GraphDatabase.driver(AccessPrefix.SINGLE_NODE.getSymbol() + server.getHost() + ":" + server.getPort(),
                     AuthTokens.basic(this.userName, this.password));
             try (Session session = driver.session()) {

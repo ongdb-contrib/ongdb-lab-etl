@@ -126,5 +126,9 @@ public class Uris {
     public int size() {
         return this.urisSet.size();
     }
+
+    public Map<Role, List<Address>> getRoleMap() {
+        return map;
+    }
 }
 

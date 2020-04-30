@@ -19,6 +19,7 @@ import data.lab.ongdb.etl.model.Condition;
 import data.lab.ongdb.etl.model.Label;
 import data.lab.ongdb.etl.model.RelationshipType;
 import data.lab.ongdb.etl.model.Result;
+import data.lab.ongdb.etl.register.Address;
 import data.lab.ongdb.etl.util.CypherTool;
 import data.lab.ongdb.etl.util.FileUtil;
 import data.lab.ongdb.etl.util.JSONTool;
@@ -56,6 +57,17 @@ public class NeoComposer extends NeoAccessor implements Composer {
 
     // 是否启动接口的HTTP-SERVICE
     public static boolean HTTP_SERVICE_IS_OPEN = true;
+
+    /**
+     * @param ipPorts:服务节点的地址列表（IP:PORT）多地址使用逗号隔开
+     * @param authAccount:节点的用户名
+     * @param authPassword:节点用户名密码
+     * @return
+     * @Description: TODO(构造函数)
+     */
+    public NeoComposer(List<Address> all, String userName, String password) {
+        super(all,userName,password);
+    }
 
     /**
      * @param ipPorts:服务节点的地址列表（IP:PORT）多地址使用逗号隔开

@@ -6,7 +6,7 @@
 >CORE AND READ_REPLICA
 >DEV - TEST
 >PRO - FORMAL
-data.lab.ongdb.etl.register.ONgDBConfiguration
+data.lab.ongdb.etl.properties.ServerConfiguration
 
 ### COMPOSER
 data.lab.ongdb.etl.compose

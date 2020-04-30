@@ -5,7 +5,7 @@ package data.lab.ongdb.etl.driver;
  *
  */
 
-import data.lab.ongdb.etl.register.ONgDBConfiguration;
+import data.lab.ongdb.etl.properties.ServerConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
@@ -63,9 +63,9 @@ public class StandAloneConfiguration_1 implements AutoCloseable {
 
         // DEV
         try ( StandAloneConfiguration_1 greeter = new StandAloneConfiguration_1(
-                ONgDBConfiguration.getDev().getUris().randomSingleNode(),
-                ONgDBConfiguration.getDev().getUserName(),
-                ONgDBConfiguration.getDev().getPassword() ) )
+                ServerConfiguration.getDev().getUris().randomSingleNode(),
+                ServerConfiguration.getDev().getUserName(),
+                ServerConfiguration.getDev().getPassword() ) )
         {
             greeter.printGreeting( "hello, world" );
         }

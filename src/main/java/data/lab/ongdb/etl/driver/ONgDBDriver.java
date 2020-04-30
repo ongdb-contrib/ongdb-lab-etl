@@ -10,6 +10,7 @@ import data.lab.ongdb.etl.common.TimeUnit;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import data.lab.ongdb.etl.register.DBHeartBeatDetection;
 import org.apache.log4j.Logger;
 import org.neo4j.driver.*;
 import org.neo4j.driver.internal.value.*;
@@ -24,7 +25,7 @@ import java.util.Map;
 /**
  * @author Yc-Ma
  * @PACKAGE_NAME: data.lab.ongdb.etl.driver
- * @Description: TODO(NEO4J_JAVA_DRIVER驱动)
+ * @Description: TODO(NEO4J_JAVA_DRIVER驱动 - 与ONgDB交互的类)
  * @date 2019/7/13 19:50
  */
 public class ONgDBDriver {
@@ -43,7 +44,9 @@ public class ONgDBDriver {
      */
     public synchronized static JSONObject composer(Driver driver, String statement) {
         long startMill = System.currentTimeMillis();
-
+        if (DBHeartBeatDetection.isRegister()) {
+            driver = DBHeartBeatDetection.getLeader();
+        }
         boolean flag = false;
         // RETRY FAILURE QUERY
         while (!flag) {
@@ -74,11 +77,14 @@ public class ONgDBDriver {
      * @Description: TODO(构图导入等操作访问)
      */
     public synchronized static JSONObject composerReturnNodeId(Driver driver, String statement) {
+        if (DBHeartBeatDetection.isRegister()) {
+            driver = DBHeartBeatDetection.getLeader();
+        }
         JSONObject resultMessage = new JSONObject();
         long startMill = System.currentTimeMillis();
         try (Session session = driver.session()) {
             try (Transaction tx = session.beginTransaction()) {
-               Result result = tx.run(statement);
+                Result result = tx.run(statement);
                 while (result.hasNext()) {
                     Record record = result.next();
                     Map<String, Object> map = record.asMap();
@@ -107,6 +113,9 @@ public class ONgDBDriver {
      * @Description: TODO(构图导入等操作访问)
      */
     public synchronized static JSONObject composerAutoCommit(Driver driver, String statement) {
+        if (DBHeartBeatDetection.isRegister()) {
+            driver = DBHeartBeatDetection.getLeader();
+        }
         long startMill = System.currentTimeMillis();
         try (Session session = driver.session()) {
             /**
@@ -123,6 +132,9 @@ public class ONgDBDriver {
     }
 
     public static JSONObject rowProperties(Driver driver, String cypher) {
+        if (DBHeartBeatDetection.isRegister()) {
+            driver = DBHeartBeatDetection.getLeader();
+        }
         JSONObject resultObject = new JSONObject();
         JSONArray resultArray = new JSONArray();
         try (Session session = driver.session()) {
@@ -165,10 +177,10 @@ public class ONgDBDriver {
             if (object instanceof Relationship) {
                 JSONObject relation = packRelation((Relationship) object);
                 array.add(relation);
-            }else if (object instanceof Node){
+            } else if (object instanceof Node) {
                 JSONObject relation = packNode((Node) object);
                 array.add(relation);
-            }else {
+            } else {
                 array.add(object);
             }
         }
@@ -182,7 +194,9 @@ public class ONgDBDriver {
      * @Description: TODO(检索)
      */
     public static JSONObject searcher(Driver driver, String statement) {
-
+        if (DBHeartBeatDetection.isRegister()) {
+            driver = DBHeartBeatDetection.getLeader();
+        }
         long startMill = System.currentTimeMillis();
 
         JSONObject results = new JSONObject();
