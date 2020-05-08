@@ -8,13 +8,30 @@ package data.lab.ongdb.etl.common;
  */
 public enum Symbol {
 
+    /**
+     * 数据分割符
+     **/
     SPECIAL_SPLIT("-SPLIT-&-"),
 
+    /**
+     * 下划线
+     **/
     DIVIDE_SPLIT("/"),
 
+    /**
+     * 逗号
+     **/
     COMMA_CHARACTER(","),
 
-    SPLIT_CHARACTER("\\|");
+    /**
+     * 分割多配置项
+     **/
+    SPLIT_CHARACTER("\\|"),
+
+    /**
+     * 英文冒号
+     **/
+    COLON(":");
 
     private String symbol;
 

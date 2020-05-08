@@ -19,7 +19,7 @@ import data.lab.ongdb.etl.model.Condition;
 import data.lab.ongdb.etl.model.Label;
 import data.lab.ongdb.etl.model.RelationshipType;
 import data.lab.ongdb.etl.model.Result;
-import data.lab.ongdb.etl.register.Address;
+import data.lab.ongdb.etl.register.Login;
 import data.lab.ongdb.etl.util.CypherTool;
 import data.lab.ongdb.etl.util.FileUtil;
 import data.lab.ongdb.etl.util.JSONTool;
@@ -32,6 +32,7 @@ import org.apache.logging.log4j.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -59,14 +60,13 @@ public class NeoComposer extends NeoAccessor implements Composer {
     public static boolean HTTP_SERVICE_IS_OPEN = true;
 
     /**
-     * @param ipPorts:服务节点的地址列表（IP:PORT）多地址使用逗号隔开
-     * @param authAccount:节点的用户名
-     * @param authPassword:节点用户名密码
+     * @param login:LOGIN对象
+     * @param IS_PRINT_CLUSTER_INFO:是否打印集群路由信息
      * @return
-     * @Description: TODO(构造函数)
+     * @Description: TODO(构造函数 - 默认使用JAVA - DRIVER发送请求 ， D3_GRAPH格式返回数据)
      */
-    public NeoComposer(List<Address> all, String userName, String password) {
-        super(all,userName,password);
+    public NeoComposer(Login login, boolean IS_PRINT_CLUSTER_INFO) {
+        super(login, IS_PRINT_CLUSTER_INFO);
     }
 
     /**

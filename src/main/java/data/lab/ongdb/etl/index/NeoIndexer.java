@@ -29,7 +29,7 @@ import java.util.Map;
  * @Description: TODO(索引工具)
  * @date 2019/7/18 15:25
  */
-public class NeoIndexer extends NeoAccessor implements data.lab.ongdb.etl.index.Indexer {
+public class NeoIndexer extends NeoAccessor implements Indexer {
 
     private static final Logger LOGGER = LogManager.getLogger(NeoIndexer.class);
 

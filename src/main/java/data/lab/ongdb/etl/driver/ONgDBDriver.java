@@ -10,7 +10,7 @@ import data.lab.ongdb.etl.common.TimeUnit;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import data.lab.ongdb.etl.register.DBHeartBeatDetection;
+import data.lab.ongdb.http.register.OngdbHeartBeat;
 import org.apache.log4j.Logger;
 import org.neo4j.driver.*;
 import org.neo4j.driver.internal.value.*;
@@ -44,8 +44,8 @@ public class ONgDBDriver {
      */
     public synchronized static JSONObject composer(Driver driver, String statement) {
         long startMill = System.currentTimeMillis();
-        if (DBHeartBeatDetection.isRegister()) {
-            driver = DBHeartBeatDetection.getLeader();
+        if (OngdbHeartBeat.isRegister()) {
+            driver = DriverPool.getWriter();
         }
         boolean flag = false;
         // RETRY FAILURE QUERY
@@ -77,8 +77,8 @@ public class ONgDBDriver {
      * @Description: TODO(构图导入等操作访问)
      */
     public synchronized static JSONObject composerReturnNodeId(Driver driver, String statement) {
-        if (DBHeartBeatDetection.isRegister()) {
-            driver = DBHeartBeatDetection.getLeader();
+        if (OngdbHeartBeat.isRegister()) {
+            driver = DriverPool.getWriter();
         }
         JSONObject resultMessage = new JSONObject();
         long startMill = System.currentTimeMillis();
@@ -113,8 +113,8 @@ public class ONgDBDriver {
      * @Description: TODO(构图导入等操作访问)
      */
     public synchronized static JSONObject composerAutoCommit(Driver driver, String statement) {
-        if (DBHeartBeatDetection.isRegister()) {
-            driver = DBHeartBeatDetection.getLeader();
+        if (OngdbHeartBeat.isRegister()) {
+            driver = DriverPool.getWriter();
         }
         long startMill = System.currentTimeMillis();
         try (Session session = driver.session()) {
@@ -132,8 +132,8 @@ public class ONgDBDriver {
     }
 
     public static JSONObject rowProperties(Driver driver, String cypher) {
-        if (DBHeartBeatDetection.isRegister()) {
-            driver = DBHeartBeatDetection.getLeader();
+        if (OngdbHeartBeat.isRegister()) {
+            driver = DriverPool.getWriter();
         }
         JSONObject resultObject = new JSONObject();
         JSONArray resultArray = new JSONArray();
@@ -194,8 +194,8 @@ public class ONgDBDriver {
      * @Description: TODO(检索)
      */
     public static JSONObject searcher(Driver driver, String statement) {
-        if (DBHeartBeatDetection.isRegister()) {
-            driver = DBHeartBeatDetection.getLeader();
+        if (OngdbHeartBeat.isRegister()) {
+            driver = DriverPool.getReader();
         }
         long startMill = System.currentTimeMillis();
 
@@ -232,25 +232,33 @@ public class ONgDBDriver {
                     Value value = stringValuePair.value();
                     if (value instanceof NodeValue) {
                         JSONObject objectNode = packNode(value.asNode());
-                        if (!nodes.contains(objectNode)) nodes.add(objectNode);
+                        if (!nodes.contains(objectNode)) {
+                            nodes.add(objectNode);
+                        }
                     } else if (value instanceof PathValue) {
 
                         JSONArray objectNodes = packNodeByPath(value.asPath());
                         objectNodes.forEach(node -> {
                             JSONObject nodeObj = (JSONObject) node;
-                            if (!nodes.contains(nodeObj)) nodes.add(nodeObj);
+                            if (!nodes.contains(nodeObj)) {
+                                nodes.add(nodeObj);
+                            }
                         });
 
                         JSONArray objectRelas = packRelations(value.asPath());
                         objectRelas.forEach(relation -> {
                             JSONObject relationObj = (JSONObject) relation;
-                            if (!relationships.contains(relationObj)) relationships.add(relationObj);
+                            if (!relationships.contains(relationObj)) {
+                                relationships.add(relationObj);
+                            }
                         });
                     } else {
                         propertiesPack.putAll(packStringValuePair(stringValuePair));
                     }
                 }
-                if (!propertiesPack.isEmpty()) properties.add(propertiesPack);
+                if (!propertiesPack.isEmpty()) {
+                    properties.add(propertiesPack);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

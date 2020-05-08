@@ -5,7 +5,6 @@ package data.lab.ongdb.etl.driver;
  *
  */
 
-import data.lab.ongdb.etl.register.AccessPrefix;
 import data.lab.ongdb.etl.register.Login;
 import data.lab.ongdb.etl.properties.ServerConfiguration;
 import org.apache.log4j.PropertyConfigurator;
@@ -41,18 +40,18 @@ public class ClusterConfiguration_1 {
 
     private void addPersonCluster(String name) {
         Login login = ServerConfiguration.getPro();
-        String server = login.getUris().coreSingleNode().replace(AccessPrefix.MULTI_NODES.getSymbol(), "");
+//        String server = login.getUris().coreSingleNode().replace(AccessPrefix.MULTI_NODES.getSymbol(), "");
         String user = login.getUserName();
         String pwd = login.getPassword();
-        try (Driver driver = createDriverCluster(
-                AccessPrefix.MULTI_NODES.getSymbol() + server, user, pwd,
-                ServerAddress.of("pro-ongdb-2", 7687),
-                ServerAddress.of("pro-ongdb-replica-1", 7687))) {
-
-            try (Session session = driver.session()) {
-                session.run("CREATE (a:Person {name: $name})", parameters("name", name));
-            }
-        }
+//        try (Driver driver = createDriverCluster(
+//                AccessPrefix.MULTI_NODES.getSymbol() + server, user, pwd,
+//                ServerAddress.of("pro-ongdb-2", 7687),
+//                ServerAddress.of("pro-ongdb-replica-1", 7687))) {
+//
+//            try (Session session = driver.session()) {
+//                session.run("CREATE (a:Person {name: $name})", parameters("name", name));
+//            }
+//        }
     }
 
     public static void main(String... args) {

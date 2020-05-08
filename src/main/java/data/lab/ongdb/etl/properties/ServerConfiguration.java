@@ -5,15 +5,15 @@ package data.lab.ongdb.etl.properties;
  *
  */
 
+import data.lab.ongdb.etl.common.Symbol;
 import data.lab.ongdb.etl.register.Login;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
  * @author Yc-Ma
  * @PACKAGE_NAME: data.lab.ongdb.etl.register
- * @Description: TODO(ONgDB configuration)
+ * @Description: TODO(ONgDB configuration - 负责加载DEV和PRO配置)
  * @date 2020/4/29 8:47
  */
 public class ServerConfiguration {
@@ -25,37 +25,52 @@ public class ServerConfiguration {
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
 
+    private static final String KEY_ONGDB_HTTP_DETECTION_INTERVAL = "ongdb.http.detection.interval";
+
+    public static int httpDetectionInterval() {
+        return Integer.parseInt(Objects.requireNonNull(EtlProperties.getConfigurationByKey(KEY_ONGDB_HTTP_DETECTION_INTERVAL)));
+    }
+
     public static Login getDev() {
-        Properties properties = rejector(DEV);
+        Properties properties = EtlProperties.rejector(DEV);
         String uriStr = properties.getProperty(DEV + URI);
         String userName = properties.getProperty(DEV + USERNAME);
         String password = properties.getProperty(DEV + PASSWORD);
-        return new Login(uriStr, userName, password);
+        String initHost = packInitHost(uriStr);
+        Map<String, String> hostMap = packHostMap(uriStr);
+        return new Login(userName, password, initHost, hostMap);
     }
 
     public static Login getPro() {
-        Properties properties = rejector(PRO);
+        Properties properties = EtlProperties.rejector(PRO);
         String uriStr = properties.getProperty(PRO + URI);
         String userName = properties.getProperty(PRO + USERNAME);
         String password = properties.getProperty(PRO + PASSWORD);
-        return new Login(uriStr, userName, password);
+        String initHost = packInitHost(uriStr);
+        Map<String, String> hostMap = packHostMap(uriStr);
+        return new Login(userName, password, initHost, hostMap);
     }
 
-    private static Properties rejector(String key_prefix_name) {
-        Properties newProperties = new Properties();
-        try {
-            Properties properties = ETLProperties.ONgDBproperties();
-            for (Object pro : properties.keySet()) {
-                String key = String.valueOf(pro);
-                String value = String.valueOf(properties.getProperty(key));
-                if (key.contains(key_prefix_name)) {
-                    newProperties.put(key, value);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    private static Map<String, String> packHostMap(String uriStr) {
+        Map<String, String> hostMap = new HashMap<>();
+        String[] servers = uriStr.split(Symbol.SPLIT_CHARACTER.getSymbolValue());
+        for (String server : servers) {
+            String[] array = server.split(Symbol.COMMA_CHARACTER.getSymbolValue());
+            hostMap.put(array[0], array[1]);
         }
-        return newProperties;
+        return hostMap;
     }
+
+    private static String packInitHost(String uriStr) {
+        StringBuilder builder = new StringBuilder();
+        String[] servers = uriStr.split(Symbol.SPLIT_CHARACTER.getSymbolValue());
+        for (String server : servers) {
+            String[] array = server.split(Symbol.COMMA_CHARACTER.getSymbolValue());
+            builder.append(array[1]).append("|");
+        }
+        return builder.substring(0, builder.length() - 1);
+    }
+
 }
+
 

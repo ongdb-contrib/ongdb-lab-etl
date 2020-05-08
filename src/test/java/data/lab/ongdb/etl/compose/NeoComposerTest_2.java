@@ -1,5 +1,7 @@
 package data.lab.ongdb.etl.compose;
 
+import com.alibaba.fastjson.JSONObject;
+import data.lab.ongdb.etl.common.CRUD;
 import data.lab.ongdb.etl.properties.ServerConfiguration;
 import data.lab.ongdb.etl.register.Login;
 import org.apache.log4j.PropertyConfigurator;
@@ -10,6 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  *
@@ -30,23 +34,25 @@ public class NeoComposerTest_2 {
 
     // 生产
     private static final Login login = ServerConfiguration.getPro();
-    private static NeoComposer neoComposer = new NeoComposer(
-            login.getUris().all(),
-            login.getUserName(),
-            login.getPassword());
+    private NeoComposer neoComposer;
 
     @Before
     public void setUp() throws Exception {
         PropertyConfigurator.configureAndWatch("config" + File.separator + "log4j.properties");
         Configurator.setAllLevels("", Level.INFO);
+
+        this.neoComposer = new NeoComposer(login, true);
     }
 
     @After
     public void tearDown() throws Exception {
-
+        this.neoComposer.close();
     }
 
     @Test
-    public void executeImport() {
+    public void execute() {
+        String cypher = "MATCH (n) RETURN n LIMIT 10";
+        JSONObject result = this.neoComposer.execute(cypher, CRUD.RETRIEVE);
+        System.out.println(result);
     }
 }

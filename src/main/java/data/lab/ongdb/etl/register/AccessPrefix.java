@@ -13,8 +13,19 @@ package data.lab.ongdb.etl.register;
  */
 public enum AccessPrefix {
 
+    /**
+     * BLOT单节点访问
+     * **/
     SINGLE_NODE("bolt://"),
+
+    /**
+     * BLOT集群访问
+     * **/
     MULTI_NODES("neo4j://"),
+
+    /**
+     * BLOT集群访问
+     * **/
     MULTI_NODES_ROUTING("bolt+routing://");
 
     private final String symbol;

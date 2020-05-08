@@ -53,8 +53,12 @@ public class Cypher {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Cypher cypher1 = (Cypher) o;
         return Objects.equals(cypher, cypher1.cypher);
     }
@@ -102,7 +106,9 @@ public class Cypher {
             if (_key_value.length % 2 != 0) throw new IllegalArgumentException();
             Map<String, Object> map = new HashMap<>();
             for (int i = 0; i < _key_value.length; i++) {
-                if (i == _key_value.length - 1) break;
+                if (i == _key_value.length - 1) {
+                    break;
+                }
                 Object key = _key_value[i];
                 map.put(String.valueOf(key), _key_value[i + 1]);
                 i += 1;
@@ -171,7 +177,9 @@ public class Cypher {
             if (_key_value.length % 2 != 0) throw new IllegalArgumentException();
             Map<String, Object> map = new HashMap<>();
             for (int i = 0; i < _key_value.length; i++) {
-                if (i == _key_value.length - 1) break;
+                if (i == _key_value.length - 1) {
+                    break;
+                }
                 Object key = _key_value[i];
                 map.put(String.valueOf(key), _key_value[i + 1]);
                 i += 1;
@@ -205,7 +213,9 @@ public class Cypher {
         }
 
         public String toMerge() {
-            if (this.relationshipType == null) throw new NullPointerException();
+            if (this.relationshipType == null) {
+                throw new NullPointerException();
+            }
             return ("MATCH (n),(m) WHERE id(n)=" + this.startId + " AND id(m)=" + this.endId + " ") +
                     "MERGE p=(n)-[r" + CypherTool.appendRelationTypes(this.relationshipType) + "]-(m) " +
                     "SET " + CypherTool.appendProperty("r", this.properties) + " " +
