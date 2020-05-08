@@ -62,11 +62,12 @@ public class NeoComposer extends NeoAccessor implements Composer {
     /**
      * @param login:LOGIN对象
      * @param IS_PRINT_CLUSTER_INFO:是否打印集群路由信息
+     * @param IS_ADD_BLOT_DRIVER:是否自动添加BLOT驱动
      * @return
      * @Description: TODO(构造函数 - 默认使用JAVA - DRIVER发送请求 ， D3_GRAPH格式返回数据)
      */
-    public NeoComposer(Login login, boolean IS_PRINT_CLUSTER_INFO) {
-        super(login, IS_PRINT_CLUSTER_INFO);
+    public NeoComposer(Login login, boolean IS_PRINT_CLUSTER_INFO, boolean IS_ADD_BLOT_DRIVER) {
+        super(login, IS_PRINT_CLUSTER_INFO, IS_ADD_BLOT_DRIVER);
     }
 
     /**

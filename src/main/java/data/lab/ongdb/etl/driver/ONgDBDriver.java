@@ -6,6 +6,7 @@ package data.lab.ongdb.etl.driver;
  */
 
 import data.lab.ongdb.etl.common.CRUD;
+import data.lab.ongdb.etl.common.NeoAccessor;
 import data.lab.ongdb.etl.common.TimeUnit;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -45,7 +46,7 @@ public class ONgDBDriver {
     public synchronized static JSONObject composer(Driver driver, String statement) {
         long startMill = System.currentTimeMillis();
         if (OngdbHeartBeat.isRegister()) {
-            driver = DriverPool.getWriter();
+            driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
         }
         boolean flag = false;
         // RETRY FAILURE QUERY
@@ -78,7 +79,7 @@ public class ONgDBDriver {
      */
     public synchronized static JSONObject composerReturnNodeId(Driver driver, String statement) {
         if (OngdbHeartBeat.isRegister()) {
-            driver = DriverPool.getWriter();
+            driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
         }
         JSONObject resultMessage = new JSONObject();
         long startMill = System.currentTimeMillis();
@@ -114,7 +115,7 @@ public class ONgDBDriver {
      */
     public synchronized static JSONObject composerAutoCommit(Driver driver, String statement) {
         if (OngdbHeartBeat.isRegister()) {
-            driver = DriverPool.getWriter();
+            driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
         }
         long startMill = System.currentTimeMillis();
         try (Session session = driver.session()) {
@@ -133,7 +134,7 @@ public class ONgDBDriver {
 
     public static JSONObject rowProperties(Driver driver, String cypher) {
         if (OngdbHeartBeat.isRegister()) {
-            driver = DriverPool.getWriter();
+            driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
         }
         JSONObject resultObject = new JSONObject();
         JSONArray resultArray = new JSONArray();
@@ -195,7 +196,7 @@ public class ONgDBDriver {
      */
     public static JSONObject searcher(Driver driver, String statement) {
         if (OngdbHeartBeat.isRegister()) {
-            driver = DriverPool.getReader();
+            driver = NeoAccessor.ongdbHeartBeat.getReaderBlotMappingLocalDriver();
         }
         long startMill = System.currentTimeMillis();
 

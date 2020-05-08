@@ -10,7 +10,6 @@ import data.lab.ongdb.etl.compose.pack.Cypher;
 import data.lab.ongdb.etl.compose.pack.NoUpdateRela;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import data.lab.ongdb.etl.driver.DriverPool;
 import data.lab.ongdb.etl.driver.ONgDBDriver;
 import data.lab.ongdb.etl.model.Condition;
 import data.lab.ongdb.etl.model.Result;
@@ -28,10 +27,8 @@ import org.neo4j.driver.Config;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.GraphDatabase;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -48,7 +45,8 @@ public abstract class NeoAccessor implements Accessor {
     // http访问对象 支持绝对接口地址和相对接口地址
     public HttpProxyRequest request;
 
-    public OngdbHeartBeat ongdbHeartBeat;
+    // 读写分离-自动路由-负载均衡
+    public static OngdbHeartBeat ongdbHeartBeat;
 
     // java_driver访问对象
     public Driver driver;
@@ -84,16 +82,16 @@ public abstract class NeoAccessor implements Accessor {
     /**
      * @param login:LOGIN对象
      * @param IS_PRINT_CLUSTER_INFO:是否打印集群路由信息
+     * @param IS_ADD_BLOT_DRIVER:是否自动添加BLOT驱动
      * @return
      * @Description: TODO(构造函数 - 默认使用JAVA - DRIVER发送请求 ， D3_GRAPH格式返回数据)
      */
-    public NeoAccessor(Login login, boolean IS_PRINT_CLUSTER_INFO) {
+    public NeoAccessor(Login login, boolean IS_PRINT_CLUSTER_INFO, boolean IS_ADD_BLOT_DRIVER) {
         // 注册HTTP检测
         OngdbHeartBeat.IS_PRINT_CLUSTER_INFO = IS_PRINT_CLUSTER_INFO;
+        OngdbHeartBeat.IS_ADD_BLOT_DRIVER = IS_ADD_BLOT_DRIVER;
         OngdbHeartBeat.setHostMap(login.getHostMap());
         this.ongdbHeartBeat = new OngdbHeartBeat(login.getInitHost(), login.getUserName(), login.getPassword(), ServerConfiguration.httpDetectionInterval());
-        // 初始化驱动池
-        DriverPool.init(this.ongdbHeartBeat);
     }
 
     /**

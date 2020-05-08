@@ -40,8 +40,14 @@ public class NeoComposerTest_2 {
     public void setUp() throws Exception {
         PropertyConfigurator.configureAndWatch("config" + File.separator + "log4j.properties");
         Configurator.setAllLevels("", Level.INFO);
-
-        this.neoComposer = new NeoComposer(login, true);
+        /**
+         * @param login:LOGIN对象
+         * @param IS_PRINT_CLUSTER_INFO:是否打印集群路由信息
+         * @param IS_ADD_BLOT_DRIVER:是否自动添加BLOT驱动
+         * @return
+         * @Description: TODO(构造函数 - 默认使用JAVA - DRIVER发送请求 ， D3_GRAPH格式返回数据)
+         */
+        this.neoComposer = new NeoComposer(login, true, true);
     }
 
     @After
