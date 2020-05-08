@@ -83,15 +83,16 @@ public abstract class NeoAccessor implements Accessor {
      * @param login:LOGIN对象
      * @param IS_PRINT_CLUSTER_INFO:是否打印集群路由信息
      * @param IS_ADD_BLOT_DRIVER:是否自动添加BLOT驱动
+     * @param httpDetectionInterval:服务监测的时间间隔
      * @return
      * @Description: TODO(构造函数 - 默认使用JAVA - DRIVER发送请求 ， D3_GRAPH格式返回数据)
      */
-    public NeoAccessor(Login login, boolean IS_PRINT_CLUSTER_INFO, boolean IS_ADD_BLOT_DRIVER) {
+    public NeoAccessor(Login login, boolean IS_PRINT_CLUSTER_INFO, boolean IS_ADD_BLOT_DRIVER, int httpDetectionInterval) {
         // 注册HTTP检测
         OngdbHeartBeat.IS_PRINT_CLUSTER_INFO = IS_PRINT_CLUSTER_INFO;
         OngdbHeartBeat.IS_ADD_BLOT_DRIVER = IS_ADD_BLOT_DRIVER;
         OngdbHeartBeat.setHostMap(login.getHostMap());
-        this.ongdbHeartBeat = new OngdbHeartBeat(login.getInitHost(), login.getUserName(), login.getPassword(), ServerConfiguration.httpDetectionInterval());
+        this.ongdbHeartBeat = new OngdbHeartBeat(login.getInitHost(), login.getUserName(), login.getPassword(), httpDetectionInterval);
     }
 
     /**

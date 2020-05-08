@@ -57,3 +57,9 @@ data.lab.ongdb.etl.index
 data.lab.ongdb.etl.update
 - 节点/关系/路径更新接口 - 无CYPHER限制，可支持大批量删除操作
 
+### 支持功能
+- 节点发现
+- 读写分离
+- 负载均衡
+- 自动路由
+

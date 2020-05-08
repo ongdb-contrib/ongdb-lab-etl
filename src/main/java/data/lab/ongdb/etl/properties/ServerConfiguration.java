@@ -56,7 +56,9 @@ public class ServerConfiguration {
         String[] servers = uriStr.split(Symbol.SPLIT_CHARACTER.getSymbolValue());
         for (String server : servers) {
             String[] array = server.split(Symbol.COMMA_CHARACTER.getSymbolValue());
-            hostMap.put(array[0], array[1]);
+            String host = array[0];
+            String initHost = array[1].split(Symbol.COLON.getSymbolValue())[0];
+            hostMap.put(host, initHost);
         }
         return hostMap;
     }
