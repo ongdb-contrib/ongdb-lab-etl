@@ -1,4 +1,9 @@
 package data.lab.ongdb.etl.compose;
+/*
+ *
+ * Data Lab - graph database organization.
+ *
+ */
 
 import com.alibaba.fastjson.JSONObject;
 import data.lab.ongdb.etl.common.CRUD;
@@ -13,19 +18,13 @@ import org.junit.Test;
 
 import java.io.File;
 
-/*
- *
- * Data Lab - graph database organization.
- *
- */
-
 /**
  * @author Yc-Ma
  * @PACKAGE_NAME: data.lab.ongdb.etl.compose
  * @Description: TODO
- * @date 2020/4/30 15:03
+ * @date 2020/5/12 16:08
  */
-public class NeoComposerTest_2 {
+public class NeoComposerTest_3 {
 
     // 测试
 //    private static final Login login = ONgDBConfiguration.getDev();
@@ -57,7 +56,7 @@ public class NeoComposerTest_2 {
     @Test
     public void execute() {
         for (; ; ) {
-            String cypher = "MATCH (n) RETURN n LIMIT 100000";
+            String cypher = "MATCH (n:PersonTest) RETURN n LIMIT 1";
             JSONObject result = this.neoComposer.execute(cypher, CRUD.RETRIEVE);
             System.out.println(result);
         }
