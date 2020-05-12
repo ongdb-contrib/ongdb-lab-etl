@@ -38,21 +38,78 @@ public class ClusterConfiguration_1 {
         return (GraphDatabase.driver(virtualUri, AuthTokens.basic(user, password), config));
     }
 
+    /**
+     * @param
+     * @return
+     * @Description: TODO(以下测试可以看到查询只在LEADER节点运行 - 停止LEADER节点之后再重启可以自动发现节点)
+     */
     private void addPersonCluster(String name) {
         Login login = ServerConfiguration.getPro();
-//        String server = login.getUris().coreSingleNode().replace(AccessPrefix.MULTI_NODES.getSymbol(), "");
         String user = login.getUserName();
         String pwd = login.getPassword();
-//        try (Driver driver = createDriverCluster(
-//                AccessPrefix.MULTI_NODES.getSymbol() + server, user, pwd,
+        try (
+//                Driver driver = createDriverCluster(
+//                "neo4j://pro-ongdb-1", user, pwd,
 //                ServerAddress.of("pro-ongdb-2", 7687),
-//                ServerAddress.of("pro-ongdb-replica-1", 7687))) {
-//
-//            try (Session session = driver.session()) {
-//                session.run("CREATE (a:Person {name: $name})", parameters("name", name));
-//            }
-//        }
+//                ServerAddress.of("pro-ongdb-replica-1", 7687))
+
+                Driver driver = createDriverCluster(
+                        "neo4j://10.20.12.173", user, pwd,
+                        ServerAddress.of("10.20.13.146", 7687),
+                        ServerAddress.of("10.20.13.200", 7687))
+
+        ) {
+
+            for (int i = 0; i < 100000; i++) {
+                name = name + i;
+                try (Session session = driver.session()) {
+                    String finalName = name;
+                    session.writeTransaction(tx -> tx.run("CREATE (a:Person {name: $name})", parameters("name", finalName)));
+                }
+            }
+        }
     }
+
+    /**
+     * @param
+     * @return
+     * @Description: TODO(以下测试可以看到查询在可读节点的自动路由)
+     */
+    private void getSomeNodes() {
+        Login login = ServerConfiguration.getPro();
+        String user = login.getUserName();
+        String pwd = login.getPassword();
+        try (
+//                Driver driver = createDriverCluster(
+//                "neo4j://pro-ongdb-1", user, pwd,
+//                ServerAddress.of("pro-ongdb-2", 7687),
+//                ServerAddress.of("pro-ongdb-replica-1", 7687))
+
+                Driver driver = createDriverCluster(
+                        "neo4j://10.20.12.173", user, pwd,
+                        ServerAddress.of("10.20.13.146", 7687),
+                        ServerAddress.of("10.20.13.200", 7687))
+
+        ) {
+
+            for (int i = 0; i < 10000; i++) {
+                try (Session session = driver.session()) {
+                    int finalI = i;
+                    session.readTransaction(tx -> {
+                        Result result = tx.run("MATCH (n) WHERE n.name CONTAINS '" + finalI + "' RETURN n.name AS name LIMIT 10000");
+                        // Each Cypher execution returns a stream of records.
+                        while (result.hasNext()) {
+                            Record record = result.next();
+                            // Values can be extracted from a record by index or name.
+                            System.out.println(record.get("name").asString());
+                        }
+                        return null;
+                    });
+                }
+            }
+        }
+    }
+
 
     public static void main(String... args) {
 
@@ -61,9 +118,11 @@ public class ClusterConfiguration_1 {
         // DEV
         ClusterConfiguration_1 example = new ClusterConfiguration_1();
 
+        // WRITE TRANSACTION
         example.addPersonCluster("Test");
 
+        // READ TRANSACTION
+//        example.getSomeNodes();
     }
-
 }
 
