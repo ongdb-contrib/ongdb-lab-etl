@@ -21,4 +21,9 @@ public class ClientUtilsTest {
         System.out.println(url.split("\\?")[0]);
     }
 
+    @Test
+    public void mD5Digest() {
+        String cypher = "MATCH (n:PersonTest) RETURN n LIMIT 1";
+        System.out.println(MD5Digest.MD5(cypher));
+    }
 }

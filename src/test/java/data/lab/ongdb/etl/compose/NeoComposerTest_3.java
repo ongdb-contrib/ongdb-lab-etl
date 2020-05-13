@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import data.lab.ongdb.etl.common.CRUD;
 import data.lab.ongdb.etl.properties.ServerConfiguration;
 import data.lab.ongdb.etl.register.Login;
+import data.lab.ongdb.etl.util.MD5Digest;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
