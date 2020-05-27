@@ -29,16 +29,33 @@ public class ServerConfiguration {
     private static final String KEY_ONGDB_withMaxTransactionRetryTime = "ongdb.withMaxTransactionRetryTime";
     private static final String KEY_ONGDB_heartHealthDetect = "ongdb.heartHealthDetect";
     private static final String KEY_ONGDB_HTTP_timeOut = "ongdb.http.timeOut";
+    private static final String KEY_PRO_ONGDB_URI_BOLT = "ongdb.pro.uri.bolt";
+    private static final String KEY_DEV_ONGDB_URI_BOLT = "ongdb.dev.uri.bolt";
+
+    public static String uriBolt() {
+        String uriBolt = Objects.requireNonNull(EtlProperties.getConfigurationByKey(KEY_PRO_ONGDB_URI_BOLT));
+        if (!"".equals(uriBolt)) {
+            return uriBolt;
+        }
+        return uriDevBolt();
+    }
+
+    private static String uriDevBolt() {
+        return Objects.requireNonNull(EtlProperties.getConfigurationByKey(KEY_DEV_ONGDB_URI_BOLT));
+    }
 
     public static int httpDetectionInterval() {
         return Integer.parseInt(Objects.requireNonNull(EtlProperties.getConfigurationByKey(KEY_ONGDB_HTTP_DETECTION_INTERVAL)));
     }
+
     public static int withMaxTransactionRetryTime() {
         return Integer.parseInt(Objects.requireNonNull(EtlProperties.getConfigurationByKey(KEY_ONGDB_withMaxTransactionRetryTime)));
     }
+
     public static int heartHealthDetect() {
         return Integer.parseInt(Objects.requireNonNull(EtlProperties.getConfigurationByKey(KEY_ONGDB_heartHealthDetect)));
     }
+
     public static int httpTimeOut() {
         return Integer.parseInt(Objects.requireNonNull(EtlProperties.getConfigurationByKey(KEY_ONGDB_HTTP_timeOut)));
     }
