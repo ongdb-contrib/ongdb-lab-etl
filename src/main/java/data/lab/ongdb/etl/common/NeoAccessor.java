@@ -61,6 +61,10 @@ public abstract class NeoAccessor implements Accessor {
     public AccessOccurs accessOccurs = AccessOccurs.JAVA_DRIVER;
 
     public NeoAccessor() {
+        Login login = ServerConfiguration.getPro();
+        OngdbHeartBeat.IS_ADD_BLOT_DRIVER = true;
+        OngdbHeartBeat.setHostMap(login.getHostMap());
+        this.ongdbHeartBeat = new OngdbHeartBeat(login.getInitHost(), login.getUserName(), login.getPassword(), ServerConfiguration.httpDetectionInterval(), ServerConfiguration.withMaxTransactionRetryTime(), ServerConfiguration.heartHealthDetect(), ServerConfiguration.httpTimeOut());
     }
 
 //    /**
@@ -81,6 +85,16 @@ public abstract class NeoAccessor implements Accessor {
 
     /**
      * @param login:LOGIN对象
+     * @return
+     * @Description: TODO(构造函数 - 默认使用JAVA - DRIVER发送请求 ， D3_GRAPH格式返回数据)
+     */
+    public NeoAccessor(Login login) {
+        OngdbHeartBeat.setHostMap(login.getHostMap());
+        this.ongdbHeartBeat = new OngdbHeartBeat(login.getInitHost(), login.getUserName(), login.getPassword(), 10);
+    }
+
+    /**
+     * @param login:LOGIN对象
      * @param IS_PRINT_CLUSTER_INFO:是否打印集群路由信息
      * @param IS_ADD_BLOT_DRIVER:是否自动添加BLOT驱动
      * @param httpDetectionInterval:服务监测的时间间隔
@@ -93,6 +107,26 @@ public abstract class NeoAccessor implements Accessor {
         OngdbHeartBeat.IS_ADD_BLOT_DRIVER = IS_ADD_BLOT_DRIVER;
         OngdbHeartBeat.setHostMap(login.getHostMap());
         this.ongdbHeartBeat = new OngdbHeartBeat(login.getInitHost(), login.getUserName(), login.getPassword(), httpDetectionInterval);
+    }
+
+    /**
+     * @param login:LOGIN对象
+     * @param ipPorts:'|'分隔的HOST:PORT地址
+     * @param authAccount:用户名
+     * @param authPassword:密码
+     * @param delay:监控线程运行间隔（秒）
+     * @param withMaxTransactionRetryTime:事务提交超时时间设置（秒）
+     * @param heartHealthDetect:心跳检测间隔时间（秒）
+     * @param timeOut:心跳检测超时时间（秒）
+     * @return
+     * @Description: TODO(构造函数 - 默认使用JAVA - DRIVER发送请求 ， D3_GRAPH格式返回数据)
+     */
+    public NeoAccessor(Login login, boolean IS_PRINT_CLUSTER_INFO, boolean IS_ADD_BLOT_DRIVER, int delay, int withMaxTransactionRetryTime, int heartHealthDetect, int timeOut) {
+        // 注册HTTP检测
+        OngdbHeartBeat.IS_PRINT_CLUSTER_INFO = IS_PRINT_CLUSTER_INFO;
+        OngdbHeartBeat.IS_ADD_BLOT_DRIVER = IS_ADD_BLOT_DRIVER;
+        OngdbHeartBeat.setHostMap(login.getHostMap());
+        this.ongdbHeartBeat = new OngdbHeartBeat(login.getInitHost(), login.getUserName(), login.getPassword(), delay, withMaxTransactionRetryTime, heartHealthDetect, timeOut);
     }
 
     /**

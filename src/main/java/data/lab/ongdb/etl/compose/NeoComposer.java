@@ -59,6 +59,22 @@ public class NeoComposer extends NeoAccessor implements Composer {
     // 是否启动接口的HTTP-SERVICE
     public static boolean HTTP_SERVICE_IS_OPEN = true;
 
+    public NeoComposer() {
+        super();
+    }
+
+    /**
+     * @param login:LOGIN对象
+     * @param IS_PRINT_CLUSTER_INFO:是否打印集群路由信息
+     * @param IS_ADD_BLOT_DRIVER:是否自动添加BLOT驱动
+     * @param httpDetectionInterval:服务监测的时间间隔-秒
+     * @return
+     * @Description: TODO(构造函数 - 默认使用JAVA - DRIVER发送请求 ， D3_GRAPH格式返回数据)
+     */
+    public NeoComposer(Login login) {
+        super(login);
+    }
+
     /**
      * @param login:LOGIN对象
      * @param IS_PRINT_CLUSTER_INFO:是否打印集群路由信息
@@ -69,6 +85,18 @@ public class NeoComposer extends NeoAccessor implements Composer {
      */
     public NeoComposer(Login login, boolean IS_PRINT_CLUSTER_INFO, boolean IS_ADD_BLOT_DRIVER, int httpDetectionInterval) {
         super(login, IS_PRINT_CLUSTER_INFO, IS_ADD_BLOT_DRIVER, httpDetectionInterval);
+    }
+
+    /**
+     * @param login:LOGIN对象
+     * @param IS_PRINT_CLUSTER_INFO:是否打印集群路由信息
+     * @param IS_ADD_BLOT_DRIVER:是否自动添加BLOT驱动
+     * @param httpDetectionInterval:服务监测的时间间隔-秒
+     * @return
+     * @Description: TODO(构造函数 - 默认使用JAVA - DRIVER发送请求 ， D3_GRAPH格式返回数据)
+     */
+    public NeoComposer(Login login, boolean IS_PRINT_CLUSTER_INFO, boolean IS_ADD_BLOT_DRIVER, int delay, int withMaxTransactionRetryTime, int heartHealthDetect, int timeOut) {
+        super(login, IS_PRINT_CLUSTER_INFO, IS_ADD_BLOT_DRIVER, delay, withMaxTransactionRetryTime, heartHealthDetect, timeOut);
     }
 
     /**

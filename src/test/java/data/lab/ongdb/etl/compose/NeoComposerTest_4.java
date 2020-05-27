@@ -7,9 +7,6 @@ package data.lab.ongdb.etl.compose;
 
 import com.alibaba.fastjson.JSONObject;
 import data.lab.ongdb.etl.common.CRUD;
-import data.lab.ongdb.etl.properties.ServerConfiguration;
-import data.lab.ongdb.etl.register.Login;
-import data.lab.ongdb.etl.util.MD5Digest;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.Configurator;
@@ -23,33 +20,23 @@ import java.io.File;
  * @author Yc-Ma
  * @PACKAGE_NAME: data.lab.ongdb.etl.compose
  * @Description: TODO
- * @date 2020/5/12 16:08
+ * @date 2020/5/27 10:38
  */
-public class NeoComposerTest_3 {
+public class NeoComposerTest_4 {
 
-    // 测试
-//    private static final Login login = ONgDBConfiguration.getDev();
-
-    // 生产
-    private static final Login login = ServerConfiguration.getPro();
     private NeoComposer neoComposer;
 
     @Before
     public void setUp() throws Exception {
         PropertyConfigurator.configureAndWatch("conf" + File.separator + "log4j.properties");
         Configurator.setAllLevels("", Level.INFO);
+
         /**
-         * @param login:LOGIN对象
-         * @param IS_PRINT_CLUSTER_INFO:是否打印集群路由信息
-         * @param IS_ADD_BLOT_DRIVER:是否自动添加BLOT驱动
-         * @param delay:监控线程运行间隔（秒）
-         * @param withMaxTransactionRetryTime:事务提交超时时间设置（秒）
-         * @param heartHealthDetect:心跳检测间隔时间（秒）
-         * @param timeOut:心跳检测超时时间（秒）
-         * @return
-         * @Description: TODO(构造函数 - 默认使用JAVA - DRIVER发送请求 ， D3_GRAPH格式返回数据)
+         * @Description: setUp TODO(加载所有PRO-ongdb.properties配置)
+         * @param
+         * @return void
          */
-        this.neoComposer = new NeoComposer(login, true, true, ServerConfiguration.httpDetectionInterval());
+        this.neoComposer = new NeoComposer();
     }
 
     @After
