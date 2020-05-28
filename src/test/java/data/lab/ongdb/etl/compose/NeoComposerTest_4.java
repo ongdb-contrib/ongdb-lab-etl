@@ -46,9 +46,11 @@ public class NeoComposerTest_4 {
 
     @Test
     public void execute() {
+        int i = 0;
         for (; ; ) {
-            String cypher = "MATCH (n) RETURN n LIMIT 1";
-            JSONObject result = this.neoComposer.execute(cypher, CRUD.RETRIEVE);
+            i++;
+            String cypher = "MERGE (n:`PRE公司中文名称` {name:'test"+i+"'})";
+            JSONObject result = this.neoComposer.execute(cypher, CRUD.MERGE);
             System.out.println(result);
         }
     }

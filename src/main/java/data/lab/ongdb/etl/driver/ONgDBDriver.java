@@ -52,8 +52,41 @@ public class ONgDBDriver {
         // RETRY FAILURE QUERY
         while (!flag) {
             try (Session session = driver.session()) {
+                    session.run(statement);
+                    flag = true;
+            } catch (Exception e) {
+                logger.info("Retrying query " + statement + "\r\n");
+                e.printStackTrace();
+            }
+        }
+        long stopMill = System.currentTimeMillis();
+        long consume = (stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()));
+        if (consume != 0) {
+            logger.info("Neo4j driver composer success!consume:" + consume + "s");
+        } else {
+            logger.info("Neo4j driver composer success!consume:" + (stopMill - startMill) + "mills");
+        }
+        return new JSONObject();
+    }
+
+    /**
+     * @param driver:传入NEO4J_JAVA驱动
+     * @param statement:cypher
+     * @return
+     * @Description: TODO(构图导入等操作访问)
+     */
+    public synchronized static JSONObject composerAutoCommitTx(Driver driver, String statement) {
+        long startMill = System.currentTimeMillis();
+        if (OngdbHeartBeat.isRegister()) {
+            driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
+        }
+        boolean flag = false;
+        // RETRY FAILURE QUERY
+        while (!flag) {
+            try (Session session = driver.session()) {
                 try (Transaction tx = session.beginTransaction()) {
                     tx.run(statement);
+                    tx.commit();
                     flag = true;
                 }
             } catch (Exception e) {
