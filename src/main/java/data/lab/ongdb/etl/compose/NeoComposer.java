@@ -59,8 +59,22 @@ public class NeoComposer extends NeoAccessor implements Composer {
     // 是否启动接口的HTTP-SERVICE
     public static boolean HTTP_SERVICE_IS_OPEN = true;
 
+    /**
+     * @param
+     * @return
+     * @Description: TODO(从ongdb.properties加载配置)
+     */
     public NeoComposer() {
         super();
+    }
+
+    /**
+     * @param
+     * @return
+     * @Description: TODO(从ongdb.properties加载配置，但忽略用户名密码)
+     */
+    public NeoComposer(String user, String password) {
+        super(user,password);
     }
 
     /**
