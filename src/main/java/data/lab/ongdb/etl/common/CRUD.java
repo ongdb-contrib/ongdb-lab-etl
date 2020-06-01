@@ -24,6 +24,11 @@ public enum CRUD {
     MERGE("merge"),
 
     /**
+     * merge请求
+     **/
+    MERGE_WRITE("merge_write"),
+
+    /**
      * 新建请求
      **/
     CREATE("create"),

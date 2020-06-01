@@ -45,7 +45,7 @@ public class NeoComposerTest_4 {
     }
 
     @Test
-    public void execute() {
+    public void execute() throws Exception{
         int i = 0;
         for (; ; ) {
             i++;

@@ -81,7 +81,7 @@ public class NeoComposerTest {
      * 批量动态导入一批节点-属性都更新
      **/
     @Test
-    public void addMergeDynamicNodes() {
+    public void addMergeDynamicNodes() throws Exception{
         List<UpdateNode> updateNodeList = new ArrayList<>();
 
         for (int i = 0; i < 1000; i++) {
@@ -110,7 +110,7 @@ public class NeoComposerTest {
      * 批量动态导入一批关系-属性都更新
      **/
     @Test
-    public void addMergeDynamicRelations() {
+    public void addMergeDynamicRelations() throws Exception{
         while (true) {
             List<UpdateRela> updateRelaList = new ArrayList<>();
 
@@ -140,7 +140,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void addMergeDynamicNodesAndaddMergeDynamicRelations() {
+    public void addMergeDynamicNodesAndaddMergeDynamicRelations() throws Exception{
 
         int num = 0;
         while (true) {
@@ -203,7 +203,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void execute() {
+    public void execute() throws Exception{
 
 //        System.out.println(composer.execute("MATCH p=()-[r]-(),MATCH p2=()-[r]-() RETURN p,p2 LIMIT 10"));
 
@@ -214,7 +214,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void importCsvFileNodesAndRelations() {
+    public void importCsvFileNodesAndRelations() throws Exception{
 
         String nodesCsvName = "node-test.csv";
         String relationsCsvName = "relation-test.csv";
@@ -293,7 +293,7 @@ public class NeoComposerTest {
 
 
     @Test
-    public void unwindMerge() {
+    public void unwindMerge() throws Exception{
         // =======================================================生成NODE=======================================================
         /**
          * @param nodes:节点列表           Object[]中数据存入的顺序和接口参数传入字段顺序需要保持一致(String _uniqueField, String... _key)
@@ -343,7 +343,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void importApocMergeNodes() {
+    public void importApocMergeNodes() throws Exception{
         List<NoUpdateNode> noUpdateNodeList = new ArrayList<>();
 
 //        NoUpdateNode noUpdateNode = new NoUpdateNode();
@@ -361,7 +361,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void importApocMergeNodes2() {
+    public void importApocMergeNodes2() throws Exception{
         List<NoUpdateNode> noUpdateNodeList = new ArrayList<>();
 
 //        NoUpdateNode noUpdateNode = new NoUpdateNode();
@@ -380,7 +380,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void importApocMergeRelations() {
+    public void importApocMergeRelations() throws Exception{
         List<NoUpdateRela> noUpdateRelaList = new ArrayList<>();
 //        NoUpdateRela noUpdateRela = new NoUpdateRela();
 //        noUpdateRela.setFrom(100510);
@@ -394,7 +394,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void mergeCypher() {
+    public void mergeCypher() throws Exception{
         String mergeCypher = Cypher.mergeNode()
                 .setLabel(Label.label("Test"))
                 .setUniqueField("unique", "adasu32423ugda")
@@ -405,7 +405,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void mergeCypher_2() {
+    public void mergeCypher_2() throws Exception{
         String mergeCypher = Cypher.mergeNode()
                 .setLabel(Label.label("Test"))
                 .setUniqueField("unique", "adasu32423ugda")
@@ -416,7 +416,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void mergeCypher_3() {
+    public void mergeCypher_3() throws Exception{
         String mergeCypher = Cypher.mergeRelation()
                 .setStartId(13)
                 .setRelationshipType(RelationshipType.withName("MERGE_RELATION_TEST"))
@@ -430,7 +430,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void mergeCypher_4() {
+    public void mergeCypher_4() throws Exception{
         String mergeCypher = Cypher.mergeNode()
                 .setStartId(23432)
                 .setProperties(
@@ -441,7 +441,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void cutListByBatchSize() {
+    public void cutListByBatchSize() throws Exception{
         // ==================================构造关系请求==================================
         List<Object[]> updateRelaList = new ArrayList<>();
         for (int i = 0; i < 2002; i++) {
@@ -451,14 +451,14 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void deleter() {
+    public void deleter() throws Exception{
         List<Long> ids = new ArrayList<>();
         ids.add(219141L);
 //        composer.relationDeleter(ids);
     }
 
     @Test
-    public void executeMagicIncorporateGraph_01() {
+    public void executeMagicIncorporateGraph_01() throws Exception{
         /**
          * @param sourceId                       :归并的节点--★★★<被归并节点的关系全部转移到这个节点>
          * @param targetId                       :被归并的节
@@ -475,7 +475,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void executeMagicIncorporateGraph_02() {
+    public void executeMagicIncorporateGraph_02() throws Exception{
         /**
          * @param sourceId                       :归并的节点--★★★<被归并节点的关系全部转移到这个节点>
          * @param targetId                       :被归并的节
@@ -501,7 +501,7 @@ public class NeoComposerTest {
     }
 
     @Test
-    public void executeMagicIncorporateGraph_packData_02() {
+    public void executeMagicIncorporateGraph_packData_02() throws Exception{
         String nList = "MATCH (n)-[r]-(m) where id(n)=85 RETURN COLLECT(n) AS nList";
         JSONArray result = composer.execute(nList, CRUD.RETRIEVE_PROPERTIES).getJSONArray("retrieve_properties");
         System.out.println(result);

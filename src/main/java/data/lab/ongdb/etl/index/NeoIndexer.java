@@ -203,7 +203,7 @@ public class NeoIndexer extends NeoAccessor implements Indexer {
      * @Description: TODO(删除创建的全文检索接口)
      */
     @Override
-    public JSONObject dropFullText(String fullTextSearchName) {
+    public JSONObject dropFullText(String fullTextSearchName) throws Exception {
         Condition condition = new Condition();
         condition.setStatement(new StringBuilder()
                 .append("CALL db.index.fulltext.drop('" + fullTextSearchName + "')")
@@ -227,7 +227,7 @@ public class NeoIndexer extends NeoAccessor implements Indexer {
      * @Description: TODO(执行请求 - 拼接请求之后执行 - 默认返回节点或者关系的所有属性字段)
      */
     @Override
-    public JSONObject execute() {
+    public JSONObject execute() throws Exception {
 
         /**
          * List<Condition>分开处理：每个Condition也需要控制大小
@@ -236,13 +236,12 @@ public class NeoIndexer extends NeoAccessor implements Indexer {
 
         long startMill = System.currentTimeMillis();
 
-        this.nodeFieldIndex.stream().forEach(condition -> {
+        for (Condition condition: this.nodeFieldIndex) {
             this.queryResultList.add(Result.message(super.chooseSendCypherWay(condition, CRUD.INDEX)));
-        });
-
-        this.relationFieldIndex.stream().forEach(condition -> {
+        }
+        for (Condition condition: this.relationFieldIndex) {
             this.queryResultList.add(Result.message(super.chooseSendCypherWay(condition, CRUD.RETRIEVE)));
-        });
+        }
 
         long stopMill = System.currentTimeMillis();
         JSONObject result = Result.statistics(this.queryResultList);

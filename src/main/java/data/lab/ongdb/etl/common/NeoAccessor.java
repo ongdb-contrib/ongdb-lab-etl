@@ -43,13 +43,16 @@ public abstract class NeoAccessor implements Accessor {
     private static final Logger LOGGER = LogManager.getLogger(NeoAccessor.class);
 
     // http访问对象 支持绝对接口地址和相对接口地址
-    public HttpProxyRequest request;
+    public static HttpProxyRequest request;
 
     // 读写分离-自动路由-负载均衡
     public static OngdbHeartBeat ongdbHeartBeat;
 
     // java_driver访问对象
-    public Driver driver;
+    public static Driver driver;
+
+    // 是否使用自动注册的DRIVER【false表示使用自动注册的DRIVER，true表示使用HTTP负载模块的驱动】
+    public static boolean driverIsResetDriver = false;
 
     // DEBUG标记开关
     public boolean DEBUG = false;
@@ -74,7 +77,7 @@ public abstract class NeoAccessor implements Accessor {
         this.ongdbHeartBeat = new OngdbHeartBeat(login.getInitHost(), login.getUserName(), login.getPassword(), ServerConfiguration.httpDetectionInterval(), ServerConfiguration.withMaxTransactionRetryTime(), ServerConfiguration.heartHealthDetect(), ServerConfiguration.httpTimeOut());
     }
 
-    public NeoAccessor(String user,String password) {
+    public NeoAccessor(String user, String password) {
 
         Login login = ServerConfiguration.getPro();
         OngdbHeartBeat.IS_ADD_BLOT_DRIVER = true;
@@ -194,14 +197,14 @@ public abstract class NeoAccessor implements Accessor {
      * @Description: TODO(执行请求 - 拼接请求之后执行 - 默认返回节点或者关系的所有属性字段)
      */
     @Override
-    public abstract JSONObject execute();
+    public abstract JSONObject execute() throws Exception;
 
     /**
      * @param cypher@return
      * @Description: TODO(跳过条件添加直接使用CYPHER查询 - 默认返回节点或者关系的所有属性字段)
      */
     @Override
-    public JSONObject execute(String cypher, CRUD crudType) {
+    public JSONObject execute(String cypher, CRUD crudType) throws Exception{
         // 禁止某些危险查询
         if (cypher.contains("DELETE") || cypher.contains("REMOVE") ||
                 cypher.contains("delete") || cypher.contains("remove")) {
@@ -242,7 +245,7 @@ public abstract class NeoAccessor implements Accessor {
      * YIELD batches, total - run the second statement for each item returned by the first statement. Returns number of batches and total processed rows)
      */
     @Override
-    public JSONObject executeIterate(String cypherIterate, String cypherAction, Object... config) {
+    public JSONObject executeIterate(String cypherIterate, String cypherAction, Object... config) throws Exception{
         // 禁止某些危险查询  - 只有更新对象才可以无限制操作图谱
         if (!(this instanceof NeoUpdater || this instanceof NeoComposer)) {
             LOGGER.info("Just neo4j updater or composer can operate!");
@@ -268,7 +271,7 @@ public abstract class NeoAccessor implements Accessor {
      * @return
      * @Description: TODO(使用REST - API或者JAVA - DRIVER执行请求)
      */
-    public JSONObject chooseSendCypherWay(Condition condition, CRUD crudType) {
+    public JSONObject chooseSendCypherWay(Condition condition, CRUD crudType) throws Exception{
         if (this.DEBUG) {
             this.LOGGER.info("Debug condition:" + condition.toString());
         }
@@ -279,7 +282,7 @@ public abstract class NeoAccessor implements Accessor {
                 return ONgDBDriver.searcher(this.driver, condition.getStatement(condition.toString()));
             } else if (CRUD.RETRIEVE_READ_ONLY.equals(crudType)) {
                 return ONgDBDriver.readOnlySearcher(this.driver, condition.getStatement(condition.toString()));
-            }else if (CRUD.MERGE_CSV.equals(crudType)) {
+            } else if (CRUD.MERGE_CSV.equals(crudType)) {
                 return ONgDBDriver.composerAutoCommit(this.driver, condition.getStatement(condition.toString()));
             } else if (CRUD.RETRIEVE_PROPERTIES.equals(crudType)) {
                 return ONgDBDriver.rowProperties(this.driver, condition.getStatement(condition.toString()));
@@ -287,6 +290,8 @@ public abstract class NeoAccessor implements Accessor {
                 return ONgDBDriver.rowPropertiesReadOnly(this.driver, condition.getStatement(condition.toString()));
             } else if (CRUD.MERGE_RETURN_NODE_ID.equals(crudType)) {
                 return ONgDBDriver.composerReturnNodeId(this.driver, condition.getStatement(condition.toString()));
+            } else if (CRUD.MERGE_WRITE.equals(crudType)) {
+                return ONgDBDriver.composerWrite(this.driver, condition.getStatement(condition.toString()));
             } else {
                 return ONgDBDriver.composer(this.driver, condition.getStatement(condition.toString()));
             }

@@ -55,7 +55,7 @@ public class NeoComposerTest_2 {
     }
 
     @Test
-    public void execute() {
+    public void execute() throws Exception{
         for (; ; ) {
             String cypher = "MATCH (n) RETURN n LIMIT 100000";
             JSONObject result = this.neoComposer.execute(cypher, CRUD.RETRIEVE);

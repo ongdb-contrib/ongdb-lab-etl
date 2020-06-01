@@ -158,8 +158,9 @@ public class FileUtil {
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
             String line;
             while ((line = reader.readLine()) != null) {
-                if ("".equals(line.trim()))
+                if ("".equals(line.trim())) {
                     continue;
+                }
                 set.add(line.trim());
             }
         } catch (Exception e) {
@@ -431,6 +432,42 @@ public class FileUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * @param
+     * @return
+     * @Description: TODO(Read All Line)
+     */
+    public static String readAllLine(String filePath, String encoding) {
+        File file = new File(filePath);
+        Long fileLength = file.length();
+        byte[] fileContent = new byte[fileLength.intValue()];
+
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(file);
+            in.read(fileContent);
+
+            return new String(fileContent, encoding);
+
+        } catch (UnsupportedEncodingException e) {
+            System.err.println("The OS does not support " + encoding);
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 
     /**

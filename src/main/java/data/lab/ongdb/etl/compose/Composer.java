@@ -24,7 +24,7 @@ public interface Composer extends Accessor {
      **/
 
     // ========================================================only cypher========================================================
-    JSONObject executeImport(List<Cypher> cypherList);
+    JSONObject executeImport(List<Cypher> cypherList) throws Exception;
 
 
     /**
@@ -43,7 +43,7 @@ public interface Composer extends Accessor {
      * @return
      * @Description: TODO(导入节点)
      */
-    JSONObject executeImport(List<Object[]> nodes, Label label, String _uniqueField, String... _key);
+    JSONObject executeImport(List<Object[]> nodes, Label label, String _uniqueField, String... _key) throws Exception;
 
     /**
      * @param nodes:节点列表             Object[]中数据存入的顺序和接口参数传入字段顺序需要保持一致(String _uniqueField, String... _key)
@@ -54,7 +54,7 @@ public interface Composer extends Accessor {
      * @return
      * @Description: TODO(导入节点)
      */
-    JSONObject executeImport(List<Object[]> nodes, Label label, Label[] setOtherLabels, String _uniqueField, String... _key);
+    JSONObject executeImport(List<Object[]> nodes, Label label, Label[] setOtherLabels, String _uniqueField, String... _key) throws Exception;
 
     /**
      * @param relations:关系列表          Object[]中数据存入的顺序和接口参数传入字段顺序需要保持一致(String _uniqueFieldStart, String _uniqueFieldEnd, String... _key)
@@ -68,7 +68,7 @@ public interface Composer extends Accessor {
      * @Description: TODO(导入关系)
      */
     JSONObject executeImport(List<Object[]> relations, RelationshipType relationshipType, Label startNodeLabel,
-                             Label endNodeLabel, String _uniqueFieldStart, String _uniqueFieldEnd, String... _key);
+                             Label endNodeLabel, String _uniqueFieldStart, String _uniqueFieldEnd, String... _key) throws Exception;
 
 
     // ========================================================only cypher - http csv========================================================
@@ -80,7 +80,7 @@ public interface Composer extends Accessor {
      * @Description: TODO(生成CSV文件头 - 覆盖写)
      */
     @Deprecated
-    void writeCsvHeader(String csvName, String... _keyFields);
+    void writeCsvHeader(String csvName, String... _keyFields) throws Exception;
 
     /**
      * @param csvName:CSV文件名
@@ -88,14 +88,14 @@ public interface Composer extends Accessor {
      * @return
      * @Description: TODO(生成CSV文件体 - 追加写)
      */
-    void writeCsvBody(String csvName, String row);
+    void writeCsvBody(String csvName, String row) throws Exception;
 
     /**
      * @param
      * @return
      * @Description: TODO(根据文件名删除CSV文件)
      */
-    void deleteCsv(String csvName);
+    void deleteCsv(String csvName) throws Exception;
 
     /**
      * @param commitBatchSize:批量提交数量
@@ -106,7 +106,7 @@ public interface Composer extends Accessor {
      * @return
      * @Description: TODO(导入节点CSV)
      */
-    JSONObject executeImportCsv(int commitBatchSize, String csvName, Label label, String _uniqueField, String... _key);
+    JSONObject executeImportCsv(int commitBatchSize, String csvName, Label label, String _uniqueField, String... _key) throws Exception;
 
     /**
      * @param commitBatchSize:批量提交数量
@@ -121,7 +121,7 @@ public interface Composer extends Accessor {
      * @Description: TODO(导入关系CSV)
      */
     JSONObject executeImportCsv(int commitBatchSize, String csvName, RelationshipType relationshipType, Label startNodeLabel, Label endNodeLabel,
-                                String _uniqueFieldStart, String _uniqueFieldEnd, String... _key);
+                                String _uniqueFieldStart, String _uniqueFieldEnd, String... _key) throws Exception;
 
     /**
      *
@@ -136,21 +136,21 @@ public interface Composer extends Accessor {
      * @return
      * @Description: TODO(批量导入节点 - 不支持属性MERGE更新)
      */
-    JSONObject importApocMergeNodes(List<NoUpdateNode> noUpdateNodeList);
+    JSONObject importApocMergeNodes(List<NoUpdateNode> noUpdateNodeList) throws Exception;
 
     /**
      * @param uniqueFieldName:指定字段名
      * @return
      * @Description: TODO(批量导入节点 - 不支持属性MERGE更新)
      */
-    JSONObject importApocMergeNodes(List<NoUpdateNode> noUpdateNodeList, String uniqueFieldName);
+    JSONObject importApocMergeNodes(List<NoUpdateNode> noUpdateNodeList, String uniqueFieldName) throws Exception;
 
     /**
      * @param
      * @return
      * @Description: TODO(批量导入关系 - 不支持属性MERGE更新)★★★默认使用name属性排重关系
      */
-    JSONObject importApocMergeRelations(List<NoUpdateRela> noUpdateRelaList);
+    JSONObject importApocMergeRelations(List<NoUpdateRela> noUpdateRelaList) throws Exception;
 
     /**
      * @param
@@ -158,7 +158,7 @@ public interface Composer extends Accessor {
      * @return
      * @Description: TODO(批量导入关系 - 不支持属性MERGE更新)★★★使用指定属性排重关系
      */
-    JSONObject importApocMergeRelations(List<NoUpdateRela> noUpdateRelaList, String uniqueKey);
+    JSONObject importApocMergeRelations(List<NoUpdateRela> noUpdateRelaList, String uniqueKey) throws Exception;
 
     //========================================================apoc.cypher.doIt.*========================================================
     // ★★★★★--EXECUTE METHOD TO RUN
@@ -170,7 +170,7 @@ public interface Composer extends Accessor {
      * @return
      * @Description: TODO(批量导入节点 - 支持属性MERGE更新)
      */
-    void addMergeDynamicNodes(List<UpdateNode> updateNodeList, int batchSize);
+    void addMergeDynamicNodes(List<UpdateNode> updateNodeList, int batchSize) throws Exception;
 
     /**
      * @param updateRelaList:需要更新的关系列表
@@ -178,21 +178,21 @@ public interface Composer extends Accessor {
      * @return
      * @Description: TODO(批量导入关系 - 支持属性MERGE更新)
      */
-    void addMergeDynamicRelations(List<UpdateRela> updateRelaList, int batchSize);
+    void addMergeDynamicRelations(List<UpdateRela> updateRelaList, int batchSize) throws Exception;
 
     /**
      * @param updateNodeList:需要更新的节点列表
      * @return
      * @Description: TODO(批量导入节点 - 支持属性MERGE更新)
      */
-    void addMergeDynamicNodes(List<UpdateNode> updateNodeList);
+    void addMergeDynamicNodes(List<UpdateNode> updateNodeList) throws Exception;
 
     /**
      * @param updateRelaList:需要更新的关系列表
      * @return
      * @Description: TODO(批量导入关系 - 支持属性MERGE更新)
      */
-    void addMergeDynamicRelations(List<UpdateRela> updateRelaList);
+    void addMergeDynamicRelations(List<UpdateRela> updateRelaList) throws Exception;
 
     //========================================================other composers========================================================
 
@@ -205,7 +205,7 @@ public interface Composer extends Accessor {
      * @return
      * @Description: TODO(合并图谱)
      */
-    JSONObject executeMagicIncorporateGraph(long sourceId, List<Long> nodesIds, String uniqueKey, boolean isDelete, int unwindCommitSize);
+    JSONObject executeMagicIncorporateGraph(long sourceId, List<Long> nodesIds, String uniqueKey, boolean isDelete, int unwindCommitSize) throws Exception;
 
     /**
      * @param sourceId:归并的节点--★★★<被归并节点的关系全部转移到这个节点>
@@ -216,7 +216,7 @@ public interface Composer extends Accessor {
      * @return
      * @Description: TODO(合并图谱)
      */
-    JSONObject executeMagicIncorporateGraph(long sourceId, long targetId, String uniqueKey, boolean isDelete, int unwindCommitSize);
+    JSONObject executeMagicIncorporateGraph(long sourceId, long targetId, String uniqueKey, boolean isDelete, int unwindCommitSize) throws Exception;
 }
 
 

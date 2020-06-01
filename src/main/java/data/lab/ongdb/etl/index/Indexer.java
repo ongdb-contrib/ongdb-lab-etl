@@ -75,7 +75,7 @@ public interface Indexer {
      * @return
      * @Description: TODO(删除创建的全文检索接口)
      */
-    JSONObject dropFullText(String fullTextSearchName);
+    JSONObject dropFullText(String fullTextSearchName) throws Exception;
 }
 
 

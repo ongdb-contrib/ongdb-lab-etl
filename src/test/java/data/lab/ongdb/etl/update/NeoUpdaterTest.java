@@ -45,7 +45,7 @@ public class NeoUpdaterTest {
     }
 
     @Test
-    public void executeIterate_1() {
+    public void executeIterate_1() throws Exception{
         /**
          * invoke cypherAction in batched transactions being feeded from cypherIteration running in main thread
          *

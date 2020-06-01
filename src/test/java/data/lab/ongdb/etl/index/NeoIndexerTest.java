@@ -34,7 +34,7 @@ public class NeoIndexerTest {
     }
 
     @Test
-    public void addNodeFieldIndexTest1() {
+    public void addNodeFieldIndexTest1() throws Exception{
         /**
          * @param label     :标签名
          * @param fieldName :字段名称
@@ -47,7 +47,7 @@ public class NeoIndexerTest {
     }
 
     @Test
-    public void addNodeFieldIndexTest2() {
+    public void addNodeFieldIndexTest2() throws Exception{
         /**
          * @param label     :标签名
          * @param fieldName :可以传入多个字段名
@@ -65,7 +65,7 @@ public class NeoIndexerTest {
      * @Description: TODO(关系单属性索引)
      */
     @Test
-    public void addRelationFieldIndexTest1() {
+    public void addRelationFieldIndexTest1() throws Exception{
         neoIndexer.addRelationFieldIndex(RelationshipType.withName("参与组织"), "_unique_uuid");
         System.out.println(neoIndexer.execute());
         neoIndexer.reset();
@@ -77,7 +77,7 @@ public class NeoIndexerTest {
      * @Description: TODO(关系复合索引)
      */
     @Test
-    public void addRelationFieldIndexTest2() {
+    public void addRelationFieldIndexTest2() throws Exception{
         neoIndexer.addRelationFieldIndex(RelationshipType.withName("参与组织"), "_unique_uuid", "_entity_name");
         System.out.println(neoIndexer.execute());
         neoIndexer.reset();
@@ -89,7 +89,7 @@ public class NeoIndexerTest {
      * @Description: TODO(关系复合索引 - 指定关系匹配模式进行索引)
      */
     @Test
-    public void addRelationFieldIndexTest3() {
+    public void addRelationFieldIndexTest3() throws Exception{
         String autoMatchRelation = "MATCH (:组织)-[r:参与组织]-(:虚拟账号) ";
         neoIndexer.addRelationFieldIndex(autoMatchRelation, RelationshipType.withName("参与组织"), "_unique_uuid", "_entity_name");
         neoIndexer.setDEBUG(true);
@@ -133,7 +133,7 @@ public class NeoIndexerTest {
     }
 
     @Test
-    public void addNodeFullTextSearch() {
+    public void addNodeFullTextSearch() throws Exception{
         /**
          * @param fullTextSearchName:全文检索名称-在创建好全文检索之后搜索时使用
          * @param fullTextMap:为节点增加全文检索属性
@@ -150,7 +150,7 @@ public class NeoIndexerTest {
     }
 
     @Test
-    public void addNodeFullTextSearchAutoUpdate() {
+    public void addNodeFullTextSearchAutoUpdate() throws Exception{
         /**
          * @param fullTextSearchName :全文检索名称-在创建好全文检索之后搜索时使用
          * @param fullTextMap        :为节点增加全文检索属性
@@ -192,7 +192,7 @@ public class NeoIndexerTest {
 //    CALL db.index.fulltext.queryNodes('新浪微博ID', '中国共产党') YIELD node RETURN node SKIP 0 LIMIT 10;
 
     @Test
-    public void addNodeFullTextSearchAutoUpdate_02() {
+    public void addNodeFullTextSearchAutoUpdate_02() throws Exception{
         /**
          * @param fullTextSearchName :全文检索名称-在创建好全文检索之后搜索时使用
          * @param fullTextMap        :为节点增加全文检索属性
@@ -214,7 +214,7 @@ public class NeoIndexerTest {
     }
 
     @Test
-    public void dropFullText() {
+    public void dropFullText() throws Exception{
         /**
          * @param fullTextSearchName :创建的全文检索名称
          * @return
@@ -224,7 +224,7 @@ public class NeoIndexerTest {
     }
 
     @Test
-    public void addUniqueFieldIndex() {
+    public void addUniqueFieldIndex() throws Exception{
         neoIndexer.addNodeFieldUniqueIndex(Label.label("Test"), "id");
         neoIndexer.setDEBUG(true);
         System.out.println(neoIndexer.execute());
@@ -242,7 +242,7 @@ public class NeoIndexerTest {
     }
 
     @Test
-    public void addIndex() {
+    public void addIndex() throws Exception{
         // 获取库中所有标签，然后添加索引
         JSONArray labels = neoIndexer.dbLabels().getJSONArray("retrieve_properties");
         neoIndexer.setDEBUG(true);

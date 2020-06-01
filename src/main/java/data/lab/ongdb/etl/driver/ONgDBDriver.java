@@ -47,6 +47,9 @@ public class ONgDBDriver {
         long startMill = System.currentTimeMillis();
         if (OngdbHeartBeat.isRegister()) {
             driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
+            if (NeoAccessor.driverIsResetDriver){
+                driver = NeoAccessor.driver;
+            }
         }
         boolean flag = false;
         // RETRY FAILURE QUERY
@@ -75,10 +78,50 @@ public class ONgDBDriver {
      * @return
      * @Description: TODO(构图导入等操作访问)
      */
+    public synchronized static JSONObject composerWrite(Driver driver, String statement) {
+        long startMill = System.currentTimeMillis();
+        if (OngdbHeartBeat.isRegister()) {
+            driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
+            if (NeoAccessor.driverIsResetDriver){
+                driver = NeoAccessor.driver;
+            }
+        }
+        boolean flag = false;
+        // RETRY FAILURE QUERY
+        while (!flag) {
+            try (Session session = driver.session()) {
+                flag = session.writeTransaction(tx -> {
+                    tx.run(statement);
+                    return true;
+                });
+            } catch (Exception e) {
+                logger.info("Retrying query " + statement + "\r\n");
+                e.printStackTrace();
+            }
+        }
+        long stopMill = System.currentTimeMillis();
+        long consume = (stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()));
+        if (consume != 0) {
+            logger.info("Neo4j driver composer success!consume:" + consume + "s");
+        } else {
+            logger.info("Neo4j driver composer success!consume:" + (stopMill - startMill) + "mills");
+        }
+        return new JSONObject();
+    }
+
+    /**
+     * @param driver:传入NEO4J_JAVA驱动
+     * @param statement:cypher
+     * @return
+     * @Description: TODO(构图导入等操作访问)
+     */
     public synchronized static JSONObject composerAutoCommitTx(Driver driver, String statement) {
         long startMill = System.currentTimeMillis();
         if (OngdbHeartBeat.isRegister()) {
             driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
+            if (NeoAccessor.driverIsResetDriver){
+                driver = NeoAccessor.driver;
+            }
         }
         boolean flag = false;
         // RETRY FAILURE QUERY
@@ -113,6 +156,9 @@ public class ONgDBDriver {
     public synchronized static JSONObject composerReturnNodeId(Driver driver, String statement) {
         if (OngdbHeartBeat.isRegister()) {
             driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
+            if (NeoAccessor.driverIsResetDriver){
+                driver = NeoAccessor.driver;
+            }
         }
         JSONObject resultMessage = new JSONObject();
         long startMill = System.currentTimeMillis();
@@ -127,8 +173,6 @@ public class ONgDBDriver {
                 }
 //                tx.success();  // Mark this write as successful.
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         long stopMill = System.currentTimeMillis();
         long consume = (stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()));
@@ -149,6 +193,9 @@ public class ONgDBDriver {
     public synchronized static JSONObject composerAutoCommit(Driver driver, String statement) {
         if (OngdbHeartBeat.isRegister()) {
             driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
+            if (NeoAccessor.driverIsResetDriver){
+                driver = NeoAccessor.driver;
+            }
         }
         long startMill = System.currentTimeMillis();
         try (Session session = driver.session()) {
@@ -156,8 +203,6 @@ public class ONgDBDriver {
              * AUTO COMMIT TRANSACTION
              * **/
             session.run(statement);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         long stopMill = System.currentTimeMillis();
         long consume = (stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()));
@@ -168,6 +213,9 @@ public class ONgDBDriver {
     public static JSONObject rowProperties(Driver driver, String cypher) {
         if (OngdbHeartBeat.isRegister()) {
             driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
+            if (NeoAccessor.driverIsResetDriver){
+                driver = NeoAccessor.driver;
+            }
         }
         JSONObject resultObject = new JSONObject();
         JSONArray resultArray = new JSONArray();
@@ -179,8 +227,6 @@ public class ONgDBDriver {
                 JSONObject object = transferObject(map);
                 resultArray.add(object);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         resultObject.put(CRUD.RETRIEVE_PROPERTIES.getSymbolValue(), resultArray);
         return resultObject;
@@ -189,6 +235,9 @@ public class ONgDBDriver {
     public static JSONObject rowPropertiesReadOnly(Driver driver, String cypher) {
         if (OngdbHeartBeat.isRegister()) {
             driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
+            if (NeoAccessor.driverIsResetDriver){
+                driver = NeoAccessor.driver;
+            }
         }
         JSONObject resultObject = new JSONObject();
         JSONArray resultArray = new JSONArray();
@@ -203,8 +252,6 @@ public class ONgDBDriver {
                 }
                 return tx;
             });
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         resultObject.put(CRUD.RETRIEVE_PROPERTIES.getSymbolValue(), resultArray);
         return resultObject;
@@ -251,9 +298,12 @@ public class ONgDBDriver {
      * @return
      * @Description: TODO(检索)
      */
-    public static JSONObject searcher(Driver driver, String statement) {
+    public static JSONObject searcher(Driver driver, String statement) throws Exception {
         if (OngdbHeartBeat.isRegister()) {
             driver = NeoAccessor.ongdbHeartBeat.getReaderBlotMappingLocalDriver();
+            if (NeoAccessor.driverIsResetDriver){
+                driver = NeoAccessor.driver;
+            }
         }
         long startMill = System.currentTimeMillis();
 
@@ -318,8 +368,6 @@ public class ONgDBDriver {
                     properties.add(propertiesPack);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         graph.put("relationships", relationships);
         graph.put("nodes", nodes);
@@ -348,6 +396,9 @@ public class ONgDBDriver {
     public static JSONObject readOnlySearcher(Driver driver, String statement) {
         if (OngdbHeartBeat.isRegister()) {
             driver = NeoAccessor.ongdbHeartBeat.getReaderBlotMappingLocalDriver();
+            if (NeoAccessor.driverIsResetDriver){
+                driver = NeoAccessor.driver;
+            }
         }
         long startMill = System.currentTimeMillis();
 
@@ -415,8 +466,6 @@ public class ONgDBDriver {
                 return 1;
             });
 
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         graph.put("relationships", relationships);
         graph.put("nodes", nodes);

@@ -59,7 +59,7 @@ public class NeoImportTool {
         return JSONObject.parseObject(response);
     }
 
-    public static void dump(NeoComposer targetComposer, JSONObject result) {
+    public static void dump(NeoComposer targetComposer, JSONObject result) throws Exception {
 
         JSONArray nodes = JSONTool.getNodeOrRelaList(result, "nodes");
         JSONArray relationships = JSONTool.getNodeOrRelaList(result, "relationships");
@@ -123,8 +123,8 @@ public class NeoImportTool {
         });
     }
 
-    private static void writeCypherToCql(NeoComposer composer, JSONArray array, boolean isNodeObj) {
-        array.forEach(obj -> {
+    private static void writeCypherToCql(NeoComposer composer, JSONArray array, boolean isNodeObj) throws Exception{
+        for (Object obj:array){
             JSONObject object = (JSONObject) obj;
             Cypher cypher;
             if (isNodeObj) {
@@ -133,9 +133,8 @@ public class NeoImportTool {
                 cypher = relationObjToCypher(object);
             }
             composer.execute(cypher.getCypher(), CRUD.MERGE);
-        });
+        }
     }
-
 
     /**
      * @param node:节点对象

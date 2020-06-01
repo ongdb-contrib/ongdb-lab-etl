@@ -47,7 +47,7 @@ public class NeoUpdater extends NeoAccessor implements Updater {
      * @Description: TODO(跳过条件添加直接使用CYPHER查询 - 默认返回节点或者关系的所有属性字段)
      */
     @Override
-    public JSONObject execute(String cypher, CRUD crudType) {
+    public JSONObject execute(String cypher, CRUD crudType) throws Exception{
         Condition condition = new Condition();
         condition.setStatement(cypher, this.contents);
         return Result.message(chooseSendCypherWay(condition, crudType));
