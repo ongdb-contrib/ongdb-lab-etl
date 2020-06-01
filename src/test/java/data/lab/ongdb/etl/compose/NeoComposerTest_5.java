@@ -49,8 +49,8 @@ public class NeoComposerTest_5 {
         int i = 0;
         for (; ; ) {
             i++;
-            String cypher = "MATCH (n:`PRE公司中文名称`) RETURN n SKIP "+i+" LIMIT 1";
-            JSONObject result = this.neoComposer.execute(cypher, CRUD.RETRIEVE);
+            String cypher = "MATCH (n:`PRE公司中文名称`) RETURN n.name SKIP "+i+" LIMIT 1";
+            JSONObject result = this.neoComposer.execute(cypher, CRUD.RETRIEVE_PROPERTIES_READ_ONLY);
             System.out.println(result);
         }
     }

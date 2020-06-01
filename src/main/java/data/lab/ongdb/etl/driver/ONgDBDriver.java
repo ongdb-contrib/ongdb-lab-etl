@@ -52,8 +52,8 @@ public class ONgDBDriver {
         // RETRY FAILURE QUERY
         while (!flag) {
             try (Session session = driver.session()) {
-                    session.run(statement);
-                    flag = true;
+                session.run(statement);
+                flag = true;
             } catch (Exception e) {
                 logger.info("Retrying query " + statement + "\r\n");
                 e.printStackTrace();
@@ -186,6 +186,30 @@ public class ONgDBDriver {
         return resultObject;
     }
 
+    public static JSONObject rowPropertiesReadOnly(Driver driver, String cypher) {
+        if (OngdbHeartBeat.isRegister()) {
+            driver = NeoAccessor.ongdbHeartBeat.getWriterBlotMappingLocalDriver();
+        }
+        JSONObject resultObject = new JSONObject();
+        JSONArray resultArray = new JSONArray();
+        try (Session session = driver.session()) {
+            session.readTransaction(tx -> {
+                Result result = tx.run(cypher);
+                while (result.hasNext()) {
+                    Record record = result.next();
+                    Map<String, Object> map = record.asMap();
+                    JSONObject object = transferObject(map);
+                    resultArray.add(object);
+                }
+                return tx;
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultObject.put(CRUD.RETRIEVE_PROPERTIES.getSymbolValue(), resultArray);
+        return resultObject;
+    }
+
     private static JSONObject transferObject(Map<String, Object> map) {
         JSONObject object = new JSONObject();
         for (String key : map.keySet()) {
@@ -294,6 +318,103 @@ public class ONgDBDriver {
                     properties.add(propertiesPack);
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        graph.put("relationships", relationships);
+        graph.put("nodes", nodes);
+        graph.put("properties", properties);
+        dataObject.put("graph", graph);
+        data.add(dataObject);
+        arrayObject.put("data", data);
+        arrayObject.put("columns", columns);
+        resultArray.add(arrayObject);
+        results.put("results", resultArray);
+        results.put("totalNodeSize", nodes.size());
+        results.put("totalRelationSize", relationships.size());
+
+        long stopMill = System.currentTimeMillis();
+        long consume = (stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()));
+        logger.info("Neo4j driver searcher success!consume:" + consume + "s");
+        return results;
+    }
+
+    /**
+     * @param driver:传入NEO4J_JAVA驱动
+     * @param statement:cypher
+     * @return
+     * @Description: TODO(检索)
+     */
+    public static JSONObject readOnlySearcher(Driver driver, String statement) {
+        if (OngdbHeartBeat.isRegister()) {
+            driver = NeoAccessor.ongdbHeartBeat.getReaderBlotMappingLocalDriver();
+        }
+        long startMill = System.currentTimeMillis();
+
+        JSONObject results = new JSONObject();
+        JSONArray resultArray = new JSONArray();
+        JSONObject arrayObject = new JSONObject();
+
+        JSONArray columns = new JSONArray();
+        JSONArray data = new JSONArray();
+        JSONObject dataObject = new JSONObject();
+        JSONObject graph = new JSONObject();
+
+        JSONArray relationships = new JSONArray();
+        JSONArray nodes = new JSONArray();
+        JSONArray properties = new JSONArray();
+
+        try (Session session = driver.session()) {
+            // Auto-commit transactions are a quick and easy way to wrap a read.
+            int num = session.readTransaction(tx -> {
+                Result result = tx.run(statement);
+                // Each Cypher execution returns a stream of records.
+                while (result.hasNext()) {
+                    Record record = result.next();
+                    // Values can be extracted from a record by index or name.
+
+                    List<Pair<String, Value>> list = record.fields();
+
+                    JSONObject propertiesPack = new JSONObject();
+                    for (int i = 0; i < list.size(); i++) {
+                        Pair<String, Value> stringValuePair = list.get(i);
+                        if (!columns.contains(stringValuePair.key())) {
+                            columns.add(stringValuePair.key());
+                        }
+                        Value value = stringValuePair.value();
+                        if (value instanceof NodeValue) {
+                            JSONObject objectNode = packNode(value.asNode());
+                            if (!nodes.contains(objectNode)) {
+                                nodes.add(objectNode);
+                            }
+                        } else if (value instanceof PathValue) {
+
+                            JSONArray objectNodes = packNodeByPath(value.asPath());
+                            objectNodes.forEach(node -> {
+                                JSONObject nodeObj = (JSONObject) node;
+                                if (!nodes.contains(nodeObj)) {
+                                    nodes.add(nodeObj);
+                                }
+                            });
+
+                            JSONArray objectRelas = packRelations(value.asPath());
+                            objectRelas.forEach(relation -> {
+                                JSONObject relationObj = (JSONObject) relation;
+                                if (!relationships.contains(relationObj)) {
+                                    relationships.add(relationObj);
+                                }
+                            });
+                        } else {
+                            propertiesPack.putAll(packStringValuePair(stringValuePair));
+                        }
+                    }
+                    if (!propertiesPack.isEmpty()) {
+                        properties.add(propertiesPack);
+                    }
+                }
+                return 1;
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }

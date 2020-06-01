@@ -277,10 +277,14 @@ public abstract class NeoAccessor implements Accessor {
         } else if (AccessOccurs.JAVA_DRIVER.equals(this.accessOccurs)) {
             if (CRUD.RETRIEVE.equals(crudType)) {
                 return ONgDBDriver.searcher(this.driver, condition.getStatement(condition.toString()));
-            } else if (CRUD.MERGE_CSV.equals(crudType)) {
+            } else if (CRUD.RETRIEVE_READ_ONLY.equals(crudType)) {
+                return ONgDBDriver.readOnlySearcher(this.driver, condition.getStatement(condition.toString()));
+            }else if (CRUD.MERGE_CSV.equals(crudType)) {
                 return ONgDBDriver.composerAutoCommit(this.driver, condition.getStatement(condition.toString()));
             } else if (CRUD.RETRIEVE_PROPERTIES.equals(crudType)) {
                 return ONgDBDriver.rowProperties(this.driver, condition.getStatement(condition.toString()));
+            } else if (CRUD.RETRIEVE_PROPERTIES_READ_ONLY.equals(crudType)) {
+                return ONgDBDriver.rowPropertiesReadOnly(this.driver, condition.getStatement(condition.toString()));
             } else if (CRUD.MERGE_RETURN_NODE_ID.equals(crudType)) {
                 return ONgDBDriver.composerReturnNodeId(this.driver, condition.getStatement(condition.toString()));
             } else {
