@@ -65,9 +65,9 @@ public class ONgDBDriver {
         long stopMill = System.currentTimeMillis();
         long consume = (stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()));
         if (consume != 0) {
-            logger.info("Neo4j driver composer success!consume:" + consume + "s");
+            logger.info("ONgDB driver composer success!consume:" + consume + "s");
         } else {
-            logger.info("Neo4j driver composer success!consume:" + (stopMill - startMill) + "mills");
+            logger.info("ONgDB driver composer success!consume:" + (stopMill - startMill) + "mills");
         }
         return new JSONObject();
     }
@@ -102,9 +102,9 @@ public class ONgDBDriver {
         long stopMill = System.currentTimeMillis();
         long consume = (stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()));
         if (consume != 0) {
-            logger.info("Neo4j driver composer success!consume:" + consume + "s");
+            logger.info("ONgDB driver composer success!consume:" + consume + "s");
         } else {
-            logger.info("Neo4j driver composer success!consume:" + (stopMill - startMill) + "mills");
+            logger.info("ONgDB driver composer success!consume:" + (stopMill - startMill) + "mills");
         }
         return new JSONObject();
     }
@@ -140,9 +140,9 @@ public class ONgDBDriver {
         long stopMill = System.currentTimeMillis();
         long consume = (stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()));
         if (consume != 0) {
-            logger.info("Neo4j driver composer success!consume:" + consume + "s");
+            logger.info("ONgDB driver composer success!consume:" + consume + "s");
         } else {
-            logger.info("Neo4j driver composer success!consume:" + (stopMill - startMill) + "mills");
+            logger.info("ONgDB driver composer success!consume:" + (stopMill - startMill) + "mills");
         }
         return new JSONObject();
     }
@@ -177,9 +177,9 @@ public class ONgDBDriver {
         long stopMill = System.currentTimeMillis();
         long consume = (stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()));
         if (consume != 0) {
-            logger.info("Neo4j merge composer success!consume:" + consume + "s");
+            logger.info("ONgDB merge composer success!consume:" + consume + "s");
         } else {
-            logger.info("Neo4j merge composer success!consume:" + (stopMill - startMill) + "mills");
+            logger.info("ONgDB merge composer success!consume:" + (stopMill - startMill) + "mills");
         }
         return resultMessage;
     }
@@ -206,7 +206,7 @@ public class ONgDBDriver {
         }
         long stopMill = System.currentTimeMillis();
         long consume = (stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()));
-        logger.info("Neo4j driver composer auto commit success!consume:" + consume + "s");
+        logger.info("ONgDB driver composer auto commit success!consume:" + consume + "s");
         return new JSONObject();
     }
 
@@ -383,7 +383,7 @@ public class ONgDBDriver {
 
         long stopMill = System.currentTimeMillis();
         long consume = (stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()));
-        logger.info("Neo4j driver searcher success!consume:" + consume + "s");
+        logger.info("ONgDB driver searcher success!consume:" + consume + "s");
         return results;
     }
 
@@ -481,7 +481,7 @@ public class ONgDBDriver {
 
         long stopMill = System.currentTimeMillis();
         long consume = (stopMill - startMill) / Integer.parseInt(String.valueOf(TimeUnit.MILL_SECOND_CV.getSymbolValue()));
-        logger.info("Neo4j driver searcher success!consume:" + consume + "s");
+        logger.info("ONgDB driver searcher success!consume:" + consume + "s");
         return results;
     }
 
