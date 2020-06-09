@@ -2,6 +2,7 @@ package data.lab.ongdb.etl.driver;
 
 import org.junit.Test;
 import org.neo4j.driver.Driver;
+import org.neo4j.driver.Result;
 
 /*
  *
@@ -18,7 +19,11 @@ import org.neo4j.driver.Driver;
 public class BuildDriverTest {
     @Test
     public void build() {
-        Driver driver = BuildDriver.build("neo4j", "123456");
-        System.out.println(driver);
+        Driver driver = BuildDriver.build("neo4j", "datalab%pro");
+        Result result = driver.session().run("MATCH (n) RETURN id(n) AS id LIMIT 10;");
+        while (result.hasNext()){
+            System.out.println(result.next().get("id"));
+        }
     }
 }
+

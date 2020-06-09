@@ -11,11 +11,6 @@
     <dependencies>
         <dependency>
             <groupId>data.lab.engineering</groupId>
-            <artifactId>neo4j-etl</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>data.lab.engineering</groupId>
             <artifactId>ongdb-lab-http</artifactId>
             <version>1.0.0</version>
         </dependency>
