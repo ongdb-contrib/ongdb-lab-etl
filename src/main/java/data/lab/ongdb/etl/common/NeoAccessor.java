@@ -77,6 +77,20 @@ public abstract class NeoAccessor implements Accessor {
         this.ongdbHeartBeat = new OngdbHeartBeat(login.getInitHost(), login.getUserName(), login.getPassword(), ServerConfiguration.httpDetectionInterval(), ServerConfiguration.withMaxTransactionRetryTime(), ServerConfiguration.heartHealthDetect(), ServerConfiguration.httpTimeOut());
     }
 
+    public NeoAccessor(boolean IS_ADD_BLOT_DRIVER,boolean RUN_ALL_DETECT) {
+
+        Login login = ServerConfiguration.getPro();
+        OngdbHeartBeat.IS_ADD_BLOT_DRIVER = IS_ADD_BLOT_DRIVER;
+        OngdbHeartBeat.RUN_ALL_DETECT = RUN_ALL_DETECT;
+        /**
+         * 显式注册bolt驱动：在HTTP不可用时此方式可靠性较高
+         * **/
+        OngdbHeartBeat.explicitRegisterBolt(ServerConfiguration.uriBolt());
+
+        OngdbHeartBeat.setHostMap(login.getHostMap());
+        this.ongdbHeartBeat = new OngdbHeartBeat(login.getInitHost(), login.getUserName(), login.getPassword(), ServerConfiguration.httpDetectionInterval(), ServerConfiguration.withMaxTransactionRetryTime(), ServerConfiguration.heartHealthDetect(), ServerConfiguration.httpTimeOut());
+    }
+
     public NeoAccessor(String user, String password) {
 
         Login login = ServerConfiguration.getPro();

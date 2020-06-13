@@ -69,12 +69,22 @@ public class NeoComposer extends NeoAccessor implements Composer {
     }
 
     /**
+     * @param IS_ADD_BLOT_DRIVER:是否添加bolt驱动
+     * @param RUN_ALL_DETECT:是否添加服务自动检测功能
+     * @return
+     * @Description: TODO(从ongdb.properties加载配置)
+     */
+    public NeoComposer(boolean IS_ADD_BLOT_DRIVER, boolean RUN_ALL_DETECT) {
+        super(IS_ADD_BLOT_DRIVER, RUN_ALL_DETECT);
+    }
+
+    /**
      * @param
      * @return
-     * @Description: TODO(从ongdb.properties加载配置，但忽略用户名密码)
+     * @Description: TODO(从ongdb.properties加载配置 ， 但忽略用户名密码)
      */
     public NeoComposer(String user, String password) {
-        super(user,password);
+        super(user, password);
     }
 
     /**
@@ -174,7 +184,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @param cypherList
      */
     @Override
-    public JSONObject executeImport(List<Cypher> cypherList) throws Exception{
+    public JSONObject executeImport(List<Cypher> cypherList) throws Exception {
         if (cypherList.isEmpty()) {
             return passEmpty();
         }
@@ -192,7 +202,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(跳过条件添加直接使用CYPHER查询 - 默认返回节点或者关系的所有属性字段)
      */
     @Override
-    public JSONObject execute(String cypher, CRUD crudType) throws Exception{
+    public JSONObject execute(String cypher, CRUD crudType) throws Exception {
         Condition condition = new Condition();
         condition.setStatement(cypher, this.contents);
         return chooseSendCypherWay(condition, crudType);
@@ -242,7 +252,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(导入节点)
      */
     @Override
-    public JSONObject executeImport(List<Object[]> nodes, Label label, Label[] setOtherLabels, String _uniqueField, String... _key) throws Exception{
+    public JSONObject executeImport(List<Object[]> nodes, Label label, Label[] setOtherLabels, String _uniqueField, String... _key) throws Exception {
         if (nodes.isEmpty()) {
             return passEmpty();
         }
@@ -290,7 +300,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(导入关系)
      */
     @Override
-    public JSONObject executeImport(List<Object[]> relations, RelationshipType relationshipType, Label startNodeLabel, Label endNodeLabel, String _uniqueFieldStart, String _uniqueFieldEnd, String... _key)  throws Exception{
+    public JSONObject executeImport(List<Object[]> relations, RelationshipType relationshipType, Label startNodeLabel, Label endNodeLabel, String _uniqueFieldStart, String _uniqueFieldEnd, String... _key) throws Exception {
         if (relations.isEmpty()) {
             return passEmpty();
         }
@@ -368,7 +378,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(导入节点CSV)
      */
     @Override
-    public JSONObject executeImportCsv(int commitBatchSize, String csvName, Label label, String _uniqueField, String... _key) throws Exception{
+    public JSONObject executeImportCsv(int commitBatchSize, String csvName, Label label, String _uniqueField, String... _key) throws Exception {
 
         StringBuilder builder = new StringBuilder();
         String[] keys = _key;
@@ -405,7 +415,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      */
     @Override
     public JSONObject executeImportCsv(int commitBatchSize, String csvName, RelationshipType relationshipType, Label startNodeLabel, Label endNodeLabel,
-                                       String _uniqueFieldStart, String _uniqueFieldEnd, String... _key) throws Exception{
+                                       String _uniqueFieldStart, String _uniqueFieldEnd, String... _key) throws Exception {
 
         StringBuilder builder = new StringBuilder();
         String[] keys = _key;
@@ -436,7 +446,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(批量导入节点 - 不支持属性MERGE更新)
      */
     @Override
-    public JSONObject importApocMergeNodes(List<NoUpdateNode> noUpdateNodeList)  throws Exception{
+    public JSONObject importApocMergeNodes(List<NoUpdateNode> noUpdateNodeList) throws Exception {
         if (noUpdateNodeList.isEmpty()) {
             return passEmpty();
         }
@@ -457,7 +467,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(批量导入节点 - 不支持属性MERGE更新)
      */
     @Override
-    public JSONObject importApocMergeNodes(List<NoUpdateNode> noUpdateNodeList, String uniqueFieldName) throws Exception{
+    public JSONObject importApocMergeNodes(List<NoUpdateNode> noUpdateNodeList, String uniqueFieldName) throws Exception {
         if (noUpdateNodeList.isEmpty()) {
             return passEmpty();
         }
@@ -477,7 +487,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(批量导入关系 - 不支持属性MERGE更新)★★★默认使用name属性排重关系
      */
     @Override
-    public JSONObject importApocMergeRelations(List<NoUpdateRela> noUpdateRelaList) throws Exception{
+    public JSONObject importApocMergeRelations(List<NoUpdateRela> noUpdateRelaList) throws Exception {
         if (noUpdateRelaList.isEmpty()) {
             return passEmpty();
         }
@@ -503,7 +513,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(批量导入关系 - 不支持属性MERGE更新)★★★使用指定属性排重关系
      */
     @Override
-    public JSONObject importApocMergeRelations(List<NoUpdateRela> noUpdateRelaList, String uniqueKey) throws Exception{
+    public JSONObject importApocMergeRelations(List<NoUpdateRela> noUpdateRelaList, String uniqueKey) throws Exception {
         if (noUpdateRelaList.isEmpty()) {
             return passEmpty();
         }
@@ -548,7 +558,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(批量导入节点 - 支持属性MERGE更新)
      */
     @Override
-    public void addMergeDynamicNodes(List<UpdateNode> updateNodeList, int batchSize) throws Exception{
+    public void addMergeDynamicNodes(List<UpdateNode> updateNodeList, int batchSize) throws Exception {
         if (updateNodeList.isEmpty()) {
             passEmpty();
         }
@@ -590,7 +600,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(批量导入关系 - 支持属性MERGE更新)
      */
     @Override
-    public void addMergeDynamicRelations(List<UpdateRela> updateRelaList, int batchSize) throws Exception{
+    public void addMergeDynamicRelations(List<UpdateRela> updateRelaList, int batchSize) throws Exception {
         if (updateRelaList.isEmpty()) {
             passEmpty();
         }
@@ -631,7 +641,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(批量导入节点 - 支持属性MERGE更新)
      */
     @Override
-    public void addMergeDynamicNodes(List<UpdateNode> updateNodeList) throws Exception{
+    public void addMergeDynamicNodes(List<UpdateNode> updateNodeList) throws Exception {
         if (updateNodeList.isEmpty()) {
             passEmpty();
         }
@@ -655,7 +665,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(批量导入关系 - 支持属性MERGE更新)
      */
     @Override
-    public void addMergeDynamicRelations(List<UpdateRela> updateRelaList) throws Exception{
+    public void addMergeDynamicRelations(List<UpdateRela> updateRelaList) throws Exception {
         if (updateRelaList.isEmpty()) {
             passEmpty();
         }
@@ -683,10 +693,10 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(合并图谱)
      */
     @Override
-    public JSONObject executeMagicIncorporateGraph(long sourceId, List<Long> nodesIds, String uniqueKey, boolean isDelete, int unwindCommitSize) throws Exception{
+    public JSONObject executeMagicIncorporateGraph(long sourceId, List<Long> nodesIds, String uniqueKey, boolean isDelete, int unwindCommitSize) throws Exception {
         JSONObject object = new JSONObject();
         JSONArray array = new JSONArray();
-        for (Long targetId: nodesIds) {
+        for (Long targetId : nodesIds) {
             JSONObject result = executeMagicIncorporateGraph(sourceId, targetId, uniqueKey, isDelete, unwindCommitSize);
             result.put("sourceId", sourceId);
             result.put("targetId", targetId);
@@ -706,7 +716,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @Description: TODO(合并图谱)
      */
     @Override
-    public JSONObject executeMagicIncorporateGraph(long sourceId, long targetId, String uniqueKey, boolean isDelete, int unwindCommitSize) throws Exception{
+    public JSONObject executeMagicIncorporateGraph(long sourceId, long targetId, String uniqueKey, boolean isDelete, int unwindCommitSize) throws Exception {
         JSONObject targetRelationsResult = execute("MATCH (n)-[r]-(m) WHERE id(n)=" + targetId + " RETURN r,ID(m) AS id", CRUD.RETRIEVE_PROPERTIES);
         JSONArray targetRelations = targetRelationsResult.getJSONArray("retrieve_properties");
         List<NoUpdateRela> noUpdateRelationList = new ArrayList<>();
@@ -729,7 +739,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
         List<List<NoUpdateRela>> listList = cutObjListByBatchSize(noUpdateRelationList, unwindCommitSize);
         JSONObject output = new JSONObject();
         JSONArray array = new JSONArray();
-        for (List<NoUpdateRela> dataPackage: listList) {
+        for (List<NoUpdateRela> dataPackage : listList) {
             array.add(importApocMergeRelations(dataPackage, uniqueKey));
         }
 
@@ -747,7 +757,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @return
      * @Description: TODO(删除节点以及与节点相链接的关系)
      */
-    public JSONObject deleter(long nodeId) throws Exception{
+    public JSONObject deleter(long nodeId) throws Exception {
         String deleteCypher = "MATCH (n) WHERE id(n)=" + nodeId + " OPTIONAL MATCH (n)-[r]-() DELETE n,r";
         return execute(deleteCypher, CRUD.DELETE);
     }
@@ -757,7 +767,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @return
      * @Description: TODO(删除节点)
      */
-    public JSONObject nodeDeleter(long nodeId) throws Exception{
+    public JSONObject nodeDeleter(long nodeId) throws Exception {
         String deleteCypher = "MATCH (n) WHERE id(n)=" + nodeId + " DELETE n";
         return execute(deleteCypher, CRUD.DELETE);
     }
@@ -767,7 +777,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @return
      * @Description: TODO(删除节点)
      */
-    public JSONObject nodeDeleter(List<Long> nodeIds) throws Exception{
+    public JSONObject nodeDeleter(List<Long> nodeIds) throws Exception {
         JSONArray ids = JSONArray.parseArray(JSON.toJSONString(nodeIds));
         String deleteCypher = "MATCH (n) WHERE id(n) IN " + ids.toJSONString() + " DELETE n";
         return execute(deleteCypher, CRUD.DELETE);
@@ -778,7 +788,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @return
      * @Description: TODO(删除关系)
      */
-    public JSONObject relationDeleter(long relationId) throws Exception{
+    public JSONObject relationDeleter(long relationId) throws Exception {
         String deleteCypher = "MATCH ()-[r]-() WHERE id(r)=" + relationId + " DELETE r";
         return execute(deleteCypher, CRUD.DELETE);
     }
@@ -788,7 +798,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @return
      * @Description: TODO(删除关系)
      */
-    public JSONObject relationDeleter(List<Long> relationIds) throws Exception{
+    public JSONObject relationDeleter(List<Long> relationIds) throws Exception {
         JSONArray ids = JSONArray.parseArray(JSON.toJSONString(relationIds));
         String deleteCypher = "MATCH ()-[r]-() WHERE id(r) IN " + ids + " DELETE r";
         return execute(deleteCypher, CRUD.DELETE);
@@ -799,7 +809,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @return
      * @Description: TODO(删除与当前节点相连的关系)
      */
-    public JSONObject relationAboutNodeDeleter(long nodeId) throws Exception{
+    public JSONObject relationAboutNodeDeleter(long nodeId) throws Exception {
         String deleteCypher = "MATCH (n) WHERE id(n)=" + nodeId + " OPTIONAL MATCH (n)-[r]-() DELETE r";
         return execute(deleteCypher, CRUD.DELETE);
     }
@@ -809,7 +819,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
      * @return
      * @Description: TODO(合并重复的关系类型 - 删除与当前节点相连的关系)
      */
-    public JSONObject checkRepeatRelationType(long nodeId) throws Exception{
+    public JSONObject checkRepeatRelationType(long nodeId) throws Exception {
         String repeatIdsCypher = "MATCH (n)-[r]-(m) where id(n)=" + nodeId + " WITH type(r) AS type,count(r) AS count,id(m) AS id \n" +
                 "WITH CASE WHEN count>=2 \n" +
                 " THEN id+'|'+type\n" +
@@ -829,7 +839,7 @@ public class NeoComposer extends NeoAccessor implements Composer {
         return object;
     }
 
-    private void mergeRepeatRelations(long nodeId, List<String> repeatIds) throws Exception{
+    private void mergeRepeatRelations(long nodeId, List<String> repeatIds) throws Exception {
         for (String idType : repeatIds) {
             String[] split = idType.split("\\|");
             long id = Long.parseLong(split[0]);
@@ -905,13 +915,13 @@ public class NeoComposer extends NeoAccessor implements Composer {
         // 先执行构建节点的请求
         long startMill = System.currentTimeMillis();
 
-        for (Condition condition: this.addMergeDynamicNodes) {
+        for (Condition condition : this.addMergeDynamicNodes) {
             this.queryResultList.add(Result.message(super.chooseSendCypherWay(condition, CRUD.CREATE)));
         }
 
         // 再执行构建关系的请求
-        for (Condition condition:
-        this.addMergeDynamicRelations ) {
+        for (Condition condition :
+                this.addMergeDynamicRelations) {
             this.queryResultList.add(Result.message(super.chooseSendCypherWay(condition, CRUD.CREATE)));
         }
 
