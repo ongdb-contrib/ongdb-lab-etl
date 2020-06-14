@@ -92,21 +92,25 @@ public class ClusterConfiguration_1 {
 
         ) {
 
-            for (int i = 0; i < 10000; i++) {
-                try (Session session = driver.session()) {
-                    int finalI = i;
-                    session.readTransaction(tx -> {
-                        Result result = tx.run("MATCH (n) WHERE n.name CONTAINS '" + finalI + "' RETURN n.name AS name LIMIT 10000");
-                        // Each Cypher execution returns a stream of records.
-                        while (result.hasNext()) {
-                            Record record = result.next();
-                            // Values can be extracted from a record by index or name.
-                            System.out.println(record.get("name").asString());
-                        }
-                        return null;
-                    });
-                }
+//            for (int i = 0; i < 10000; i++) {
+            try (Session session = driver.session()) {
+//                int finalI = i;
+                session.readTransaction(tx -> {
+//                        Result result = tx.run("MATCH (n) WHERE n.name CONTAINS '" + finalI + "' RETURN n.name AS name LIMIT 10000");
+                    Result result = tx.run("CALL apoc.es.query('https://vpc-knowledgegraph-4zarhbj33zcjjkqfo3afso45la.cn-north-1.es.amazonaws.com.cn','pre_org_cn_node','',null,{size:0,query:{bool:{}},aggs:{cluster_id:{terms:{field:'cluster_id',size:10,shard_size:100000,order:{_count:'DESC'}},aggs:{topHitsData:{top_hits:{size:100,_source:{includes:['name']}}}}},field_count:{cardinality:{precision_threshold:100000,field:'cluster_id'}}}}) yield value \n" +
+                            "WITH value.aggregations.cluster_id.buckets AS buckets\n" +
+                            "UNWIND buckets AS topHitsData\n" +
+                            "RETURN topHitsData.key AS master,topHitsData.doc_count AS slaveCount,topHitsData.topHitsData.hits.hits AS slaves");
+                    // Each Cypher execution returns a stream of records.
+                    while (result.hasNext()) {
+                        Record record = result.next();
+                        // Values can be extracted from a record by index or name.
+                        System.out.println(record.get("master").asInt());
+                    }
+                    return null;
+                });
             }
+//            }
         }
     }
 
@@ -119,10 +123,10 @@ public class ClusterConfiguration_1 {
         ClusterConfiguration_1 example = new ClusterConfiguration_1();
 
         // WRITE TRANSACTION
-        example.addPersonCluster("Test");
+//        example.addPersonCluster("Test");
 
         // READ TRANSACTION
-//        example.getSomeNodes();
+        example.getSomeNodes();
     }
 }
 
