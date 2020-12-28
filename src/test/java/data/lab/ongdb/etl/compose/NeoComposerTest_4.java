@@ -37,6 +37,8 @@ public class NeoComposerTest_4 {
          * @return void
          */
         this.neoComposer = new NeoComposer();
+
+        this.neoComposer = new NeoComposer(false);
     }
 
     @After

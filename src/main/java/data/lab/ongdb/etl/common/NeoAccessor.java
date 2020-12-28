@@ -77,7 +77,27 @@ public abstract class NeoAccessor implements Accessor {
         this.ongdbHeartBeat = new OngdbHeartBeat(login.getInitHost(), login.getUserName(), login.getPassword(), ServerConfiguration.httpDetectionInterval(), ServerConfiguration.withMaxTransactionRetryTime(), ServerConfiguration.heartHealthDetect(), ServerConfiguration.httpTimeOut());
     }
 
-    public NeoAccessor(boolean IS_ADD_BLOT_DRIVER,boolean RUN_ALL_DETECT) {
+    /**
+     * @param isDoNothing:TRUE-什么都不做初始化 FALSE-做一些其他操作
+     * @return
+     * @Description: TODO(可指定在构造函数中做不做其他操作)
+     */
+    public NeoAccessor(boolean isDoNothing) {
+        if (isDoNothing) {
+            Login login = ServerConfiguration.getPro();
+            OngdbHeartBeat.IS_ADD_BLOT_DRIVER = true;
+            OngdbHeartBeat.RUN_ALL_DETECT = false;
+            /**
+             * 显式注册bolt驱动：在HTTP不可用时此方式可靠性较高
+             * **/
+            OngdbHeartBeat.explicitRegisterBolt(ServerConfiguration.uriBolt());
+
+            OngdbHeartBeat.setHostMap(login.getHostMap());
+            this.ongdbHeartBeat = new OngdbHeartBeat(login.getInitHost(), login.getUserName(), login.getPassword(), ServerConfiguration.httpDetectionInterval(), ServerConfiguration.withMaxTransactionRetryTime(), ServerConfiguration.heartHealthDetect(), ServerConfiguration.httpTimeOut());
+        }
+    }
+
+    public NeoAccessor(boolean IS_ADD_BLOT_DRIVER, boolean RUN_ALL_DETECT) {
 
         Login login = ServerConfiguration.getPro();
         OngdbHeartBeat.IS_ADD_BLOT_DRIVER = IS_ADD_BLOT_DRIVER;
@@ -218,7 +238,7 @@ public abstract class NeoAccessor implements Accessor {
      * @Description: TODO(跳过条件添加直接使用CYPHER查询 - 默认返回节点或者关系的所有属性字段)
      */
     @Override
-    public JSONObject execute(String cypher, CRUD crudType) throws Exception{
+    public JSONObject execute(String cypher, CRUD crudType) throws Exception {
         // 禁止某些危险查询
         if (cypher.contains("DELETE") || cypher.contains("REMOVE") ||
                 cypher.contains("delete") || cypher.contains("remove")) {
@@ -259,7 +279,7 @@ public abstract class NeoAccessor implements Accessor {
      * YIELD batches, total - run the second statement for each item returned by the first statement. Returns number of batches and total processed rows)
      */
     @Override
-    public JSONObject executeIterate(String cypherIterate, String cypherAction, Object... config) throws Exception{
+    public JSONObject executeIterate(String cypherIterate, String cypherAction, Object... config) throws Exception {
         // 禁止某些危险查询  - 只有更新对象才可以无限制操作图谱
         if (!(this instanceof NeoUpdater || this instanceof NeoComposer)) {
             LOGGER.info("Just neo4j updater or composer can operate!");
@@ -285,7 +305,7 @@ public abstract class NeoAccessor implements Accessor {
      * @return
      * @Description: TODO(使用REST - API或者JAVA - DRIVER执行请求)
      */
-    public JSONObject chooseSendCypherWay(Condition condition, CRUD crudType) throws Exception{
+    public JSONObject chooseSendCypherWay(Condition condition, CRUD crudType) throws Exception {
         if (this.DEBUG) {
             this.LOGGER.info("Debug condition:" + condition.toString());
         }

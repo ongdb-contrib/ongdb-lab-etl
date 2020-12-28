@@ -69,6 +69,15 @@ public class NeoComposer extends NeoAccessor implements Composer {
     }
 
     /**
+     * @param isDoNothing:TRUE-什么都不做初始化 FALSE-做一些其他操作
+     * @return
+     * @Description: TODO(可指定在构造函数中做不做其他操作)
+     */
+    public NeoComposer(boolean isDoNothing) {
+        super(isDoNothing);
+    }
+
+    /**
      * @param IS_ADD_BLOT_DRIVER:是否添加bolt驱动
      * @param RUN_ALL_DETECT:是否添加服务自动检测功能
      * @return
