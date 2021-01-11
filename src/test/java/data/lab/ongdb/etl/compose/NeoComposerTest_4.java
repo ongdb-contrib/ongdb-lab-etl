@@ -38,7 +38,10 @@ public class NeoComposerTest_4 {
          */
         this.neoComposer = new NeoComposer();
 
-        this.neoComposer = new NeoComposer(false);
+        /**
+         * TRUE-什么都不做初始化 FALSE-做一些其他操作
+         * **/
+        this.neoComposer = new NeoComposer(true);
     }
 
     @After
@@ -47,12 +50,21 @@ public class NeoComposerTest_4 {
     }
 
     @Test
-    public void execute() throws Exception{
+    public void execute_01() throws Exception {
         int i = 0;
         for (; ; ) {
             i++;
-            String cypher = "MERGE (n:`PRE公司中文名称` {name:'test"+i+"'})";
+            String cypher = "MERGE (n:`PRE公司中文名称` {name:'test" + i + "'})";
             JSONObject result = this.neoComposer.execute(cypher, CRUD.MERGE);
+            System.out.println(result);
+        }
+    }
+
+    @Test
+    public void execute_02() throws Exception {
+        for (; ; ) {
+            String cypher = "MATCH (n) RETURN n LIMIT 10";
+            JSONObject result = this.neoComposer.execute(cypher, CRUD.RETRIEVE);
             System.out.println(result);
         }
     }

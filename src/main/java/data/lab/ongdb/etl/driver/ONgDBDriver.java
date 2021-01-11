@@ -22,6 +22,7 @@ import org.neo4j.driver.util.Pair;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Yc-Ma
@@ -53,7 +54,7 @@ public class ONgDBDriver {
         }
         boolean flag = false;
         // RETRY FAILURE QUERY
-        while (!flag) {
+        while (!flag && Objects.nonNull(driver)) {
             try (Session session = driver.session()) {
                 session.run(statement);
                 flag = true;

@@ -83,7 +83,7 @@ public abstract class NeoAccessor implements Accessor {
      * @Description: TODO(可指定在构造函数中做不做其他操作)
      */
     public NeoAccessor(boolean isDoNothing) {
-        if (isDoNothing) {
+        if (!isDoNothing) {
             Login login = ServerConfiguration.getPro();
             OngdbHeartBeat.IS_ADD_BLOT_DRIVER = true;
             OngdbHeartBeat.RUN_ALL_DETECT = false;
